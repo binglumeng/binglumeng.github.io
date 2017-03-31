@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android网络连接与云服务 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/03/27/Android学习笔记第五篇--网络连接与云服务/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android网络连接与云服务</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-03-27
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android学习笔记第五篇–网络连接与云服务"><a href="#Android学习笔记第五篇–网络连接与云服务" class="headerlink" title="Android学习笔记第五篇–网络连接与云服务"></a>Android学习笔记第五篇–网络连接与云服务</h1><h2 id="第一章、无线连接设备"><a href="#第一章、无线连接设备" class="headerlink" title="第一章、无线连接设备"></a>第一章、无线连接设备</h2><p>​    除了能够在云端通讯，Android的无线API也允许在同一局域网内的设备通讯，<strong>甚至没有连接网络，而是物理具体相近，也可以相互通讯。</strong>Network Service Discovery 简称NSD可以允许应用相互通讯发现附近设备。</p>
+<p>​    本节主要介绍Android应用发现与连接其他设备的API。主要介绍NSD的API和点对点无线(the Wi-Fi Peer-to-Peer)API。</p>
+<h3 id="1、使用网络服务发现-NSD"><a href="#1、使用网络服务发现-NSD" class="headerlink" title="1、使用网络服务发现(NSD)"></a>1、使用网络服务发现(NSD)</h3><p>添加NSD服务到App中，可以使用户辨识在局域网内支持app请求的设备。有助于更好的实现文件共享、联机游戏等服务需求。</p>
+<ul>
+<li><p>注册NSD服务</p>
+<blockquote>
+<p><strong>Note:</strong>注册NSD服务为非必选项，若是不关注本地网络的广播，则可以不用注册。</p>
+</blockquote>
+<p>在局域网内注册自身服务首先要创建<code>NsdServiceInfo</code>对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerService</span><span class="params">(<span class="keyword">int</span> port)</span></span>&#123;</div><div class="line">  <span class="comment">//创建并初始化NSD对象</span></div><div class="line">  NsdServiceInfo serviceInfo = <span class="keyword">new</span> NsdServiceInfo();</div><div class="line">  <span class="comment">//服务名称要保证唯一性</span></div><div class="line">  serviceInfo.serServiceName(<span class="string">"NsdChat"</span>);</div><div class="line">  <span class="comment">//指定协议和传输层，如指定打印服务"_ipp._tcp"</span></div><div class="line">  serviceInfo.setServiceType(<span class="string">"_http._tcp."</span>);</div><div class="line">  serviceInfo.setPort(port);</div><div class="line">  .....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如上创建了一个NSD服务，并设置了名称、服务类型。其中服务类型制定的是应用使用的协议和传输层。语法是<code>_&lt;protocol&gt;._&lt;transportlayer&gt;</code>。</p>
+<blockquote>
+<p><strong>Note:</strong>互联网编号分配机构(International Assigned Numbers Authority)提供用于服务发现协议，如NSD和Bonjour等。</p>
+</blockquote>
+<p>服务端口号应避免硬代码，以便于可以动态更改端口号，并更新通知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initializeServerSocket</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//初始化一个server socket，指定下面的端口</span></div><div class="line">  mServiceSocket = <span class="keyword">new</span> ServerSocket(<span class="number">0</span>);</div><div class="line">  <span class="comment">//存储选择的端口号</span></div><div class="line">  mLocalPort = mServerSocket.getLocalPort();</div><div class="line">  ......</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此已经创建了<code>NsdServiceInfo</code>对象，接着要实现<code>RegistrationListener</code>接口，实现注册功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initializeRegistrationListener</span><span class="params">()</span></span>&#123;</div><div class="line">  mRegistrationListener = <span class="keyword">new</span> NsdManager.RegistrationListener()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceRegistered</span><span class="params">(NsdServiceInfo nsdServiceInfo)</span></span>&#123;</div><div class="line">      <span class="comment">//需要更新已经保存的注册服务名称，因为它需要唯一性，若是命名冲突，Android会自动解决冲突，此处就需要更新获取。</span></div><div class="line">      mServiceName = nsdServiceInfo.getServiceName();</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRegistrationFailed</span><span class="params">(NsdServiceInfo serviceInfo,<span class="keyword">int</span> errorCode)</span></span>&#123;</div><div class="line">     <span class="comment">//注册失败时候，在此处可以记录日志 </span></div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceUnregistered</span><span class="params">(NsdServiceInfo arg0)</span></span>&#123;</div><div class="line">      <span class="comment">//注销服务，只有通过NsdManager来注销才会调用这里。</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUnregistrationFailed</span><span class="params">(NsdService serviceInfo,<span class="keyword">int</span> errorCode)</span></span>&#123;</div><div class="line">     <span class="comment">//注销失败，记录日志 </span></div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因为<code>registerService()</code>方法是异步的，在注册服务之后的操作，需要在<code>onServiceRegistered()</code>方法中进行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerService</span><span class="params">(<span class="keyword">int</span> port)</span></span>&#123;</div><div class="line">  NsdServiceInfo serviceInfo = <span class="keyword">new</span> NsdServiceInfo();</div><div class="line">  serviceInfo.setServiceName(<span class="string">"NsdChat"</span>);</div><div class="line">  serviceInfo.setServiceType(<span class="string">"_http._tcp."</span>);</div><div class="line">  serviceInfo.setPort(Port);</div><div class="line">  </div><div class="line">  mNsdManager = Context.getSystemService(Context.NSD_SERVICE);</div><div class="line">  mNsdManager.registerService(serviceInfo,NsdManager.PROTOCOL_DNS_SD,mRegistrationListener);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>发现网络中的服务</p>
+<p>发现网络服务需要两步：</p>
+<ul>
+<li>注册网络监听器</li>
+<li>调用<code>discoverServices()</code>异步API</li>
+</ul>
+<p>1、创建<code>NsdManager.DiscoveryListener</code>接口的实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initializeDiscoveryListener</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//实例化网络发现监听器</span></div><div class="line">  mDiscoverListener = <span class="keyword">new</span> NsdManager.DiscoveryListener()&#123;</div><div class="line">    <span class="comment">//发现服务时候调用该方法</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDiscoveryStarted</span><span class="params">(String regType)</span></span>&#123;</div><div class="line">      Log.d(TAG,<span class="string">"Service discovery started"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceFound</span><span class="params">(NsdServiceInfo service)</span> </span>&#123;</div><div class="line">            <span class="comment">// A service was found!  Do something with it.</span></div><div class="line">            Log.d(TAG, <span class="string">"Service discovery success"</span> + service);</div><div class="line">            <span class="keyword">if</span> (!service.getServiceType().equals(SERVICE_TYPE)) &#123;</div><div class="line">                <span class="comment">// Service type is the string containing the protocol and</span></div><div class="line">                <span class="comment">// transport layer for this service.</span></div><div class="line">                Log.d(TAG, <span class="string">"Unknown Service Type: "</span> + service.getServiceType());</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (service.getServiceName().equals(mServiceName)) &#123;</div><div class="line">                <span class="comment">// The name of the service tells the user what they'd be</span></div><div class="line">                <span class="comment">// connecting to. It could be "Bob's Chat App".</span></div><div class="line">                Log.d(TAG, <span class="string">"Same machine: "</span> + mServiceName);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (service.getServiceName().contains(<span class="string">"NsdChat"</span>))&#123;</div><div class="line">                mNsdManager.resolveService(service, mResolveListener);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceLost</span><span class="params">(NsdServiceInfo service)</span> </span>&#123;</div><div class="line">            <span class="comment">// When the network service is no longer available.</span></div><div class="line">            <span class="comment">// Internal bookkeeping code goes here.</span></div><div class="line">            Log.e(TAG, <span class="string">"service lost"</span> + service);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDiscoveryStopped</span><span class="params">(String serviceType)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"Discovery stopped: "</span> + serviceType);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartDiscoveryFailed</span><span class="params">(String serviceType, <span class="keyword">int</span> errorCode)</span> </span>&#123;</div><div class="line">            Log.e(TAG, <span class="string">"Discovery failed: Error code:"</span> + errorCode);</div><div class="line">            mNsdManager.stopServiceDiscovery(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStopDiscoveryFailed</span><span class="params">(String serviceType, <span class="keyword">int</span> errorCode)</span> </span>&#123;</div><div class="line">            Log.e(TAG, <span class="string">"Discovery failed: Error code:"</span> + errorCode);</div><div class="line">            mNsdManager.stopServiceDiscovery(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>NSD API</code>通过使用该接口中的方法，可以对网络服务状态进行监控。设置好监听器后，调用<code>discoverService()</code>函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mNsdManager.discoveryService(SERVICE_TYPE,NsdManager.PROTOCOL_DNS_SD,mDiscoveryListener);</div></pre></td></tr></table></figure>
+</li>
+<li><p>连接到网络上的服务</p>
+<p>发现网络上的可接入服务时，首先调用resolveService()方法，来确定服务连接信息。实现<code>NsdManage.ResolveListener</code>对象并将其传入<code>resolveService()</code>方法，并使用该对象获得<code>NsdSerServiceInfo</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initializeResolveListener</span><span class="params">()</span></span>&#123;</div><div class="line">  mResolveListener = <span class="keyword">new</span> NsdManager.ResolveListener()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResolveFailed</span><span class="params">(NsdServiceInfo serviceInfo, <span class="keyword">int</span> errorCode)</span> </span>&#123;</div><div class="line">            <span class="comment">// Called when the resolve fails.  Use the error code to debug.</span></div><div class="line">            Log.e(TAG, <span class="string">"Resolve failed"</span> + errorCode);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceResolved</span><span class="params">(NsdServiceInfo serviceInfo)</span> </span>&#123;</div><div class="line">            Log.e(TAG, <span class="string">"Resolve Succeeded. "</span> + serviceInfo);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (serviceInfo.getServiceName().equals(mServiceName)) &#123;</div><div class="line">                Log.d(TAG, <span class="string">"Same IP."</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            mService = serviceInfo;</div><div class="line">            <span class="keyword">int</span> port = mService.getPort();</div><div class="line">            InetAddress host = mService.getHost();</div><div class="line">        &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此完成服务接入，即可实现本地与之通讯。</p>
+</li>
+<li><p>程序退出注销服务</p>
+<p>使用NSD服务是比较消耗资源的，而且重复链接会导致问题，所以需要在app生命周期内的合适阶段开启、关闭服务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Activity</span></div><div class="line">	<span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mNsdHelper != <span class="keyword">null</span>) &#123;</div><div class="line">            mNsdHelper.tearDown();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        <span class="keyword">if</span> (mNsdHelper != <span class="keyword">null</span>) &#123;</div><div class="line">            mNsdHelper.registerService(mConnection.getLocalPort());</div><div class="line">            mNsdHelper.discoverServices();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        mNsdHelper.tearDown();</div><div class="line">        mConnection.tearDown();</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// NsdHelper's tearDown method</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tearDown</span><span class="params">()</span> </span>&#123;</div><div class="line">        mNsdManager.unregisterService(mRegistrationListener);</div><div class="line">        mNsdManager.stopServiceDiscovery(mDiscoveryListener);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2、使用WiFi建立P2P连接"><a href="#2、使用WiFi建立P2P连接" class="headerlink" title="2、使用WiFi建立P2P连接"></a>2、使用WiFi建立P2P连接</h3><p>WiFi点对点(P2P)API允许应用程序在无需连接到网络和热点的情况下连接到附近的设备。相比于蓝牙技术，其具有加大的连接范围。</p>
+<ul>
+<li><p>配置应用权限</p>
+<p>使用Wi-Fi P2P技术需要添加<code>CHANGE_WIFI_STATE</code>,<code>ACCESS_WIFI_STATE</code>以及<code>INTERNET</code>三种权限，因为虽然Wi-Fi P2P技术可以不用访问互联网，但是它使用的是<code>Java socket</code>的标准，所以需要<code>INTERNET</code>权限。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">          package="com.example.android.nsdchat"</div><div class="line">          ...</div><div class="line">	&lt;uses-permission</div><div class="line">        android:required="true"</div><div class="line">        android:name="android.permission.ACCESS_WIFI_STATE"/&gt;</div><div class="line">	&lt;uses-permission</div><div class="line">        android:required="true"</div><div class="line">        android:name="android.permission.CHANGE_WIFI_STATE"/&gt;</div><div class="line">    &lt;uses-permission</div><div class="line">        android:required="true"</div><div class="line">        android:name="android.permission.INTERNET"/&gt;</div><div class="line">    ...</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置广播接收器和P2P管理器</p>
+<p>使用WiFi P2P时，需要侦听事件发生时的broadcast intent。需要<code>IntentFilter</code></p>
+<ul>
+<li><code>WIFI_P2P_STATE_CHANGED_ACTION</code>指示Wi-Fi P2P是否开启</li>
+<li><code>WIFI_P2P_PEERS_CHANGED_ACTION</code>代表对等列表节点发生了变化。</li>
+<li><code>WIFI_P2P_CONNECTION_CHANGED_ACTION</code>表明Wi-Fi P2P连接状态发生了变化。</li>
+<li><code>WIFI_P2P_THIS_DEVICE_CHANGED_ACTION</code>指示设备详细配置发生了变化。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter();</div><div class="line">...</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.main);</div><div class="line"></div><div class="line">    <span class="comment">//  Indicates a change in the Wi-Fi P2P status.</span></div><div class="line">    intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);</div><div class="line"></div><div class="line">    <span class="comment">// Indicates a change in the list of available peers.</span></div><div class="line">    intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);</div><div class="line"></div><div class="line">    <span class="comment">// Indicates the state of Wi-Fi P2P connectivity has changed.</span></div><div class="line">    intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);</div><div class="line"></div><div class="line">    <span class="comment">// Indicates this device's details have changed.</span></div><div class="line">    intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>onCreate()</code>方法的最后，需要获得<code>WifiP2pManager</code>的实例，并调用他的<code>initailize()</code>方法，以获得<code>WifiP2pManager.Channel</code>对象.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Channel mChannel;</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">  ...</div><div class="line">    mManager = (WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);</div><div class="line">	mChannel = mManager.initialize(<span class="keyword">this</span>,getMainLooper(),<span class="keyword">null</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后创建广播接收着，监听上述不同的P2P状态变化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        String action = intent.getAction();</div><div class="line">        <span class="keyword">if</span> (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) &#123;</div><div class="line">            <span class="comment">// Determine if Wifi P2P mode is enabled or not, alert</span></div><div class="line">            <span class="comment">// the Activity.</span></div><div class="line">            <span class="keyword">int</span> state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -<span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) &#123;</div><div class="line">                activity.setIsWifiP2pEnabled(<span class="keyword">true</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                activity.setIsWifiP2pEnabled(<span class="keyword">false</span>);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) &#123;</div><div class="line"></div><div class="line">            <span class="comment">// The peer list has changed!  We should probably do something about</span></div><div class="line">            <span class="comment">// that.</span></div><div class="line"></div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) &#123;</div><div class="line"></div><div class="line">            <span class="comment">// Connection state changed!  We should probably do something about</span></div><div class="line">            <span class="comment">// that.</span></div><div class="line"></div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) &#123;</div><div class="line">            DeviceListFragment fragment = (DeviceListFragment) activity.getFragmentManager()</div><div class="line">                    .findFragmentById(R.id.frag_list);</div><div class="line">            fragment.updateThisDevice((WifiP2pDevice) intent.getParcelableExtra(</div><div class="line">                    WifiP2pManager.EXTRA_WIFI_P2P_DEVICE));</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>并在Activity启动时，注册广播，添加过滤器。Activity暂停或者关闭时候，注销广播。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">//在Activity启动后注册广播</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        receiver = <span class="keyword">new</span> WiFiDirectBroadcastReceiver(mManager, mChannel, <span class="keyword">this</span>);</div><div class="line">        registerReceiver(receiver, intentFilter);</div><div class="line">    &#125;</div><div class="line"><span class="comment">//Activity关闭前，注销广播。</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        unregisterReceiver(receiver);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化对等节点发现(Peer Discovery)</p>
+<p>调用<code>discoveryPeers()</code>开始搜寻附近设备，需要传入参数</p>
+<ul>
+<li>上面得到的<code>WifiP2pManager.Channel</code>对象。</li>
+<li>对<code>WifiP2pManager.ActionListener</code>接口的实现，确定发现成功与失败时候的事件处理。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mManager.discoverPeers(mChannel, <span class="keyword">new</span> WifiP2pManager.ActionListener() &#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="comment">// Code for when the discovery initiation is successful goes here.</span></div><div class="line">            <span class="comment">// No services have actually been discovered yet, so this method</span></div><div class="line">            <span class="comment">// can often be left blank.  Code for peer discovery goes in the</span></div><div class="line">            <span class="comment">// onReceive method, detailed below.</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> reasonCode)</span> </span>&#123;</div><div class="line">            <span class="comment">// Code for when the discovery initiation fails goes here.</span></div><div class="line">            <span class="comment">// Alert the user that something went wrong.</span></div><div class="line">        &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong>如上仅仅完成了对匹配设备的发现扫描的初始化，<code>WifiP2pManager.ActionListener</code>中国年的方法会通知应用初始化是否正确等消息。</p>
+</li>
+<li><p>获取对等节点列表</p>
+<p>完成初始化后，扫描会得到匹配的附近设备列表信息。需要实现<code>WifiP2pManager.PeerListener</code>接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> List peers = <span class="keyword">new</span> ArrayList();<span class="comment">//匹配到的设备信息列表。</span></div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="keyword">private</span> PeerListListener peerListListener = <span class="keyword">new</span> PeerListListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPeersAvailable</span><span class="params">(WifiP2pDeviceList peerList)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="comment">// Out with the old, in with the new.</span></div><div class="line">            peers.clear();</div><div class="line">            peers.addAll(peerList.getDeviceList());</div><div class="line"></div><div class="line">            <span class="comment">// If an AdapterView is backed by this data, notify it</span></div><div class="line">            <span class="comment">// of the change.  For instance, if you have a ListView of available</span></div><div class="line">            <span class="comment">// peers, trigger an update.</span></div><div class="line">            ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();</div><div class="line">            <span class="keyword">if</span> (peers.size() == <span class="number">0</span>) &#123;</div><div class="line">                Log.d(WiFiDirectActivity.TAG, <span class="string">"No devices found"</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>如上获得的匹配列表，我们需要将它传递给广播接收者做进一步处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context,Intent intent)</span></span>&#123;</div><div class="line">  ...</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) &#123;</div><div class="line">        <span class="comment">// Request available peers from the wifi p2p manager. This is an</span></div><div class="line">        <span class="comment">// asynchronous call and the calling activity is notified with a</span></div><div class="line">        <span class="comment">// callback on PeerListListener.onPeersAvailable()</span></div><div class="line">        <span class="keyword">if</span> (mManager != <span class="keyword">null</span>) &#123;</div><div class="line">            mManager.requestPeers(mChannel, peerListListener);</div><div class="line">        &#125;</div><div class="line">        Log.d(WiFiDirectActivity.TAG, <span class="string">"P2P peers changed"</span>);</div><div class="line">    &#125;...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>连接一个对等节点</p>
+<p>发现到附近可用设备，则可以进一步的连接它，需要创建一个新的WifiP2pConfig对象，并将连接信息从设备WifiP2pDevice拷贝到其中，调用connect()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="comment">// Picking the first device found on the network.</span></div><div class="line">      WifiP2pDevice device = peers.get(<span class="number">0</span>);</div><div class="line"></div><div class="line">      WifiP2pConfig config = <span class="keyword">new</span> WifiP2pConfig();</div><div class="line">      config.deviceAddress = device.deviceAddress;</div><div class="line">      config.wps.setup = WpsInfo.PBC;</div><div class="line"><span class="comment">//ActionListener仅实现通知初始化成功与否</span></div><div class="line">      mManager.connect(mChannel, config, <span class="keyword">new</span> ActionListener() &#123;</div><div class="line"></div><div class="line">          <span class="meta">@Override</span></div><div class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">              <span class="comment">// WiFiDirectBroadcastReceiver will notify us. Ignore for now.</span></div><div class="line">          &#125;</div><div class="line"></div><div class="line">          <span class="meta">@Override</span></div><div class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> reason)</span> </span>&#123;</div><div class="line">              Toast.makeText(WiFiDirectActivity.<span class="keyword">this</span>, <span class="string">"Connect failed. Retry."</span>,</div><div class="line">                      Toast.LENGTH_SHORT).show();</div><div class="line">          &#125;</div><div class="line">      &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>使用<code>WifiP2pManager.ConnectionInfoListener</code>接口，<code>onConnectionInfoAvailable()</code>来确定连接状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConnectionInfoAvailable</span><span class="params">(<span class="keyword">final</span> WifiP2pInfo info)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// InetAddress from WifiP2pInfo struct.</span></div><div class="line">    InetAddress groupOwnerAddress = info.groupOwnerAddress.getHostAddress());</div><div class="line"></div><div class="line">    <span class="comment">// After the group negotiation, we can determine the group owner.</span></div><div class="line">    <span class="keyword">if</span> (info.groupFormed &amp;&amp; info.isGroupOwner) &#123;</div><div class="line">        <span class="comment">// Do whatever tasks are specific to the group owner.</span></div><div class="line">        <span class="comment">// One common case is creating a server thread and accepting</span></div><div class="line">        <span class="comment">// incoming connections.</span></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (info.groupFormed) &#123;</div><div class="line">        <span class="comment">// The other device acts as the client. In this case,</span></div><div class="line">        <span class="comment">// you'll want to create a client thread that connects to the group</span></div><div class="line">        <span class="comment">// owner.</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完善广播接收者的代码,监听到连接广播信号时候，请求连接。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) &#123;</div><div class="line"></div><div class="line">           <span class="keyword">if</span> (mManager == <span class="keyword">null</span>) &#123;</div><div class="line">               <span class="keyword">return</span>;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           NetworkInfo networkInfo = (NetworkInfo) intent</div><div class="line">                   .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);</div><div class="line"></div><div class="line">           <span class="keyword">if</span> (networkInfo.isConnected()) &#123;</div><div class="line"></div><div class="line">               <span class="comment">// We are connected with the other device, request connection</span></div><div class="line">               <span class="comment">// info to find group owner IP</span></div><div class="line"></div><div class="line">               mManager.requestConnectionInfo(mChannel, connectionListener);</div><div class="line">           &#125;</div><div class="line">           ...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3、使用WiFi-P2P服务"><a href="#3、使用WiFi-P2P服务" class="headerlink" title="3、使用WiFi P2P服务"></a>3、使用WiFi P2P服务</h3><p>第一节讲述了<code>NSD</code>服务用于局域网之间的连接通讯，本节的WiFi P2P有点类似，但是并不相同。</p>
+<ul>
+<li><p>配置Manifest</p>
+<p>需要网络权限以及wifi相关权限。如上节所讲的三个权限，配置在Android manifest清单文件中。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">    package="com.example.android.nsdchat"</div><div class="line">    ...</div><div class="line"></div><div class="line">    &lt;uses-permission</div><div class="line">        android:required="true"</div><div class="line">        android:name="android.permission.ACCESS_WIFI_STATE"/&gt;</div><div class="line">    &lt;uses-permission</div><div class="line">        android:required="true"</div><div class="line">        android:name="android.permission.CHANGE_WIFI_STATE"/&gt;</div><div class="line">    &lt;uses-permission</div><div class="line">        android:required="true"</div><div class="line">        android:name="android.permission.INTERNET"/&gt;</div><div class="line">    ...</div></pre></td></tr></table></figure>
+</li>
+<li><p>添加本地服务</p>
+<p>需要在服务框架中注册该服务，才能对外提供。</p>
+<ul>
+<li>新建<code>WifiP2pServiceInfo</code>对象</li>
+<li>加入相应的服务详细信息</li>
+<li>调用<code>addLocalService()</code>来注册为本地服务。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startRegistration</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//  Create a string map containing information about your service.</span></div><div class="line">        Map record = <span class="keyword">new</span> HashMap();</div><div class="line">        record.put(<span class="string">"listenport"</span>, String.valueOf(SERVER_PORT));</div><div class="line">        record.put(<span class="string">"buddyname"</span>, <span class="string">"John Doe"</span> + (<span class="keyword">int</span>) (Math.random() * <span class="number">1000</span>));</div><div class="line">        record.put(<span class="string">"available"</span>, <span class="string">"visible"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Service information.  Pass it an instance name, service type</span></div><div class="line">        <span class="comment">// _protocol._transportlayer , and the map containing</span></div><div class="line">        <span class="comment">// information other devices will want once they connect to this one.</span></div><div class="line">        WifiP2pDnsSdServiceInfo serviceInfo =</div><div class="line">                WifiP2pDnsSdServiceInfo.newInstance(<span class="string">"_test"</span>, <span class="string">"_presence._tcp"</span>, record);</div><div class="line"></div><div class="line">        <span class="comment">// Add the local service, sending the service info, network channel,</span></div><div class="line">        <span class="comment">// and listener that will be used to indicate success or failure of</span></div><div class="line">        <span class="comment">// the request.</span></div><div class="line">        mManager.addLocalService(channel, serviceInfo, <span class="keyword">new</span> ActionListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="comment">// Command successful! Code isn't necessarily needed here,</span></div><div class="line">                <span class="comment">// Unless you want to update the UI or add logging statements.</span></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> arg0)</span> </span>&#123;</div><div class="line">                <span class="comment">// Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY</span></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>发现附近的服务</p>
+<p>新建一个<code>WifiP2pManager.DnsSdTxtRecordListener</code>实例来监听实时收到到记录。记录到的周边设备服务信息会拷贝到外部数据机构中，以供使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> HashMap&lt;String, String&gt; buddies = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</div><div class="line">...</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">discoverService</span><span class="params">()</span> </span>&#123;</div><div class="line">    DnsSdTxtRecordListener txtListener = <span class="keyword">new</span> DnsSdTxtRecordListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="comment">/* Callback includes:</span></div><div class="line">         * fullDomain: full domain name: e.g "printer._ipp._tcp.local."</div><div class="line">         * record: TXT record dta as a map of key/value pairs.</div><div class="line">         * device: The device running the advertised service.</div><div class="line">         */</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDnsSdTxtRecordAvailable</span><span class="params">(</span></span></div><div class="line">                String fullDomain, Map record, WifiP2pDevice device) &#123;</div><div class="line">                Log.d(TAG, <span class="string">"DnsSdTxtRecord available -"</span> + record.toString());</div><div class="line">                buddies.put(device.deviceAddress, record.get(<span class="string">"buddyname"</span>));</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后创建<code>WifiP2pManager.DnsSdServiceResponseListener</code>对象，来响应服务请求。上述两个listener匹配构建后，调用<code>setDnsResponseListener()</code>将它们加入<code>WifiP2pManager</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">discoverService</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line"></div><div class="line">    DnsSdServiceResponseListener servListener = <span class="keyword">new</span> DnsSdServiceResponseListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDnsSdServiceAvailable</span><span class="params">(String instanceName, String registrationType,</span></span></div><div class="line">                WifiP2pDevice resourceType) &#123;</div><div class="line"></div><div class="line">                <span class="comment">// Update the device name with the human-friendly version from</span></div><div class="line">                <span class="comment">// the DnsTxtRecord, assuming one arrived.</span></div><div class="line">                resourceType.deviceName = buddies</div><div class="line">                        .containsKey(resourceType.deviceAddress) ? buddies</div><div class="line">                        .get(resourceType.deviceAddress) : resourceType.deviceName;</div><div class="line"></div><div class="line">                <span class="comment">// Add to the custom adapter defined specifically for showing</span></div><div class="line">                <span class="comment">// wifi devices.</span></div><div class="line">                WiFiDirectServicesList fragment = (WiFiDirectServicesList) getFragmentManager()</div><div class="line">                        .findFragmentById(R.id.frag_peerlist);</div><div class="line">                WiFiDevicesAdapter adapter = ((WiFiDevicesAdapter) fragment</div><div class="line">                        .getListAdapter());</div><div class="line"></div><div class="line">                adapter.add(resourceType);</div><div class="line">                adapter.notifyDataSetChanged();</div><div class="line">                Log.d(TAG, <span class="string">"onBonjourServiceAvailable "</span> + instanceName);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    mManager.setDnsSdResponseListeners(channel, servListener, txtListener);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>调用<code>addServiceRequest()</code>创建服务请求,它需要一个listener来通知创建成功与否。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">serviceRequest = WifiP2pDnsSdServiceRequest.newInstance();</div><div class="line">       mManager.addServiceRequest(channel,</div><div class="line">               serviceRequest,</div><div class="line">               <span class="keyword">new</span> ActionListener() &#123;</div><div class="line">                   <span class="meta">@Override</span></div><div class="line">                   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">                       <span class="comment">// Success!</span></div><div class="line">                   &#125;</div><div class="line"></div><div class="line">                   <span class="meta">@Override</span></div><div class="line">                   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> code)</span> </span>&#123;</div><div class="line">                       <span class="comment">// Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY</span></div><div class="line">                   &#125;</div><div class="line">               &#125;);</div></pre></td></tr></table></figure>
+<p>最后是调用<code>discoverService()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mManager.discoverServices(channel, <span class="keyword">new</span> ActionListener() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="comment">// Success!</span></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> code)</span> </span>&#123;</div><div class="line">                <span class="comment">// Command failed.  Check for P2P_UNSUPPORTED, ERROR, or BUSY</span></div><div class="line">                <span class="keyword">if</span> (code == WifiP2pManager.P2P_UNSUPPORTED) &#123;</div><div class="line">                    Log.d(TAG, <span class="string">"P2P isn't supported on this device."</span>);</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(...)</div><div class="line">                    ...</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<p>顺利的话，可以实现匹配连接的效果，常见错误代码：</p>
+<ul>
+<li>P2P_UNSUPPORTED 当前设备不支持</li>
+<li>BUSY 系统繁忙</li>
+<li>ERROR 内部错误</li>
+</ul>
+</li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/03/27/第一篇、Android入门基础/" data-toggle="tooltip" data-placement="top" title="Android入门基础">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/27/Android开源控件搜集--ProgressBar/" data-toggle="tooltip" data-placement="top" title="Android开源控件搜集----ProgressBar">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

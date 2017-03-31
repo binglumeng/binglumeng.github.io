@@ -1,0 +1,24 @@
+language: node_js
+node_js: stable
+# S: Build Lifecycle
+install:
+  - npm install
+#before_script:
+ # - npm install -g gulp
+script:
+  - hexo g
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "binglumeng"
+  - git config user.email "binglu@sina.cn"
+  - git add .
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://${GITHUB_TOKEN}@${GH_REPO}" master:master
+# E: Build LifeCycle
+branches:
+  only:
+    - gh-pages
+env:
+ global:
+   - GH_REPO: github.com/binglumeng/binglumeng.github.io.git
