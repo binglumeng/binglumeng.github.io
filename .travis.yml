@@ -10,7 +10,7 @@ script:
 after_script:
   - cd ./public
   - git init
-  - git config user.name "binglumeng"
+  - git config user.name "冰路梦"
   - git config user.email "binglu@sina.cn"
   - git add .
   - git commit -m "Update docs"
