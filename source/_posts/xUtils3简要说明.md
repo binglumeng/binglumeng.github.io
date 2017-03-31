@@ -1,9 +1,9 @@
 ---
-title: xUtils开源框架简要使用说明
+title: xUtils3开源框架简要使用说明
 date: 2017-01-21 15:38
 tags: 
     - Android
-    -xUtils
+    - xUtils
 categories:
     - Android
 ---

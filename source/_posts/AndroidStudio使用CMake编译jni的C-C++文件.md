@@ -1,10 +1,10 @@
 ---
-title: AndroidStudio使用CMake编译jni的C/C++文件
+title: "AndroidStudio使用CMake编译jni的C/C++文件"
 date: 2017-01-22 15:36
 tags:
     - Android Studio
-	- C++
-	- JNI
+    - C++
+    - JNI
 categories:
     - 编程相关
 ---

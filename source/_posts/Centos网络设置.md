@@ -4,7 +4,7 @@ date: 2016-11-03 17:31
 tags:
     - Linux
     - Centos
-	- 网络设置
+    - 网络设置
 categories:
     - Linux
 ---
