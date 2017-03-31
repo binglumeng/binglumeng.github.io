@@ -93,6 +93,13 @@
 
                         
                         <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">About Author</a>
                         </li>
                         
@@ -101,13 +108,6 @@
                         
                         <li>
                             <a href="/archives/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -694,7 +694,7 @@
 <p>脚本化的printf命令使用：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># author:菜鸟教程</span></div><div class="line"><span class="comment"># url:www.runoob.com</span></div><div class="line"> </div><div class="line"><span class="built_in">printf</span> <span class="string">"%-10s %-8s %-4s\n"</span> 姓名 性别 体重kg  </div><div class="line"><span class="built_in">printf</span> <span class="string">"%-10s %-8s %-4.2f\n"</span> 郭靖 男 66.1234 </div><div class="line"><span class="built_in">printf</span> <span class="string">"%-10s %-8s %-4.2f\n"</span> 杨过 男 48.6543 </div><div class="line"><span class="built_in">printf</span> <span class="string">"%-10s %-8s %-4.2f\n"</span> 郭芙 女 47.9876</div></pre></td></tr></table></figure>
 <p>执行脚本，显示结果：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">姓名     性别   体重<span class="selector-tag">kg</span></div><div class="line">郭靖     男      66<span class="selector-class">.12</span></div><div class="line">杨过     男      48<span class="selector-class">.65</span></div><div class="line">郭芙     女      47<span class="selector-class">.99</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">姓名     性别   体重kg</div><div class="line">郭靖     男      66.12</div><div class="line">杨过     男      48.65</div><div class="line">郭芙     女      47.99</div></pre></td></tr></table></figure>
 <p><code>%s,%c,%d,%f</code>都是格式替换符，<code>%-10s</code>指一个宽度为10个字符（-表示左对齐，没有则右对齐），任何字符都会被显示在10个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。</p>
 <p>%-4.2f 指格式化为小数，其中.2指保留2位小数。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># author:菜鸟教程</span></div><div class="line"><span class="comment"># url:www.runoob.com</span></div><div class="line"> </div><div class="line"><span class="comment"># format-string为双引号</span></div><div class="line"><span class="built_in">printf</span> <span class="string">"%d %s\n"</span> 1 <span class="string">"abc"</span></div><div class="line"></div><div class="line"><span class="comment"># 单引号与双引号效果一样 </span></div><div class="line"><span class="built_in">printf</span> <span class="string">'%d %s\n'</span> 1 <span class="string">"abc"</span> </div><div class="line"></div><div class="line"><span class="comment"># 没有引号也可以输出</span></div><div class="line"><span class="built_in">printf</span> %s abcdef</div><div class="line"></div><div class="line"><span class="comment"># 格式只指定了一个参数，但多出的参数仍然会按照该格式输出，format-string 被重用</span></div><div class="line"><span class="built_in">printf</span> %s abc def</div><div class="line"></div><div class="line"><span class="built_in">printf</span> <span class="string">"%s\n"</span> abc def</div><div class="line"></div><div class="line"><span class="built_in">printf</span> <span class="string">"%s %s %s\n"</span> a b c d e f g h i j</div><div class="line"></div><div class="line"><span class="comment"># 如果没有 arguments，那么 %s 用NULL代替，%d 用 0 代替</span></div><div class="line"><span class="built_in">printf</span> <span class="string">"%s and %d \n"</span></div></pre></td></tr></table></figure>
@@ -862,7 +862,7 @@
 <h3 id="1、输出重定向"><a href="#1、输出重定向" class="headerlink" title="1、输出重定向"></a>1、输出重定向</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">command</span>1 &gt; file1</div></pre></td></tr></table></figure>
 <p>若file1存在，则被替代。可以用<code>&gt;&gt;</code>追加符号，则不替代。</p>
 <h3 id="2、输入重定向"><a href="#2、输入重定向" class="headerlink" title="2、输入重定向"></a>2、输入重定向</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">command</span>1 &lt; file1</div></pre></td></tr></table></figure>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">command1 &lt; <span class="keyword">infile</span> &gt; <span class="keyword">outfile</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">command1 &lt; infile &gt; outfile</div></pre></td></tr></table></figure>
 <p>同时替换输入和输出，执行command1，从文件infile读取内容，然后将输出写入到outfile中。</p>
 <h3 id="3、重定向深入讲解"><a href="#3、重定向深入讲解" class="headerlink" title="3、重定向深入讲解"></a>3、重定向深入讲解</h3><p>一般类unix系统命令运行会同时打开三个文件：</p>
 <ul>

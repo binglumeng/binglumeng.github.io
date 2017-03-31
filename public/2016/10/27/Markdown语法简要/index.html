@@ -93,6 +93,13 @@
 
                         
                         <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">About Author</a>
                         </li>
                         
@@ -101,13 +108,6 @@
                         
                         <li>
                             <a href="/archives/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -227,7 +227,7 @@
 <li>行内式，格式<code>[name](url,&quot;title&quot;)</code>，效果：<br>  <a href="http://blog.csdn.net/binglumeng/article/details/52668151" target="_blank" rel="external">Markdown语法</a></li>
 <li>参考式，格式<code>[name][id]</code>，文章他处声明id，<code>[id]:url</code>，效果：<pre><code>[Markdown语法][md]
 </code></pre></li>
-<li>自动链接<code>&lt; &gt;</code>其中直接写网址，或者邮箱，需要有<a href="http://同类的，或@符号。效果：" target="_blank" rel="external">http://同类的，或@符号。效果：</a><br>   <a href="https://google.com" target="_blank" rel="external">https://google.com</a>,<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x6d;&#97;&#x72;&#x6b;&#100;&#x6f;&#119;&#110;&#x40;&#x6d;&#x64;&#46;&#99;&#111;&#x6d;">&#x6d;&#97;&#x72;&#x6b;&#100;&#x6f;&#119;&#110;&#x40;&#x6d;&#x64;&#46;&#99;&#111;&#x6d;</a></li>
+<li>自动链接<code>&lt; &gt;</code>其中直接写网址，或者邮箱，需要有<a href="http://同类的，或@符号。效果：" target="_blank" rel="external">http://同类的，或@符号。效果：</a><br>   <a href="https://google.com" target="_blank" rel="external">https://google.com</a>,<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#x6d;&#x61;&#x72;&#107;&#x64;&#111;&#119;&#x6e;&#x40;&#109;&#x64;&#46;&#99;&#x6f;&#x6d;">&#x6d;&#x61;&#x72;&#107;&#x64;&#111;&#119;&#x6e;&#x40;&#109;&#x64;&#46;&#99;&#x6f;&#x6d;</a></li>
 <li>网址直译，www.google.com， <font color="#ff0000"><strong>csdn不支持</strong></font></li>
 </ul>
 <p>####8. 强调</p>
@@ -268,7 +268,7 @@
 </ul>
 <p>####11. 表格</p>
 <pre><code>行首开始，写title，`|`符号表示分栏，减号`-`表示列宽。格式为首行写title，次行写对齐方式。至少形成表头才是表格。两列一行。
-</code></pre><figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">学号<span class="string">|姓名</span></div><div class="line">-<span class="string">|</span></div><div class="line">有的必须每行前后都要有<span class="string">|符号</span></div></pre></td></tr></table></figure>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">学号|姓名</div><div class="line">-|</div><div class="line">有的必须每行前后都要有|符号</div></pre></td></tr></table></figure>
 <ul>
 <li><p><code>:---</code>左对齐</p>
 </li>
@@ -307,10 +307,10 @@
 
 ​<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">  ```flow</div><div class="line">  st=&gt;start: 开始</div><div class="line">  e=&gt;end: 结束</div><div class="line">  op=&gt;operation: 我的操作</div><div class="line">  cond=&gt;condition: 确认？</div><div class="line">  st-&gt;op-&gt;<span class="function">cond</span></div><div class="line">  <span class="title">cond</span><span class="params">(yes)</span>-&gt;e</div><div class="line">  <span class="title">cond</span><span class="params">(no)</span>-&gt;op</div><div class="line">​</div></pre></td></tr></table></figure>
 
-​<figure class="highlight sml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">效果：</div><div class="line"></div><div class="line">```flow</div><div class="line">st=&gt;start: 开始</div><div class="line">e=&gt;<span class="keyword">end</span>: 结束</div><div class="line"><span class="keyword">op</span>=&gt;operation: 我的操作</div><div class="line">cond=&gt;condition: 确认？</div><div class="line">st-&gt;<span class="keyword">op</span>-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;<span class="keyword">op</span></div></pre></td></tr></table></figure>
+​<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">效果：</div><div class="line"></div><div class="line">```flow</div><div class="line">st=&gt;start: 开始</div><div class="line">e=&gt;end: 结束</div><div class="line">op=&gt;operation: 我的操作</div><div class="line">cond=&gt;condition: 确认？</div><div class="line">st-&gt;op-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;op</div></pre></td></tr></table></figure>
 </code></pre><h4 id="18-甘特图："><a href="#18-甘特图：" class="headerlink" title="18. 甘特图："></a>18. 甘特图：</h4><pre><code>类似代码块，语言标识`gantt`，有语法，以后慢慢总结。
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">​```gantt</div><div class="line">    title 项目开发流程//标题</div><div class="line">    section 项目确定//项目阶段</div><div class="line">        需求分析       :a1, 2016-06-22, 3d//任务名称，日期线和时长</div><div class="line">        可行性报告     :after a1, 5d</div><div class="line">        概念验证       : 5d</div><div class="line">    section 项目实施</div><div class="line">        概要设计      :2016-07-05  , 5d</div><div class="line">        详细设计      :2016-07-08, 10d</div><div class="line">        编码          :2016-07-15, 10d</div><div class="line">        测试          :2016-07-22, 5d</div><div class="line">    section 发布验收</div><div class="line">        发布: 2d</div><div class="line">        验收: 3d</div><div class="line">​</div></pre></td></tr></table></figure>
-<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">```</span>gantt</div><div class="line">	title 项目开发流程</div><div class="line">        <span class="meta">section</span> 项目确定</div><div class="line">            需求分析       :a1, <span class="number">2016</span>-<span class="number">06</span>-<span class="number">22</span>, <span class="number">3d</span></div><div class="line">            可行性报告     :after a1, <span class="number">5d</span></div><div class="line">            概念验证       : <span class="number">5d</span></div><div class="line">        <span class="meta">section</span> 项目实施</div><div class="line">            概要设计      :<span class="number">2016</span>-<span class="number">07</span>-<span class="number">05</span>  , <span class="number">5d</span></div><div class="line">            详细设计      :<span class="number">2016</span>-<span class="number">07</span>-<span class="number">08</span>, <span class="number">10d</span></div><div class="line">            编码          :<span class="number">2016</span>-<span class="number">07</span>-<span class="number">15</span>, <span class="number">10d</span></div><div class="line">            测试          :<span class="number">2016</span>-<span class="number">07</span>-<span class="number">22</span>, <span class="number">5d</span></div><div class="line">        <span class="meta">section</span> 发布验收</div><div class="line">            发布: <span class="number">2d</span></div><div class="line">            验收: <span class="number">3d</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```gantt</div><div class="line">	title 项目开发流程</div><div class="line">        section 项目确定</div><div class="line">            需求分析       :a1, 2016-06-22, 3d</div><div class="line">            可行性报告     :after a1, 5d</div><div class="line">            概念验证       : 5d</div><div class="line">        section 项目实施</div><div class="line">            概要设计      :2016-07-05  , 5d</div><div class="line">            详细设计      :2016-07-08, 10d</div><div class="line">            编码          :2016-07-15, 10d</div><div class="line">            测试          :2016-07-22, 5d</div><div class="line">        section 发布验收</div><div class="line">            发布: 2d</div><div class="line">            验收: 3d</div></pre></td></tr></table></figure>
 <h4 id="19-数学公式："><a href="#19-数学公式：" class="headerlink" title="19. 数学公式："></a>19. 数学公式：</h4><pre><code>markdown多使用LaTex数学公式，用`$`和`$$`符号标识
 </code></pre><ul>
 <li>行内公式，<code>$\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$</code></li>

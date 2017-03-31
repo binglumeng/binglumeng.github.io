@@ -100,6 +100,7 @@ skip_render:
 # relative_link 把链接改为与根目录的相对路径位置，默认值false；
 # future 显示未来的文章，默认值true；
 # highlight 代码块设置
+# auto_detect 自动检测，如果设置true，在hexo 3.x版上，现在会出现hexo g 错误。暂时false。--2017-03-31
 new_post_name: :title.md # File name of new posts
 default_layout: post 
 titlecase: false # Transform title into titlecase
@@ -112,7 +113,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: true
+  auto_detect: false
   tab_replace:
 
 # Category & Tag 分类和标签 ，default_categorty 默认分类，默认值 uncategorized;
