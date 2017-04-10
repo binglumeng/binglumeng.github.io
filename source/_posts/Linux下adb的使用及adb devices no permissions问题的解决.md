@@ -1,3 +1,13 @@
+---
+title: Linux adb使用及adb devices no permissions问题解决
+date: 2017-04-07 11:52:25
+tags:
+    - Linux
+    - Android
+    - adb
+categories:
+    - Android
+---
 ## Linux下adb的使用及adb devices ： no permissions问题的解决
 
 最近在Android开发过程中，需要用到linux下的开发环境，而使用adb时候遇到点小问题，特此笔记记录一下，方便自已，亦希望有助于他人。
