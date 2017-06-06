@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Windows系统安装 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2015/12/06/windows系统安装/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Windows" title="Windows">Windows</a>
+                        
+                    </div>
+                    <h1>Windows系统安装</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2015-12-06
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Windows系统安装"><a href="#Windows系统安装" class="headerlink" title="Windows系统安装"></a>Windows系统安装</h1><p>声明：本文仅用于技术交流，按照文章操作理论上不会出现故障和问题，但可能由于不同机器、不同人员的不同的偶然的操作失误，会引起不同的未知问题，则不属于本文技术指导的责任，按照本文操作，则视为操作者责任自负。</p>
+<p>一、安装准备</p>
+<p>1、系统源的选择（三种方式）</p>
+<p>①、微软官方系统镜像，纯净正版，从源头避免系统附带木马病毒等流氓软件。</p>
+<p><a href="http://msdn.itellyou.cn/" target="_blank" rel="external">http://msdn.itellyou.cn/</a></p>
+<p><a href="http://www.msdn.hk/" target="_blank" rel="external">http://www.msdn.hk/</a></p>
+<p>以上为两个常用的原版系统下载网址，在操作系统栏选择所需系统，下载对应的发行版，注意x86和x64的选择。（如今新机器基本都是x64，2010年前的多是x86）</p>
+<p> <img src="/2015/12/06/windows系统安装/msdn.png" alt="img"></p>
+<p>②、第三方Ghost系统，安装简便，免激活，不敢保证无病毒和捆绑软件等。</p>
+<p>百度一下Ghost系统，太多下载网址，系统之家相对还算不错。</p>
+<p>③、官方OEM系统，相对纯净，免激活，只是不太好找资源。</p>
+<p>可根据个人笔记本品牌搜索对应oem系统，如百度“联想win7 oem系统”。</p>
+<p>2、安装盘制作（三种方式）</p>
+<p>①、光盘刻录，需要空白光盘，使用光驱刻录。刻录工具很多，此处使用软碟通UltralIOS工具刻录：</p>
+<p>a）、选择下载好的iso格式的系统镜像，打开。</p>
+<p> <img src="/2015/12/06/windows系统安装/ultralISO.png" alt="img"></p>
+<p>b）、放置空光盘入光驱后，点击如下图位置，刻录光盘。</p>
+<p><img src="/2015/12/06/windows系统安装/刻录.png" alt="img"></p>
+<p>c）、刻录镜像到光盘，等待完成，可选择刻录校验，以保证刻录的完整正确。此处注意光盘的大小空间要大于镜像的大小。一般xp原镜像用cd光碟700M大小即可。Win7或者之后系统需要DVD光碟4.7G大小。</p>
+<p><img src="/2015/12/06/windows系统安装/校验.png" alt="img"></p>
+<p>d）、刻录完成后，即可进入安装步骤。</p>
+<p>②、U盘刻录，较光盘安装效率更高，U盘大小需要大于iso镜像。依然用UltralISO刻录。</p>
+<p>a)、打开下载后的iso系统镜像。</p>
+<p>b)、选择启动–写入硬盘镜像。</p>
+<p><img src="/2015/12/06/windows系统安装/写入.png" alt="img"></p>
+<p>c)、放入空白U盘（会被格式化，U盘上资料提前备份到他处），写入usb-hdd+引导。写入方式也选择usb-hdd+</p>
+<p> <img src="/2015/12/06/windows系统安装/引导.png" alt="img"> </p>
+<p>d)、格式化，写入完成后进入安装步骤。</p>
+<p>③、硬盘安装，安装速度快，对新手操作略繁琐（主要指PE系统的使用）</p>
+<p>a)、xp–&gt;win7，或者类似的低版本系统升级高版本系统，且两个系统都是x86或者x64的，可以将下载后的iso系统镜像文件，用winRAR之类的解压缩工具解压到非C盘的磁盘目录下，然后双击运行Setup.exe即可进入安装步骤。</p>
+<p>b)、上一步也可以用虚拟光驱工具，加载iso系统镜像，然后再“我的电脑”下找到加载后的系统安装盘，双击运行其中的setup.exe进入安装步骤。</p>
+<p> <img src="/2015/12/06/windows系统安装/镜像.png" alt="img"></p>
+<p> <img src="/2015/12/06/windows系统安装/镜像2.png" alt="img"></p>
+<p>c)、如上两条均需要当前系统可用的前提下，满足一定条件才可实现。倘若系统崩溃无法进入系统，则需要使用其他电脑制作安装光盘/U盘，放于本电脑来安装。亦或者，有PE系统，进入PE系统环境安装。（PE系统的制作，稍后再讲）</p>
+<p>三、系统安装</p>
+<p>1、将制作好的安装光盘/U盘连接电脑</p>
+<p>2、开机选择进入启动选择菜单，不同品牌电脑的进入方式不同，一般在开机显示品牌LOGO时，下面会有提示。Lenovo是按F12进入快速选择启动项，其他品牌自行百度，如“联想进入开机选项方式”。一般为Delete，Esc，F2等。</p>
+<p>3、进入启动项菜单后，若是光盘为安装盘，一般不用上一步就会进入安装界面，但有的也需要在此步骤选择光驱启动，回车即可。U盘为安装盘，则选择对应的USB启动项。</p>
+<p>4、如上无误则进入安装界面，一路下一步即可</p>
+<p> <img src="/2015/12/06/windows系统安装/安装语言.png" alt="img"> </p>
+<p>5、在下图步骤时，非全新硬盘则选择C盘，可以点击高级选项中，可以格式化，分区等，C盘数据会丢失，所以安装系统前备份好个人C盘的重要资料，如我的文档，桌面等等上面的资料。（崩溃后的系统可以在PE环境下备份数据）</p>
+<p><img src="/2015/12/06/windows系统安装/选择分区.png" alt="img"></p>
+<p>6、几乎一路下一步就可完成安装，系统可能会让提供安装密钥，可百度相应系统的序列号即可。（在第一步中选择的不同系统源，决定安装步骤的差异，一般大致相同）</p>
+<p> <img src="http://img.blog.csdn.net/20151206161206568?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p> <img src="/2015/12/06/windows系统安装/安装完成.png" alt="img"></p>
+<p>四、系统设置及优化</p>
+<p>至此即可完成系统的安装，windows系列的安装大同小异，安装好系统仅仅是一个好的桌面系统环境的第一步，之后需要打补丁，装软件，优化设置，其重要性不亚于系统的安装，有一个良好的使用习惯，会让你的电脑保持较为长久的流畅和高效状态。</p>
+<p>纯净初装系统并无集成驱动，甚至无法联网，用户需要从他处下载带网卡驱动的驱动精灵或驱动人生等，安装后一键安装所有必须的驱动，同时安装必要的软件，安装补丁等。</p>
+<p>需要注意的是下载软件尽可能都在官网下载，安装时候注意选择自定安装，留心去掉需要没用的默认勾选，否则可能会被附带安装太多不要的东西。安装软件建议安装到D盘下自建一个公用目录，最好英文无空格，以免极个别奇葩软件无法运行。</p>
+<p>任何软件的安装后，都需要进行设置，更改其设置中暗含的默认选项，免除流氓广告和其他无关行为。</p>
+<p>系统装好驱动和补丁后，及时清理系统垃圾，优化设置，具体优化无法一篇概论，提供一些个人用的优化工具，请自行使用，优化工具需要善用，错误操作责任自负。</p>
+<p>另：建议系统设置优化完成后，安装一个Ghost备份工具，备份系统，或者是本地PE系统，以备不时之需。</p>
+<p> <img src="/2015/12/06/windows系统安装/onekey.png" alt="img"><img src="/2015/12/06/windows系统安装/pe.png" alt="img"></p>
+<p>附件：本文所需工具均可自行在网上下载官方版本。—UltralISO：OneKey：微PE：魔方优化：— </p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2015/12/06/windowsPE系统制作/" data-toggle="tooltip" data-placement="top" title="windowsPE系统制作">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Windows" title="Windows">Windows</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

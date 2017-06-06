@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>冰路梦Github空间</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">用纯洁的心灵、感悟人生...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2017/06/06/Android 《第一行代码》简要知识点笔记/">
+        <h2 class="post-title">
+            Android 《第一行代码》简要笔记（一）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android 《第一行代码》简要笔记（一）第一章，开始启程Android系统，2003年10月，Andy Rubin创办Android公司。2005年8月，Google收购Android。
+
+系统架构
+Android系统基于Linux内核，分为：Linux内核层、系统运行库层、应用框架层、应用层。
+
+版本信息
+2008年9月，Android 1.0版本发布。之后2.1、2.2、2.3。
+2......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-06-06
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/06/04/Failed-to-open-zip-file-1/">
+        <h2 class="post-title">
+            Failed to open zip file
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Failed to open zip file2017年Google I/O大会，发布了Android O以及AndroidStuido 3.0版本的预览版。本技术小白，就尝试了一下新版的Android  Studio,系统是LinuxMint18,在创建项目时候，总会一直运行Gradle联网下载依赖，好不容易gradle运行好，偏偏出现了这么个错误：
+Failed  to open zip......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-06-04
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/18/经典欧美动画电影/">
+        <h2 class="post-title">
+            经典欧美动画电影
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            经典欧美动画电影
+个人比较喜欢的欧美动画电影，部分列表。:smile:
+
+
+机器人总动员，番外篇：电焊工波力
+冰雪奇缘，番外篇：雪宝的鼻子，生日惊喜
+爱宠大机密
+精灵旅社1，2
+里约大冒险1，2
+小叮当1，2，3，4，5，番外篇：精灵杯大赛
+疯狂动物城
+机械心
+魔发奇缘
+森林战士
+疯狂原始人
+守卫者联盟
+猫头鹰王国
+僵尸新娘
+功夫熊猫1，2，3，番外篇：师父的秘密，圣诞，卷轴的秘密
+海洋奇缘......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-18
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/11/Android 通用流行框架简介/">
+        <h2 class="post-title">
+            Android 通用流行框架简介
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android 通用流行框架简介
+缓存
+
+
+名称
+描述
+
+
+
+
+DiskLruCache
+Java实现基于LRU的磁盘缓存
+
+
+
+图片加载
+
+
+名称
+描述
+
+
+
+
+Android Universal Image Loader
+一个强大的加载，缓存，展示图片的库
+
+
+Picasso
+一个强大的图片下载与缓存的库
+
+
+Fresco
+一个用于管理图像和他们使用的内存的库
+
+
+Glide
+一个图片加......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-11
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/11/GitHub-IOS-Libraries-Top-100-简介/">
+        <h2 class="post-title">
+            GitHub IOS Libraries Top 100 简介
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            GitHub IOS 框架Top 100 简介本文原文链接https://github.com/Aufree/trip-to-iOS/blob/master/Top-100.md
+
+
+
+主要对当前 GitHub 排名前 100 的项目做一个简单的简介, 方便初学者快速了解到当前 Objective-C 在 GitHub 的情况.
+
+
+Android 版本。
+本人著作的书籍《Laravel 入......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-11
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/11/GitHub-Android-Libraries-Top-100-简介 - 副本/">
+        <h2 class="post-title">
+            GitHub Android Libraries Top 100 简介
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            GitHub Android Libraries Top 100 简介本文原文链接地址https://github.com/Freelander/Android_Data/blob/master/Android-Librarys-Top-100.md
+
+
+
+
+本项目主要对目前 GitHub 上排名前 100 的 Android 开源库进行简单的介绍, 至于排名完全是根据 GitHub 搜索 ......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-11
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/11/Android动态服务SPI的实现/">
+        <h2 class="post-title">
+            Android动态服务SPI的实现
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android 动态服务SPI的实现
+声明：此处所谓的SPI是指Service Provider Interfaces，属于Java中动态加载Service的一项技术。
+而非硬件编程中的SPI，那是Serial Peripheral Interface。
+
+本文参照了元亨利贞o这位博主的博客，表示感谢。
+一、概念SPI即Service Provider Interfaces。Java的接口可......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-11
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/10/Android系统源码编译-unsupported-reloc-43-和-make-update-api问题/">
+        <h2 class="post-title">
+            Android系统源码编译 unsupported reloc 43 和 make update-api问题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android系统源码编译 unsupported reloc 43 和 make update-api最近初次接触到Android系统源码的编译工作，公司内使用的开发板是RK3288平台的。众所周知，Android是一个开源、开放的系统平台，国内的众多所谓的智能系统好多都是基于Android平台裁剪定制而来的。
+无可厚非，Android的开放性却也带来的一些副作用，各类修改版的Androi......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-10
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/04/07/Linux下adb的使用及adb devices no permissions问题的解决/">
+        <h2 class="post-title">
+            Linux adb使用及adb devices no permissions问题解决
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Linux下adb的使用及adb devices ： no permissions问题的解决最近在Android开发过程中，需要用到linux下的开发环境，而使用adb时候遇到点小问题，特此笔记记录一下，方便自已，亦希望有助于他人。
+1、adb的安装本人的Linux开发环境为Ubuntu Server 16.04，有使用其他平台，如CentOS等，可灵活变通。
+123# 安装adbsudo ......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-07
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/27/第三篇、Android多媒体/">
+        <h2 class="post-title">
+            Android多媒体
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            第三章、Android多媒体1. 管理音频播放
+控制音量与音频播放应用若使用音频功能，应保证App获取音频焦点，不造成多个应用声音混杂，且可响应音频按钮事件。
+
+
+Android有播放音乐、闹铃、通知、来电等等不同的音频流，需要独立鉴别。
+音量按钮会调节当前音频流，若无，则调节响铃。Android 中setVolumeControlStream()方法控制音频流。一般在Activity或Fr......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-03-27
+    </p>
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+        <li class="next">
+            <a href="/page/2/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+
+            </div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                            
+                            <a href="/tags/#Android" title="Android" rel="18">Android</a>
+                            
+                        
+                            
+                            <a href="/tags/#框架" title="框架" rel="3">框架</a>
+                            
+                        
+                            
+                            <a href="/tags/#Android Studio" title="Android Studio" rel="2">Android Studio</a>
+                            
+                        
+                            
+                            <a href="/tags/#C++" title="C++" rel="2">C++</a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <a href="/tags/#Linux" title="Linux" rel="10">Linux</a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <a href="/tags/#C" title="C" rel="4">C</a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <a href="/tags/#Markdown" title="Markdown" rel="2">Markdown</a>
+                            
+                        
+                            
+                            <a href="/tags/#xUtils" title="xUtils" rel="2">xUtils</a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <a href="/tags/#Windows" title="Windows" rel="3">Windows</a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+
+                        
+                            <img src="/./img/avatar.jpg" />
+                        
+
+                        
+                            <p>冰路梦，青春激情的冰与梦...</p>
+                        
+
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                                <li>
+                                    <a target="_blank" href="https://twitter.com/冰路梦">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                            
+                                <li>
+                                    <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+                            
+                                <li>
+                                    <a target="_blank" href="http://weibo.com/冰路梦">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+                            
+                                <li>
+                                    <a target="_blank" href="https://www.facebook.com/冰路梦">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+                            
+                                <li>
+                                    <a target="_blank"  href="https://github.com/binglumeng">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                            
+                            
+                            
+                                <li>
+                                    <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          正则表达式 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2016/11/21/正则表达式学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#正则表达式" title="正则表达式">正则表达式</a>
+                        
+                          <a class="tag" href="/tags/#regular" title="regular">regular</a>
+                        
+                    </div>
+                    <h1>正则表达式</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2016-11-21
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="正则表达式学习笔记"><a href="#正则表达式学习笔记" class="headerlink" title="正则表达式学习笔记"></a>正则表达式学习笔记</h1><!-- TOC -->
+<ul>
+<li><a href="#正则表达式学习笔记">正则表达式学习笔记</a><ul>
+<li><a href="#一简介">一、简介</a><ul>
+<li><a href="#1为什么是用正则表达式">1、为什么是用正则表达式</a></li>
+<li><a href="#2发展历史">2、发展历史</a></li>
+<li><a href="#3应用领域">3、应用领域</a></li>
+</ul>
+</li>
+<li><a href="#二语法">二、语法</a><ul>
+<li><a href="#1普通字符">1、普通字符</a></li>
+<li><a href="#2非打印字符">2、非打印字符</a></li>
+<li><a href="#3特殊字符">3、特殊字符</a></li>
+<li><a href="#4限定符">4、限定符</a></li>
+<li><a href="#5定位符">5、定位符</a></li>
+<li><a href="#6选择和反向引用">6、选择和反向引用</a></li>
+</ul>
+</li>
+<li><a href="#三元字符">三、元字符</a></li>
+<li><a href="#四运算符优先级">四、运算符优先级</a></li>
+<li><a href="#五匹配规则">五、匹配规则</a><ul>
+<li><a href="#1基本模式匹配">1、基本模式匹配</a></li>
+<li><a href="#2字符簇">2、字符簇</a></li>
+<li><a href="#3确定重复出现">3、确定重复出现</a></li>
+</ul>
+</li>
+<li><a href="#六示例">六、示例</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<p>Regular Expression正则表达式，是一种文本模式，包括普通字符（a-z，A-Z）和特殊字符（元字符）。</p>
+<p>正则表达式使用打个字符来描述、匹配一系列匹配某个句法规则的字符串。</p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>初学者一般都不太熟悉正则表达式的专业术语，但一般程序员都会用过<code>*</code>和<code>?</code>两个符号，作为通配符，分别是配多个和单个字符。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data1.dat</div><div class="line">data2.dat</div><div class="line"><span class="comment">#可以用data?.dat同时匹配如上两个</span></div><div class="line">data3.dat</div><div class="line">data4.dat</div><div class="line">data123.dat</div><div class="line"><span class="comment">#如上，则需要data*.dat才能匹配到data123.dat这个。</span></div></pre></td></tr></table></figure>
+<h3 id="1、为什么是用正则表达式"><a href="#1、为什么是用正则表达式" class="headerlink" title="1、为什么是用正则表达式"></a>1、为什么是用正则表达式</h3><p>典型的搜索和替换操作，需要提供确切的匹配文本。正则表达式相比具有更高的灵活性：</p>
+<ul>
+<li><p>测试字符串内的模式</p>
+<p>例如可以测试输入的字符串，是否包含特定格式，此种称为数据验证。</p>
+</li>
+<li><p>替换文本</p>
+<p>正则表达式来识别特定文本、删除和替换。</p>
+</li>
+<li><p>基于模式匹配从字符串中提取子字符串。</p>
+<p>可以查找文档内或者输入域内的特定字符。</p>
+</li>
+</ul>
+<h3 id="2、发展历史"><a href="#2、发展历史" class="headerlink" title="2、发展历史"></a>2、发展历史</h3><p>正则表达式雏形出现于生理学神经系统的研究中。后来被数学家<code>Stephen Kleene</code>用于描述<code>正则集的代数</code>表示，而形成<code>正则表达式</code>这个术语，虽有有应用于Unix系统的搜索算法，于是开始了计算机领域内的正则表达式的使用。</p>
+<h3 id="3、应用领域"><a href="#3、应用领域" class="headerlink" title="3、应用领域"></a>3、应用领域</h3><p>正则表达式在许多软件中得到广泛应用，类Unix系统、HP系统，php、c#、java等。</p>
+<h2 id="二、语法"><a href="#二、语法" class="headerlink" title="二、语法"></a>二、语法</h2><p>正则表达式(regular expression)描述的是一种字符串匹配模式，可用于检查是否包含、替换或取出符合条件的字符串。</p>
+<ul>
+<li>列表目录时，使用<code>*</code>通配符的做法不属于正则表达式的范畴，因为在RegExp中<code>*</code>的含义不同</li>
+<li>构造正则表达式的方式类似数学表达式。</li>
+</ul>
+<h3 id="1、普通字符"><a href="#1、普通字符" class="headerlink" title="1、普通字符"></a>1、普通字符</h3><p>普通字符是指没有显式指定为元字符的所有可打印和不可打印字符，大小写字母、数字、表达符号和一些其他符号。</p>
+<h3 id="2、非打印字符"><a href="#2、非打印字符" class="headerlink" title="2、非打印字符"></a>2、非打印字符</h3><p>非打印字符也可以是正则表达式的组成部分，如下列转义序列的非打印字符：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\cx</td>
+<td>匹配由x指明的控制字符。例如，\cM匹配一个<code>Control-M</code>或<code>回车符</code>。x必须为A-Z(a-z)。否则c将是为原意的`c`字符。</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>匹配换页符。等价于<code>\x0c</code>和<code>\cL</code>。</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>匹配换行符。等价于<code>\x0a</code>和<code>\cJ</code>。</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>匹配回车符。等价于<code>\x0d</code>和<code>\cM</code>。</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任何空白字符，包括空格，制表符、换页符等等。等价于[\f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>撇陪任何非空白字符。等价于[^ \f\n\t\v]。</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>匹配一个制表符。等价于<code>\x09</code>和<code>\cl</code>。</td>
+</tr>
+<tr>
+<td>\v</td>
+<td>匹配一个垂直制表符。等价于<code>\x0b</code>和<code>\cK</code>。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3、特殊字符"><a href="#3、特殊字符" class="headerlink" title="3、特殊字符"></a>3、特殊字符</h3><p>包含特殊含义的字符，如<code>*</code>符号，通配符，若搜索本身的<code>*</code>符号，就需要转义匹配<code>\*</code>。特殊字符可以理解为正则表达式的关键字，若要匹配它们自己本身，就要用转义符<code>\</code>。</p>
+<table>
+<thead>
+<tr>
+<th>特殊字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\$</td>
+<td>匹配输入字符的结尾位置。如果设置了RegExp对象的Multiline属性，则\$也匹配<code>\n</code>或<code>\r</code>。若要匹配<code>$</code>本身，就要用<code>\$</code>转义。</td>
+</tr>
+<tr>
+<td>()</td>
+<td>标识一个子表达式的首末位置。子表达式可以获取供以后使用。匹配符号本身用<code>\(</code>和<code>\)</code>。</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配前面的子表达式零次或多次。匹配自身用<code>\*</code>。</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配前面的子表达式一次或多次。匹配自身用<code>\+</code>。</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配除换行符<code>\n</code>之外的任何单字符。匹配自身用<code>\.</code>。</td>
+</tr>
+<tr>
+<td>[</td>
+<td>标记中括号表达式的开始。匹配自身用<code>\[</code>。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。匹配自身用<code>\?</code>。</td>
+</tr>
+<tr>
+<td>\</td>
+<td>将下一个字符标记为特殊字符、原义字符、向后引用、八进制转义等等。如<code>n</code>匹配<code>n</code>，<code>\n</code>匹配换行符。<code>\\</code>匹配<code>\</code>。</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配输入字符串的开始位置，除非在方括号表达式中使用，此时他表示不接受该字符集合。匹配自身用<code>\^</code>。</td>
+</tr>
+<tr>
+<td>{</td>
+<td>标记限定符表达式的开始。匹配自身用<code>{</code>。</td>
+</tr>
+<tr>
+<td>\</td>
+<td></td>
+<td>之名亮相之间的一个选择。匹配自身用`\</td>
+<td>`。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4、限定符"><a href="#4、限定符" class="headerlink" title="4、限定符"></a>4、限定符</h3><p>限定符用来指定正则表达式的一个给顶组件，必须要出现多少次才能满足匹配。有一下六种</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>匹配前面的子表达式零次或多次。例如，<code>zo*</code>能匹配”z”以及”zoo”，*等价于{0,}。</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配前面的子表达式一次或多次。例如，<code>zo+</code>能匹配”zo”以及”zoo”，不能匹配”z”。+等价于{1,}。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配前面的子表达式零次或一次。例如，<code>do(es)?</code>可匹配”do”或”does”中的”do”。?等价于{0,1}。</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>n是一个非负整数。匹配确定的n次。例如，<code>o{2}</code>不能匹配”Bob”中的o，能匹配”food”中的两个o。</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>你是一个非负整数。至少匹配n次。例如，<code>o{2,}</code>不能匹配”Bob”中的o,能匹配”foooood”中所有的o。<code>o{1,}</code>等价于<code>o+</code>。<code>o{0,}</code>等价于<code>o*</code>。</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>m、n均为非负整数。n&lt;=m。最少匹配n次切最多匹配m次。例如，<code>o{1,3}</code>将匹配”foooood”中的前三个o。<code>o{0,1}</code>等价于<code>o?</code>。==注意逗号与数字间不能有空格==</td>
+</tr>
+</tbody>
+</table>
+<p>章节编号亦可能大于9，正则表达式匹配正解标题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Chapter [1-9](0-9)*/</div></pre></td></tr></table></figure>
+<p><strong>*、+和?限定符都是贪婪的，尽可能多的匹配文字，在其后加上一个?则可实现非贪婪或最小匹配</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配&lt;开始到&gt;结束之间的所有内容。</span></div><div class="line">/&lt;.*&gt;/</div></pre></td></tr></table></figure>
+<h3 id="5、定位符"><a href="#5、定位符" class="headerlink" title="5、定位符"></a>5、定位符</h3><p>定位符可以是正则表达式固定到行首或行尾。用于描述字符串或单词的边界，<code>^</code>和<code>$</code>分别表示字符串的开始和结束。<code>\b</code>表示单词的前或后边界，<code>\B</code>表示非单词的边界。</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^</td>
+<td>匹配输入字符的开始位置。如果RegExp设置了Multiple属性，^还会与\n或\r之后的位置匹配。</td>
+</tr>
+<tr>
+<td>\$</td>
+<td>匹配输入字符串的结尾位置。若RegExp设置了Multiple属性，$还会匹配\n或\r之前的位置。</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配一个字边界，即字与空格之间的位置。</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>非字边界匹配。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：不能将限定符与定位点一起使用。由于在紧靠换行或者字边界的前面或后面不能有==<strong>一个以上</strong>==位置，因此不允许诸如<code>^*</code>之类的表达式。</p>
+<ul>
+<li>匹配一行文本开始处的文本，在RegExp开始使用<code>^</code>字符。这与<code>()</code>内的<code>^</code>意思不同。</li>
+<li>匹配一行文本结束处的文本，在RegExp结尾使用<code>$</code>字符。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配章节标题，其只含两个尾随数字</span></div><div class="line">/^Chapter [1-9][0-9]&#123;0,1&#125;/</div><div class="line"><span class="comment">#匹配真正标题，而非包含交叉引用，则标题独占一行。</span></div><div class="line">/^Chapter [1-9][0-9]&#123;0,1&#125;$/</div><div class="line"><span class="comment">#字符边界匹配，以下两个分别匹配Chapter的前三和后三个字符。</span></div><div class="line">/\bCha/</div><div class="line">/ter\b/</div><div class="line"><span class="comment">#非字符边界，匹配Chapter中的apt，而不匹配边界的aptitude中的apt</span></div><div class="line">/\Bapt/</div></pre></td></tr></table></figure>
+<h3 id="6、选择和反向引用"><a href="#6、选择和反向引用" class="headerlink" title="6、选择和反向引用"></a>6、选择和反向引用</h3><p>用圆括号<code>()</code>括起来所有选择项，相邻选择项用<code>|</code>分隔。如此有副作用，相关的匹配会被缓存，则用<code>?:</code>放在第一选项前来消除副作用。</p>
+<p><strong><code>?:</code>、<code>?=</code>、<code>?!</code>属于非捕获元，而<code>?=</code>还表示正向预查，在任何开始匹配圆括号内正则表达式模式的位置来匹配搜索字符串。<code>?!</code>反向预查，在任何开始不匹配该正则表达式模式的位置来匹配搜索字符串。</strong></p>
+<p>正则表达式模式添加<code>()</code>会导致相关匹配存储到一个临时缓冲区，所有匹配子项都按照正则模式从左到右存储。1开始到99个子表达式缓存。缓冲区都可以用<code>\n</code>访问，其中<code>n</code>表示特定缓冲区的一位或两位十进制数。</p>
+<p>反向引用，常用相邻单词的匹配，</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Is is the cost of of gasoline going up up?</div><div class="line"><span class="comment">#如上句子包含重复单词，若不需要重复单词而定位到该句子</span></div><div class="line">/\b([a-z]+) \1\b/gi</div><div class="line"><span class="comment">#如上捕获表达式，[a-z]+指定一个或多个字母。单词的第二个匹配项正好由括号表达式匹配。\1指定第一个字匹配项。\b保证了只检测整个单词。全局标记g和忽略大小写标记i</span></div></pre></td></tr></table></figure>
+<p>如上示例中使用到全局标记<code>g</code>和大小写忽略标记<code>i</code></p>
+<p>反向引用还可以分解资源指示符<code>URI</code>组件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://www.google.com:80/android/index.html</div><div class="line"><span class="comment">#使用正则表达式</span></div><div class="line">/(\w+):\/\/([^/:]+)(:\d*)?([^<span class="comment"># ])/</span></div></pre></td></tr></table></figure>
+<p>说明：第一个括号用于获取http协议部分，在://之前。第二个表达式，捕获域名地址，匹配/和:之外的一个或多个字符。第三个捕获端口号，:后面的0个或多个只能重复一次该表达式，最后的括号补货地址路径/符号的页面信息。</p>
+<h2 id="三、元字符"><a href="#三、元字符" class="headerlink" title="三、元字符"></a>三、元字符</h2><p>下表包含元字符的完整列表以及他们在正则表达式上下文中的行为：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\</td>
+<td>将下一个字符标记为一个特殊字符、或一个原义字符、或一个 向后引用、或一个八进制转义符。例如，’n’ 匹配字符 “n”。’\n’ 匹配一个换行符。序列 ‘\‘ 匹配 “\” 而 “(“ 则匹配 “(“。</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 ‘\n’ 或 ‘\r’ 之后的位置。</td>
+</tr>
+<tr>
+<td>\$</td>
+<td>匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 ‘\n’ 或 ‘\r’ 之前的位置。</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配前面的子表达式零次或多次。例如，zo<em> 能匹配 “z” 以及 “zoo”。</em> 等价于{0,}。</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配前面的子表达式零次或一次。例如，”do(es)?” 可以匹配 “do” 或 “does” 中的”do” 。? 等价于 {0,1}。</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>n 是一个非负整数。匹配确定的 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>n 是一个非负整数。至少匹配n 次。例如，’o{2,}’ 不能匹配 “Bob” 中的 ‘o’，但能匹配 “foooood” 中的所有 o。’o{1,}’ 等价于 ‘o+’。’o{0,}’ 则等价于 ‘o*’。</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。例如，”o{1,3}” 将匹配 “fooooood” 中的前三个 o。’o{0,1}’ 等价于 ‘o?’。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>当该字符紧跟在任何一个其他限制符 (*, +, ?, {n}, {n,}, {n,m}) 后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串 “oooo”，’o+?’ 将匹配单个 “o”，而 ‘o+’ 将匹配所有 ‘o’。</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用像”**(.</td>
+</tr>
+<tr>
+<td>(pattern)</td>
+<td>匹配 pattern 并获取这一匹配。所获取的匹配可以从产生的 Matches 集合得到，在VBScript 中使用 SubMatches 集合，在JScript 中则使用 $0…$9 属性。要匹配圆括号字符，请使用 ‘(‘ 或 ‘)‘。</td>
+</tr>
+<tr>
+<td>(?:pattern)</td>
+<td>匹配 pattern 但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用 “或” 字符 (</td>
+</tr>
+<tr>
+<td>(?=pattern)</td>
+<td>正向预查，在任何匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，’Windows (?=95</td>
+</tr>
+<tr>
+<td>(?!pattern)</td>
+<td>负向预查，在任何不匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如’Windows (?!95</td>
+</tr>
+<tr>
+<td>x</td>
+<td>y</td>
+</tr>
+<tr>
+<td>[xyz]</td>
+<td>字符集合。匹配所包含的任意一个字符。例如， ‘[abc]’ 可以匹配 “plain” 中的 ‘a’。</td>
+</tr>
+<tr>
+<td>[^xyz]</td>
+<td>负值字符集合。匹配未包含的任意字符。例如， ‘[^abc]’ 可以匹配 “plain” 中的’p’、’l’、’i’、’n’。</td>
+</tr>
+<tr>
+<td>[a-z]</td>
+<td>字符范围。匹配指定范围内的任意字符。例如，’[a-z]’ 可以匹配 ‘a’ 到 ‘z’ 范围内的任意小写字母字符。</td>
+</tr>
+<tr>
+<td>[^a-z]</td>
+<td>负值字符范围。匹配任何不在指定范围内的任意字符。例如，’[^a-z]’ 可以匹配任何不在 ‘a’ 到 ‘z’ 范围内的任意字符。</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配一个单词边界，也就是指单词和空格间的位置。例如， ‘er\b’ 可以匹配”never” 中的 ‘er’，但不能匹配 “verb” 中的 ‘er’。</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>匹配非单词边界。’er\B’ 能匹配 “verb” 中的 ‘er’，但不能匹配 “never” 中的 ‘er’。</td>
+</tr>
+<tr>
+<td>\cx</td>
+<td>匹配由 x 指明的控制字符。例如， \cM 匹配一个 Control-M 或回车符。x 的值必须为 A-Z 或 a-z 之一。否则，将 c 视为一个原义的 ‘c’ 字符。</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配一个数字字符。等价于 [0-9]。</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配一个非数字字符。等价于 [^0-9]。</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>匹配一个换页符。等价于 \x0c 和 \cL。</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>匹配一个换行符。等价于 \x0a 和 \cJ。</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>匹配一个回车符。等价于 \x0d 和 \cM。</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配任何非空白字符。等价于 [^ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>匹配一个制表符。等价于 \x09 和 \cI。</td>
+</tr>
+<tr>
+<td>\v</td>
+<td>匹配一个垂直制表符。等价于 \x0b 和 \cK。</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配包括下划线的任何单词字符。等价于’[A-Za-z0-9_]’。</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配任何非单词字符。等价于 ‘[^A-Za-z0-9_]’。</td>
+</tr>
+<tr>
+<td>\xn</td>
+<td>匹配 n，其中 n 为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，’\x41’ 匹配 “A”。’\x041’ 则等价于 ‘\x04’ &amp; “1”。正则表达式中可以使用 ASCII 编码。</td>
+</tr>
+<tr>
+<td>\num</td>
+<td>匹配 num，其中 num 是一个正整数。对所获取的匹配的引用。例如，’(.)\1’ 匹配两个连续的相同字符。</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>标识一个八进制转义值或一个向后引用。如果 \n 之前至少 n 个获取的子表达式，则 n 为向后引用。否则，如果 n 为八进制数字 (0-7)，则 n 为一个八进制转义值。</td>
+</tr>
+<tr>
+<td>\nm</td>
+<td>标识一个八进制转义值或一个向后引用。如果 \nm 之前至少有 nm 个获得子表达式，则 nm 为向后引用。如果 \nm 之前至少有 n 个获取，则 n 为一个后跟文字 m 的向后引用。如果前面的条件都不满足，若 n 和 m 均为八进制数字 (0-7)，则 \nm 将匹配八进制转义值 nm。</td>
+</tr>
+<tr>
+<td>\nml</td>
+<td>如果 n 为八进制数字 (0-3)，且 m 和 l 均为八进制数字 (0-7)，则匹配八进制转义值 nml。</td>
+</tr>
+<tr>
+<td>\un</td>
+<td>匹配 n，其中 n 是一个用四个十六进制数字表示的 Unicode 字符。例如， \u00A9 匹配版权符号 (?)。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="四、运算符优先级"><a href="#四、运算符优先级" class="headerlink" title="四、运算符优先级"></a>四、运算符优先级</h2><p>正则表达式从左到右进行计算，类似算术运算，遵循优先级：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\</td>
+<td>转义符</td>
+</tr>
+<tr>
+<td>(),(?:),(?=),[]</td>
+<td>圆括号和方括号</td>
+</tr>
+<tr>
+<td>*,+,?,{n},{n,},{n,m}</td>
+<td>限定符</td>
+</tr>
+<tr>
+<td>^,$,\任何元字符、任何字符</td>
+<td>定位点和序列(即：位置和顺序)</td>
+</tr>
+<tr>
+<td>\</td>
+<td></td>
+<td>替换，”或”操作，字符具有高于替换运算符的优先级，使得”m\</td>
+<td>food”匹配”m”或”food”。若要匹配”mood”或”food”，请使用括号创建子表达式，从而产生”(m\</td>
+<td>f)ood”。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="五、匹配规则"><a href="#五、匹配规则" class="headerlink" title="五、匹配规则"></a>五、匹配规则</h2><h3 id="1、基本模式匹配"><a href="#1、基本模式匹配" class="headerlink" title="1、基本模式匹配"></a>1、基本模式匹配</h3><p>模式是正则表达式最基本的元素，它们是一组描述字符串特征的字符。可以很简单，有普通字符组成，也可以很复杂由特殊字符构成。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">^once</div></pre></td></tr></table></figure>
+<p>如上模式，包含特殊字符<code>^</code>表示该模式只匹配以<code>once</code>开头的字符串。”once upon a time”匹配，”There once was a man from NewYork”则不匹配。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bucket$</div></pre></td></tr></table></figure>
+<p><code>$</code>符号表示结尾，如上匹配”Who kept all of this cash in a bucket”，则不匹配”buckets”。如果<code>^</code>和<code>$</code>同时使用，则精准匹配。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">^bucket$</div></pre></td></tr></table></figure>
+<p>如上只能匹配<code>bucket</code>这个单词，如果不适用特殊字符，仅用普通字符，如once，则匹配所有包含once的字符串。这里的字符是普通字符，有的特殊字符，如空格、制表符、标点等，可能就需要用转义符配合来匹配。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配制表符，则不是匹配\t这两个字符的字面意思，若匹配\t本义，则用\\t转义后的表示法。</span></div><div class="line">^\t</div></pre></td></tr></table></figure>
+<h3 id="2、字符簇"><a href="#2、字符簇" class="headerlink" title="2、字符簇"></a>2、字符簇</h3><p>用方括号构建字符簇，用于更为自由的使用正则表达式来实现我们需要的搜索与验证功能。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#元音字符簇</span></div><div class="line">[AaEeIiOoUu]</div><div class="line"><span class="comment">#如上则匹配所有元音字符，但只能匹配一个。</span></div><div class="line">[a-z]<span class="comment">#匹配所有小写字母</span></div><div class="line">[A-Z]<span class="comment">#匹配所有大写字母</span></div><div class="line">[a-zA-Z]<span class="comment">#匹配所有字母</span></div><div class="line">[0-9]<span class="comment">#匹配所有数字</span></div><div class="line">[0-9\.\-]<span class="comment">#匹配所有数字，句号和减号</span></div><div class="line">[ \f\r\t\n]<span class="comment">#匹配所有空白字符</span></div><div class="line"><span class="comment">#字符簇可以结合^和$符号使用，做精准匹配。</span></div></pre></td></tr></table></figure>
+<p><code>^</code>在方括号内，表示<code>非</code>的意思，用于排除，剔除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//如下，则表示第一个字符不能是数字</div><div class="line">^[^0-9][0-9]$</div><div class="line">[^a-z] //除了小写字母以外的所有字符 </div><div class="line">[^\\\/\^] //除了(\)(/)(^)之外的所有字符 </div><div class="line">[^\"\'] //除了双引号(")和单引号(')之外的所有字符</div></pre></td></tr></table></figure>
+<p>特殊字符<code>.</code>表示除了<code>新行</code>之外的所有字符。”.”模式，则可以匹配除了空串和仅有”新行“的之外字符串。</p>
+<p>PHP正则表达式有一些内置的字符簇。</p>
+<table>
+<thead>
+<tr>
+<th>字符簇</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[[:alpha:]]</td>
+<td>所有字母</td>
+</tr>
+<tr>
+<td>[[:digit:]]</td>
+<td>所有数字</td>
+</tr>
+<tr>
+<td>[[:alnum:]]</td>
+<td>所有字母和数字</td>
+</tr>
+<tr>
+<td>[[:space:]]</td>
+<td>所有空白符</td>
+</tr>
+<tr>
+<td>[[:upper:]]</td>
+<td>所有大写字母</td>
+</tr>
+<tr>
+<td>[[:lower:]]</td>
+<td>所有小写字母</td>
+</tr>
+<tr>
+<td>[[:punct:]]</td>
+<td>所有标点</td>
+</tr>
+<tr>
+<td>[[:xdigit:]]</td>
+<td>所有十六进制数字，相当于[0-9a-fA-F]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3、确定重复出现"><a href="#3、确定重复出现" class="headerlink" title="3、确定重复出现"></a>3、确定重复出现</h3><p>匹配一个单词或一组数字就需要使用可重复的匹配方式，在字符或字符簇后用<code>{}</code>来确定重复出现的次数。</p>
+<table>
+<thead>
+<tr>
+<th>字符簇</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^[a-zA-Z_]$</td>
+<td>所有字母和下划线</td>
+</tr>
+<tr>
+<td>^[[:alpha:]]{3}$</td>
+<td>所有的3个字母的单词</td>
+</tr>
+<tr>
+<td>^a$</td>
+<td>字母a</td>
+</tr>
+<tr>
+<td>^a{4}$</td>
+<td>aaaa</td>
+</tr>
+<tr>
+<td>^a{2,4}$</td>
+<td>aa,aaa或aaaa</td>
+</tr>
+<tr>
+<td>^a{1,3}$</td>
+<td>a,aa或aaa</td>
+</tr>
+<tr>
+<td>^a{2,}$</td>
+<td>包含多于两个a的字符串，都是a</td>
+</tr>
+<tr>
+<td>^a{2,}</td>
+<td>包含多于两个a的字符串，不要求都是a，但在开头是。</td>
+</tr>
+<tr>
+<td>a{2,}</td>
+<td>含有两个以上的a的字符串</td>
+</tr>
+<tr>
+<td>\t{2}</td>
+<td>两个制表符</td>
+</tr>
+<tr>
+<td>.{2}</td>
+<td>所有两个字符，不含新行</td>
+</tr>
+</tbody>
+</table>
+<p><code>{}</code>表示集合，内部的数字结构，确定结合的范围或者元素次数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">^[a-zA-Z0<span class="number">-9</span>_]&#123;<span class="number">1</span>,&#125;$ <span class="comment">//所有包含一个以上的字母、数字或下划线的字符串 </span></div><div class="line">^[<span class="number">1</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>]*$ <span class="comment">//所有的正整数 </span></div><div class="line">^\-&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">1</span>,&#125;$ <span class="comment">//所有的整数 </span></div><div class="line">^[-]?[<span class="number">0</span><span class="number">-9</span>]+\.?[<span class="number">0</span><span class="number">-9</span>]+$ <span class="comment">//所有的浮点数</span></div></pre></td></tr></table></figure>
+<p>如上最后一个较为复杂，<code>-</code>表示负号，可选。<code>.</code>表示小数点，通过<code>^</code>与<code>$</code>符号配合，限定数字的结构，浮点数。其实<code>?</code>代表的是<code>{0,1}</code>表示一个或者没有，所以用<code>?</code>代替了<code>{}</code>来限定范围个数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//一样的</span></div><div class="line">^\-?[<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">1</span>,&#125;\.?[<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">1</span>,&#125;$</div></pre></td></tr></table></figure>
+<p>而<code>*</code>与<code>{0,}</code>相等，表示0个或多个前面的元素。<code>+</code>与<code>{1,}</code>相等，表示一个或多个前面的内容，如此上面简化为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">^[a-zA-Z0<span class="number">-9</span>_]+$ <span class="comment">//所有包含一个以上的字母、数字或下划线的字符串 </span></div><div class="line">^[<span class="number">0</span><span class="number">-9</span>]+$ <span class="comment">//所有的正整数 </span></div><div class="line">^\-?[<span class="number">0</span><span class="number">-9</span>]+$ <span class="comment">//所有的整数 </span></div><div class="line">^\-?[<span class="number">0</span><span class="number">-9</span>]+\.?[<span class="number">0</span><span class="number">-9</span>]*$ <span class="comment">//所有的浮点数</span></div></pre></td></tr></table></figure>
+<h2 id="六、示例"><a href="#六、示例" class="headerlink" title="六、示例"></a>六、示例</h2><ul>
+<li><p>简单表达式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">单字匹配</span></div><div class="line">/a/</div><div class="line">/7/</div><div class="line">/M/</div><div class="line"><span class="meta">#</span><span class="bash">多匹配的单字符</span></div><div class="line">/a7M/</div></pre></td></tr></table></figure>
+<p>注意没有字符串联符号，只须在字符后直接写字符就可以。</p>
+</li>
+<li><p>字符匹配</p>
+<p><code>.</code>匹配除<code>\n</code>之外的所有字符。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配a开头c结尾的三个字符</span></div><div class="line">/a.c/</div><div class="line"><span class="comment">#要匹配文件名，带后缀的，那么.需要转义</span></div><div class="line">/filename\.txt/</div></pre></td></tr></table></figure>
+</li>
+<li><p>中括号表达式</p>
+<p>方括号<code>[]</code>构建字符簇，但是注意两个特殊字符：</p>
+<ul>
+<li><code>]</code>由于右方括号也是表达式的一个符号，若要匹配原本它自身，则放在字符簇的第一位。</li>
+<li><code>\</code>斜杠符号，要匹配自身，需要转义<code>\\</code>。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#这两种写法等效。格式中空格是不可缺少的。但是指定范围的方式，需要字符的Unicode码大小顺序来写范围。</span></div><div class="line">/Chapter [12345]/</div><div class="line">/Chapter [1-5]/</div><div class="line"></div><div class="line"><span class="comment">#连接符</span></div><div class="line">[\-]</div><div class="line">[-a-z]</div><div class="line">[a-z-]</div><div class="line"><span class="comment">#开始值小于连字符，结束字符大于或等于连字符，</span></div><div class="line">[!--]</div><div class="line">[!-~]</div></pre></td></tr></table></figure>
+<ul>
+<li><code>^</code>在中括号内表示<code>非</code>，用于排除</li>
+</ul>
+</li>
+<li><p>替换和分组</p>
+<p><code>|</code>符号用于替换。如下表示出现在行首或行尾，后面跟一个或两个数字的Chapter或Section：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#需要用()来限定需要替换的范围，如果不加()，那么会将Chapter与|后面所有的等价位置，而不是和Section等价。</span></div><div class="line">/^(Chapter|Section) [1-9][0-9]&#123;0,1&#125;$/</div><div class="line"><span class="comment">#如上搜索结果会被捕获并存储，有时候多个子表达式，会引起误会。需要清除缓存。</span></div><div class="line">/^(?:Chapter|Section) [1-9][0-9]&#123;0,1&#125;$/</div></pre></td></tr></table></figure>
+</li>
+<li><p>其他示例</p>
+<p>| 正则表达式                                    | 描述                                       |<br>| —————————————- | —————————————- |<br>| /\b([a-z]+)\1\b/gi                       | 一个单词连续出现的位置                              |<br>| /(\w+):\/\/([^/:]+)(:\d*)?([^#*])/   | 将一个URL解析为协议、域、端口、相对路径                    |<br>| /^(?:Chapter|Section)[1-9][0-9]{0,1}$/ | 定位章节位置                                   |<br>| /[-a-z]/                                 | a-z和-                                    |<br>| /ter\b/                                  | 末尾边界符                                    |<br>| /\Bapt/                                  | 非边界符                                     |<br>| /Windows(?=95|98|NT)/                  | 可匹配Windows95或Windows98或WindowsNT，当找到一个匹配后，从Windows后面开始进行下一次的检索匹配。 |<br>| /^\s<em>$/                                  | 匹配空行                                     |<br>| /\d{2}-\d{5}/                            | 验证由两位数、一个连字符、5位数组成的ID号。                  |<br>| /&lt;\s\</em>(\S+)(\s[^&gt;]*)?&gt;[\s\S]*&lt;\s*\/\1\s*&gt;/ | 匹配HTML标记。                                |</p>
+</li>
+</ul>
+<p><strong>Note:</strong>各个编程语言中的正则表达式可能略微还有差异，如java中特殊元字符可能就需要<code>\\b</code>来代替<code>\b</code>符号，用双斜杠代替原有的单斜杠。使用中稍加注意。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/15/C语言学习笔记--基础语法一/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法一">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/11/18/Git学习笔记/" data-toggle="tooltip" data-placement="top" title="Git学习笔记">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#正则表达式" title="正则表达式">正则表达式</a>
+                        
+                          <a class="tag" href="/tags/#regular" title="regular">regular</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

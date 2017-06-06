@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Markdown基本语法 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2016/09/26/Markdown基本语法/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Markdown" title="Markdown">Markdown</a>
+                        
+                    </div>
+                    <h1>Markdown基本语法</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2016-09-26
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Markdown-基本语法"><a href="#Markdown-基本语法" class="headerlink" title="Markdown 基本语法"></a>Markdown 基本语法</h1><p><strong>本文没有使用csdn的markdown书写，而是原语法格式显示，便于更好的理解markdown语法。</strong><br>目前本人发现的比较不错的markdown编辑器：tepora、atom、Haroopad、以及在线版的cmdMarkdown、马克飞象、Stack Edit等。<br>文章结尾附上本文的markdown形式。</p>
+<image url="/path/to/image">
+
+
+<h2 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h2><p><code>1. 类似Setext形式，利用 = 或 - 符号，写在标题文字下一行，分别表示一级、二级 标题</code></p>
+<p>注 : =或-至少也只需要两个就好。</p>
+<p><code>2.类似Atx形式，使用 # 符号，加与标题文字前，且至少一个空格才行使用个数1～6,分别表示六级标题</code></p>
+<p>注 : 标签语言讲究对称性，标题Atx模式可以在标题后加上不定个数的#，仅为美观而已。</p>
+<p>markdown编辑文字需要有空行，才能显示为空行，而换行需要编辑时有一个空行</p>
+<p>显示才会换行。编程通则，符号输入法英文半角。</p>
+<h2 id="二、区块引用"><a href="#二、区块引用" class="headerlink" title="二、区块引用"></a>二、区块引用</h2><blockquote>
+<p>markdown使用类似email中的 &gt; 引用符号，标记区块<br>区块内的每一行都会自动添加 &gt; 符号<br>其实也可以仅在第一行使用了 &gt; 符号即可，不过有些编辑器会自动补上。</p>
+</blockquote>
+<p>但是这样的话就需要有一个空行，才能表示区块结束。若是最后一行有 &gt; 符号，<br>想要结束区块就要回车后，空一行，再回来哦，表示中断和区块编辑的联系。</p>
+<blockquote>
+<p>区块内也可以使用嵌套</p>
+<blockquote>
+<p>嵌套层级应该是没有限制的</p>
+<blockquote>
+<p>多级嵌套<br>也是挺好看的</p>
+</blockquote>
+<p>但是想要结束一个小区块，就得借助空行了。<br>不然还真的不好结束呢。外层区块与其他区块之间，<br>看来需要有非区块语法隔离才行。</p>
+</blockquote>
+</blockquote>
+<hr>
+<blockquote>
+<p>使用了一个分割线才和上面的区块分开来，空格，空行，回车都没用的哦。<br>区块内可以使用其他markdown的语法。</p>
+<h6 id="来个标题"><a href="#来个标题" class="headerlink" title="来个标题"></a>来个标题</h6><p><code>背景条幅</code></p>
+</blockquote>
+<hr>
+<p>三个—即可形成一个分割线，注意和上面文字空一行，否则就成标题了哦</p>
+<h2 id="三、列表"><a href="#三、列表" class="headerlink" title="三、列表"></a>三、列表</h2><ul>
+<li>列表分为无序列表和有序列表，可以多级列表。</li>
+</ul>
+<pre><code>- 无序列表中使用 加、减、星号
+   * 来作为开启列表的标识,均需要有一个空格才生效。或者tab也行
+</code></pre><ol>
+<li>有序列表使用数字<ol>
+<li>和英文的句号，数字不一定就要一二三的很有序。</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li>显示时候都是123的。</li>
+<li>多个段落的隔开，需要每个段前tab或4空格？有点乱，感觉首列后空一行<pre><code>则每列都会空，非首列则空其后。
+</code></pre></li>
+<li>列表内使用引用符号&gt;，需要缩进<ol>
+<li>还是列表内容<blockquote>
+<p>引用，我似乎没感觉到？</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li>如果列表放入代码，该区快就要缩进两tab或8空格<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line"> System.out.pringtln(<span class="string">"代码高亮"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>1.可能无意间会写出列表形式，比如首行“2016. 09. 25”出现了数字，句点和空格<br>就会形成列表，如此可以加个\来避免，或者其他符号。<br>注意和普通文本的编辑不同，列表的缩进，需要在列表标识符号前加空格，最多三个。<br>其后面需至少一个空格或tab</p>
+<p>2.文字段落前一个tab或4个空格，就会生成背景框。<br><code>和用``符号似乎不太一样，这个有点加黑得样子？</code></p>
+<h2 id="四、代码区块"><a href="#四、代码区块" class="headerlink" title="四、代码区块"></a>四、代码区块</h2><p>1,代码区块得建立就是面所说，一个tab或者4个空格。<br>而在带码区块中，markdown的一般语法符号，将只是普通文本。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    System.out.pringtln(<span class="string">"代码高亮"</span>);</div><div class="line">&#125;<span class="comment">//哎呦，后面的```引号，还不到能直接放在这一行呢，否则就不算结束代码块了。</span></div></pre></td></tr></table></figure></p>
+<h2 id="五、分割线"><a href="#五、分割线" class="headerlink" title="五、分割线"></a>五、分割线</h2><p>在一行中使用三个或以上的星号、减号、下划线，就可以显示一个分割线<br>但是需要从行首就开始,可以混用,(不同的md编辑器，也许细节不同)且不必连续，但不能掺杂文字</p>
+<hr>
+<hr>
+<hr>
+<p>而且要注意避免形成标题哦，</p>
+<hr>
+<h2 id="六、区段元素"><a href="#六、区段元素" class="headerlink" title="六、区段元素"></a>六、区段元素</h2><h4 id="1、链接"><a href="#1、链接" class="headerlink" title="1、链接"></a>1、链接</h4><p>Markdown 支持两种链接：行内式和参考式。链接文字都用[方括号]标记。</p>
+<ul>
+<li>行内式，[]后跟(url “网址标题”)即可。<br><a href="www.baidu.com" title="百度">baidu</a>，前面式显示网址，””内部式网址标题<ul>
+<li>似乎也可以使用路径形式,<a href="/server/file/" title="FTP服务器">file</a>。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>参考式，两个[name][id]，前面为显示名称，id为标记变量名，在文章内任意文本首行位置<br>声明 [id]:www.baidu.com,即可。<br>*例如，<a href="www.baidu.com&quot;baidu&quot;">百度</a>,网址在此显示，地址声明如下，<br>注意缩进什么的不要与其他语法冲突而失效。</li>
+</ul>
+<p>  此种链接内容的格式，选择性的3个空格，一个冒号，一个tab或空格，然后是网址，<br>  后面的标题title，可以用单引号，双引号，或者括号都行。<br>  注，网址可以用&lt;&gt;包括，标题可以另起一行。链接不区分大小写，字母数字，空白和标点。<br>  隐式链接标记功能，可以省略指定连接。此时视为文字为网址，[id]就空这，name等于id了。</p>
+<ul>
+<li>如<a href="www.google.com">Google</a></li>
+</ul>
+<p>如此形式，name可以多单词，加空格。<br><a href="www.lenovo.com">thinkpad lenovo</a>,</p>
+<p>参考式链接可以像文献引用一样，放于文后，便于整洁。</p>
+<h2 id="七、强调"><a href="#七、强调" class="headerlink" title="七、强调"></a>七、强调</h2><p>Markdown用*或_来标识强调，位于其包围内的文本，被强调显示，两个**或__,会更强吗？<br>此处为了显示单个的*而不是和后面的一起作用，用了\做转义。</p>
+<ul>
+<li>如下<ul>
+<li><em>单个强调</em>,和<em>强调单个</em>，是加黑斜体</li>
+<li><strong>双星强调</strong>，<strong>更厉害</strong></li>
+</ul>
+<ul>
+<li><strong><strong>那么三星更厉害吗</strong></strong>,最多可用四个，但是没啥区别了。<br><strong><strong>你</strong></strong>混合失效，且符号两边不能有空格。前边的不能空？</li>
+</ul>
+</li>
+<li><em>强调单个</em></li>
+</ul>
+<ul>
+<li>删除线，<del>nihao</del></li>
+</ul>
+<h2 id="八、代码及符号"><a href="#八、代码及符号" class="headerlink" title="八、代码及符号"></a>八、代码及符号</h2><p>原来背景<code>是用来标记小行段代码的</code>，用反单引号``标记，代码写在其中。<br>要是代码内也有``符号，那么外围可以多用几个``符号<br>例如<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">___</div><div class="line">使用反引号时候，紧跟代码语言，即可实现代码高亮</div><div class="line">最外围的\```  内部各加一个空格，里面的引用就可以直接一开始添加更多的\```了</div><div class="line">```  ``使用反引号</div></pre></td></tr></table></figure></p>
+<p>$$注意使用标签标识符的时候，前后的位置个数要一致，尤其小心缩进与空格的影响$$<br>$d$</p>
+<p>#d</p>
+<p>$$你好#$$</p>
+<p>$$nihao_$$</p>
+<p>$$nihao^$$</p>
+<p>$$nihao$$<br>$$nihao%$$<br>$$nihao@$$<br>$$nihao~$$<br>$$nihao{$$<br>1、markdown语法会自动规避一盒html的标签，比如&amp;，[]之类的</p>
+<h2 id="九、图片"><a href="#九、图片" class="headerlink" title="九、图片"></a>九、图片</h2><p>1、Markdown 使用和链接类似得方式处理图片，行内式和参考式，用！作为标记，加[name]和(path)</p>
+<ul>
+<li>行内式，<img src="/path/to/img1.jpg,&quot;title&quot;" alt="img1">,小心写成链接哦<img src="/path/to/img2.jpg" alt="img2"></li>
+<li>参考式，<img src="/path/to/image2.jpg" alt="img2"></li>
+</ul>
+<p>  暂时没法指定宽高，可以用html的&lt; image &gt; 标签,此处加空格，否则就不显示了。颜色字体什么的<br>  就看html的形式了。</p>
+<h2 id="十、其他"><a href="#十、其他" class="headerlink" title="十、其他"></a>十、其他</h2><p>1、自动链接，Markdown  转译简短得自动链接或邮箱<br><a href="http://www.baidu.com/" target="_blank" rel="external">http://www.baidu.com/</a>,<a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#109;&#97;&#x72;&#x6b;&#x64;&#111;&#x77;&#110;&#x40;&#109;&#107;&#46;&#99;&#x6e;">&#109;&#97;&#x72;&#x6b;&#x64;&#111;&#x77;&#110;&#x40;&#109;&#107;&#46;&#99;&#x6e;</a><br>2、反斜杠，转义符号，可用于一下符号转义为普通</p>
+<blockquote>
+<p>\<br>`<br>*<br>_<br>{}<br>[]<br>#<br>+<br>-<br>.<br>!<br>这几种符号得转义。</p>
+</blockquote>
+<p>&lt;! html 的标签，似乎会被隐藏,不同编辑器略有不同哦，&lt;&gt; &gt;<br>空格空格加回车，才是换行符。</p>
+<text 这个标签就被隐藏了哦="">
+
+
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p><strong>Markdown　Extra</strong>　表格语法：独立行开始，写title，用|分割，然后次行用－符号，并配合|，如此构成表格。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Computer</td>
+<td>$1600</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td>$12</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td>$1</td>
+</tr>
+</tbody>
+</table>
+<p>可以使用冒号来定义对齐方式：<br>：—表示左对齐，—：表示右对齐，：—：表示居中对齐。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">项目</th>
+<th style="text-align:right">价格</th>
+<th style="text-align:center">数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Computer</td>
+<td style="text-align:right">1600 元</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:left">Phone</td>
+<td style="text-align:right">12 元</td>
+<td style="text-align:center">12</td>
+</tr>
+<tr>
+<td style="text-align:left">Pipe</td>
+<td style="text-align:right">1 元</td>
+<td style="text-align:center">234</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>试试表格，至少要有表头和一个－标识列才行哦。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>表头</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>复选框，使用空格-/*/+空格[x]空格 项目，表示选中,类似列表选项。<ul>
+<li>[x] 第一条</li>
+<li>[ ] 第二条</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>表情，使用冒号包围表情的英文代号<ul>
+<li>猴子:monkey:,星星:stars:,:v:</li>
+<li>表情支持，见<a href="http://emoji.codes/" target="_blank" rel="external">http://emoji.codes/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="其他拓展"><a href="#其他拓展" class="headerlink" title="其他拓展"></a>其他拓展</h2><ul>
+<li><p>CSDN</p>
+<ol>
+<li>脚注，类似链接，使用[^id]声明，其他地方[^id]:解释。</li>
+<li>目录，[toc]标签</li>
+<li><p>UML图，类似代码块，不过反单引号后面申明的不是编程语言，而是图的类型</p>
+<ol>
+<li><p>如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">张三-&gt;李四: 嘿，小四儿, 写博客了没?</div><div class="line">Note right of 李四: 李四愣了一下，说：</div><div class="line">李四--&gt;张三: 忙得吐血，哪有时间写。</div></pre></td></tr></table></figure>
+<ol>
+<li>流程图<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">st=&gt;start: 开始</div><div class="line">e=&gt;end: 结束</div><div class="line">op=&gt;operation: 我的操作</div><div class="line">cond=&gt;condition: 确认？</div><div class="line">st-&gt;op-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;op</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>列表的定义与基本语法不同，使用:  项目来缩进列表项。</p>
+</li>
+<li>数学公式，如下<br>使用MathJax渲染<em>LaTex</em> 数学公式，详见[math.stackexchange.com].</li>
+</ol>
+<ul>
+<li>行内公式，数学公式为：$\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$。</li>
+<li>块级公式：<br>  $$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Gitlab</p>
+<pre><code>1、网址直译，www.baidu.com
+
+2、文件对比，不同,使用花括号和中括号的配合
+，不能同时使用同一个哦。{+ ADD +] and [-delete-}
+3、gitlab引用，@user_name,#123,等等。
+</code></pre></li>
+</ul>
+<hr>
+<p>####CmdMarkdown <a href="jiaozhu">^cmd</a></p>
+<ul>
+<li><p>高效绘制 <a href="https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#7-流程图" target="_blank" rel="external">流程图</a>，标识为flow</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">st=&gt;start: Start</div><div class="line">op=&gt;operation: Your Operation</div><div class="line">cond=&gt;condition: Yes or No?</div><div class="line">e=&gt;end</div><div class="line"></div><div class="line">st-&gt;op-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;op</div></pre></td></tr></table></figure>
+</li>
+<li><p>高效绘制 <a href="https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#8-序列图" target="_blank" rel="external">序列图</a>，其标识为sequence</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Alice-&gt;Bob: Hello Bob, how are you?</div><div class="line">Note right of Bob: Bob thinks</div><div class="line">Bob--&gt;Alice: I am good thanks!</div></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>高效绘制 <a href="https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#9-甘特图" target="_blank" rel="external">甘特图</a>标识为gantt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">title 项目开发流程</div><div class="line">section 项目确定</div><div class="line">    需求分析       :a1, 2016-06-22, 3d</div><div class="line">    可行性报告     :after a1, 5d</div><div class="line">    概念验证       : 5d</div><div class="line">section 项目实施</div><div class="line">    概要设计      :2016-07-05  , 5d</div><div class="line">    详细设计      :2016-07-08, 10d</div><div class="line">    编码          :2016-07-15, 10d</div><div class="line">    测试          :2016-07-22, 5d</div><div class="line">section 发布验收</div><div class="line">    发布: 2d</div><div class="line">    验收: 3d</div></pre></td></tr></table></figure>
+<p>注：markdown可以直接使用许多html的标签，用于更为丰富的界面显示哦。<br>本人记录Markdown 语法用于个人学习，难免有疏漏，请读者见谅指点<br>本文参考<a href="http://www.appinn.com/markdown/" target="_blank" rel="external"><em>Markdown</em>语法</a>,在此感谢。</p>
+</text></image>
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/10/24/Linux桌面版安装及开发环境配置/" data-toggle="tooltip" data-placement="top" title="Linux桌面版安装及开发环境配置">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/08/22/Linux中文相关设置/" data-toggle="tooltip" data-placement="top" title="Linux中文相关设置">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Markdown" title="Markdown">Markdown</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

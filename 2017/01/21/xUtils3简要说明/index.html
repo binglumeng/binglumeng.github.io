@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          xUtils3开源框架简要使用说明 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/01/21/xUtils3简要说明/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#xUtils" title="xUtils">xUtils</a>
+                        
+                    </div>
+                    <h1>xUtils3开源框架简要使用说明</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-01-21
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p>前言：开源技术对于当前便捷开发的重要性，自不必言明。不重复造轮子，去学习和使用已有的开源框架和类库，有利于我们的产品快速开发与迭代实现。</p>
+</blockquote>
+<p>xUtils3是基于xUtils的一个开源框架升级版，不再兼容Android4.0以下版本，虽然不如2016年的RxJava、retrofit等框架那么热门，但是也算是一个小而综合的开源框架，适合初学者学习使用。</p>
+<h2 id="1、xUtils3简介"><a href="#1、xUtils3简介" class="headerlink" title="1、xUtils3简介"></a>1、xUtils3简介</h2><p>xUtils是github上<code>wyouflf</code>作者的一个开源项目，继承了很多Android app开发常用的功能模块框架，主要有四大模块：DbUtils、ViewUtils、HttpUtils、BitmapUtils模块。包含了ORM框架、IOC框架，是的开发更为快捷。更为详细的介绍请异步github上的项目主页。<a href="https://github.com/wyouflf/xUtils" target="_blank" rel="external">xUtils</a>,<a href="https://github.com/wyouflf/xUtils3" target="_blank" rel="external">xUtils3</a>以及在开源中国上发现的有简要的注释代码的<a href="http://git.oschina.net/guozhiwei/xUtils3/tree/master" target="_blank" rel="external">xUtils3</a>和<a href="http://xutilsapi.oschina.mopaas.com/" target="_blank" rel="external">api文档</a>.感谢这些热心同学，感谢伟大的开源共享精神！</p>
+<h2 id="2、xUtils3使用"><a href="#2、xUtils3使用" class="headerlink" title="2、xUtils3使用"></a>2、xUtils3使用</h2><p>目前Android项目开发主流都在使用AndroidStudio为开发工具了，还在使用eclipse的同学，真心需要改变了，优势太多，无法一一赘述，简言之就是便捷、高效。Gralde中配置依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'org.xutils:xutils:3.3.40'</span></div></pre></td></tr></table></figure>
+<p>建议使用最新版本的依赖库。详情请看xUtils的github地址<a href="https://github.com/wyouflf/xUtils3" target="_blank" rel="external">xUtils3</a>，Eclipse的使用，可以下载对应提供的aar文件，去除jar包和so文件到<code>lib</code>文件中使用。</p>
+<h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><ul>
+<li>权限，xUtils3中使用数据库存储和网络请求，所以需要以下权限</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>初始化，在Application的onCreate中初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//自定义MyApplication 继承 Application</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">super</span>.onCreate();</div><div class="line">  x.Ext.init(<span class="keyword">this</span>);</div><div class="line">  x.Ext.setDebug(BuildConfig.DEBUG);<span class="comment">//是否输出debug日志，开启日志输出，会影响一部分性能</span></div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ViewUtils注解使用"><a href="#ViewUtils注解使用" class="headerlink" title="ViewUtils注解使用"></a>ViewUtils注解使用</h3><ul>
+<li>注解来绑定UI和事件</li>
+<li>免除<code>findViewById</code>和<code>setOnClickListener</code>等</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ContentView</span>(R.layout.activit_main)</div><div class="line"><span class="keyword">public</span> MainActivity extends Activity &#123;</div><div class="line">  <span class="meta">@ViewInject</span>(R.id.text)</div><div class="line">  <span class="keyword">private</span> TextView tvTest;</div><div class="line">  ...</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">      <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">      x.view().inject(<span class="keyword">this</span>);<span class="comment">//注入View的初始化，如此，方能在Activity的java文件中使用@ContentView、@ViewInject等注解</span></div><div class="line">      <span class="comment">//需要说明的是，x.view().inject()有几个方法重载呢，可以注入fragment，也可在adapter中注入，或者其他自定义类中，需要使用x.view().inject(this,view);或者x.view().inject(holder,view);</span></div><div class="line">    ...</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//此处需要说明的是，@Event默认的即使View的onClick事件，所以其最简实现形式如下，省略了许多参数</span></div><div class="line">  <span class="meta">@Event</span>(R.id.btnTest)</div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">toClick</span><span class="params">(View view)</span></span>&#123;</div><div class="line">    <span class="comment">//点击事件响应处理</span></div><div class="line">    ...</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//而下面为完整实现形式，value可以是多个控件的数组，type表示该组控件的事件响应方式，以及设置注册这类事件的setter方式，事件响应的函数的方法名，对应的自定义的这个方法，名称无所谓，但是需要private以及方法签名中的参数，要保持和所使用控件原有的方法参数的一致性。</span></div><div class="line">  </div><div class="line">  <span class="comment">/**</span></div><div class="line"> * 1. 方法必须私有限定,</div><div class="line"> * 2. 方法参数形式必须和type对应的Listener接口一致.</div><div class="line"> * 3. 注解参数value支持数组: value=&#123;id1, id2, id3&#125;</div><div class="line"> * 4. 其它参数说明见&#123;<span class="doctag">@link</span> org.xutils.event.annotation.Event&#125;类的说明.</div><div class="line"> **/</div><div class="line">  <span class="meta">@Event</span>(value = &#123;R.id.btnSend、R.id.btnReceive&#125;,type = View.OnClickListener.class,setter=<span class="string">"setOnClickListener"</span>,method=<span class="string">"onClickListener"</span>)</div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doClick</span><span class="params">(View view)</span></span>&#123;<span class="comment">//此处方法参数，(View view)是因为onClickListerner的方法参数就是（View view），若是其他方法，则换成对应的参数列表。</span></div><div class="line">    ...</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="HttpUtils访问网络"><a href="#HttpUtils访问网络" class="headerlink" title="HttpUtils访问网络"></a>HttpUtils访问网络</h3><ul>
+<li>便捷的下载、上传文件或提交数据，如下简单的使用方式，更多的可以参照项目<code>sample</code>和githbu上的说明。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Event</span>(value = R.id.btn_test_baidu2)</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onTestBaidu2Click</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">    RequestParams params = <span class="keyword">new</span> RequestParams(<span class="string">"https://www.baidu.com/s"</span>);</div><div class="line">    params.setSslSocketFactory(...); <span class="comment">// 设置ssl</span></div><div class="line">    params.addQueryStringParameter(<span class="string">"wd"</span>, <span class="string">"xUtils"</span>);</div><div class="line">    <span class="comment">//或者其他参数设置，比如超时，读取时长，请记住这里需要网络权限，若是忘了添加，可能就报错，但是提示不明显，会让你蒙头。返回的result结果，需要在这里面处理，尽量不要拿出外面线程处理，因为是网络异步，可能会出现到外面数据一时间为空。</span></div><div class="line">    x.http().get(params, <span class="keyword">new</span> Callback.CommonCallback&lt;String&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String result)</span> </span>&#123;</div><div class="line">            Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable ex, <span class="keyword">boolean</span> isOnCallback)</span> </span>&#123;</div><div class="line">            Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCancelled</span><span class="params">(CancelledException cex)</span> </span>&#123;</div><div class="line">            Toast.makeText(x.app(), <span class="string">"cancelled"</span>, Toast.LENGTH_LONG).show();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinished</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="DbUtils数据库的使用"><a href="#DbUtils数据库的使用" class="headerlink" title="DbUtils数据库的使用"></a>DbUtils数据库的使用</h3><ul>
+<li>使用了orm框架更为简便的代码实现数据CURD</li>
+<li>各种检索方式，支持事务等</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> String dbPath = Environment.getExternalStorageDirectory() + <span class="string">"/database"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String DB_NAME = <span class="string">"test.db"</span>;</div><div class="line">    <span class="comment">//数据库业务层配置信息的初始化</span></div><div class="line">    <span class="keyword">private</span> DbManager.DaoConfig daoConfig = <span class="keyword">new</span> DbManager.DaoConfig()</div><div class="line">            .setDbName(DB_NAME)<span class="comment">//数据库名称</span></div><div class="line">            <span class="comment">// 不设置dbDir时, 默认存储在app的私有目录.</span></div><div class="line">            .setDbDir(<span class="keyword">new</span> File(dbPath)) <span class="comment">// "sdcard"的写法并非最佳实践, 这里为了简单, 先这样写了.</span></div><div class="line">            .setDbVersion(<span class="number">1</span>)<span class="comment">//版本</span></div><div class="line">            .setDbOpenListener(<span class="keyword">new</span> DbManager.DbOpenListener() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDbOpened</span><span class="params">(DbManager db)</span> </span>&#123;</div><div class="line">                    <span class="comment">// 开启WAL, 对写入加速提升巨大</span></div><div class="line">                    db.getDatabase().enableWriteAheadLogging();</div><div class="line">                &#125;</div><div class="line">            &#125;)</div><div class="line">            .setDbUpgradeListener(<span class="keyword">new</span> DbManager.DbUpgradeListener() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(DbManager db, <span class="keyword">int</span> oldVersion, <span class="keyword">int</span> newVersion)</span> </span>&#123;</div><div class="line">                    <span class="comment">// db.addColumn(...);</span></div><div class="line">                    <span class="comment">// db.dropTable(...);</span></div><div class="line">                    <span class="comment">// ...</span></div><div class="line">                    <span class="comment">// or</span></div><div class="line">                    <span class="comment">// db.dropDb();</span></div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> DbManager db = x.getDb(daoConfig);<span class="comment">//DB manager的对象</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 新增数据对象到数据库</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> object</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(Object object)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            db.saveOrUpdate(object);</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绑定id形式的新增数据</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> object</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">saveBindId</span><span class="params">(Object object)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> db.saveBindingId(object);</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">   <span class="comment">/**</span></div><div class="line">     * 删除学生信息</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> id 学生的学号</div><div class="line">     * <span class="doctag">@return</span> 返回删除结果，true为成功，false为失败</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">deleteChild</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            db.deleteById(Child.class, id);</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 更新</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> object 数据对象</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">update</span><span class="params">(Object object)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            db.saveOrUpdate(object);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 查询所有学生信息</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Child&gt; <span class="title">searchChild</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> db.findAll(Child.class);</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据学号查询学生信息</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> id 学生学号</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> Child <span class="title">searchChildById</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> db.findById(Child.class, id);</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除Child表</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dropChildTable</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            db.dropTable(Child.class);</div><div class="line">        &#125; <span class="keyword">catch</span> (DbException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>Child.java</code>注意，此文件删除了一写get、set方法和属性，只作为说明演示，特别需要注意的就是<strong>构造函数</strong>那块，个人经验总结</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建child表的方式，使用@Table注解，只有一个参数就是name</span></div><div class="line"><span class="meta">@Table</span>(name = <span class="string">"child"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Child</span> </span>&#123;</div><div class="line">  <span class="comment">//创建表格中的列，使用@Column注解，包含name，isId，autoGen，property等属性，也就是sql语句中的属性字段等。</span></div><div class="line">    <span class="meta">@Column</span>(name = <span class="string">"cNum"</span>, isId = <span class="keyword">true</span>, autoGen = <span class="keyword">false</span>)</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> cNum;<span class="comment">//学号</span></div><div class="line">    <span class="meta">@Column</span>(name = <span class="string">"cName"</span>)</div><div class="line">    <span class="keyword">private</span> String cName;<span class="comment">//学生姓名</span></div><div class="line">   </div><div class="line">    <span class="meta">@Column</span>(name = <span class="string">"ic_num"</span>, property = <span class="string">"unique"</span>)</div><div class="line">    <span class="keyword">private</span> String icNum;<span class="comment">//幼儿卡号码,唯一</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 无参数构造法不可私有化，否则数据库表格创建异常</div><div class="line">     * 且不设置自增，若使用无参构造，容易引起数据插入只有一条。</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Child</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 多参数构造函数，创建Child类的对象</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> cNum  学号</div><div class="line">     * <span class="doctag">@param</span> name  姓名</div><div class="line">     * <span class="doctag">@param</span> sex   性别</div><div class="line">     * <span class="doctag">@param</span> grade 班级</div><div class="line">     * <span class="doctag">@param</span> age   年龄</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Child</span><span class="params">(<span class="keyword">int</span> cNum, String name, String sex, String grade, <span class="keyword">int</span> age)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cNum = cNum;</div><div class="line">        <span class="keyword">this</span>.cName = name;</div><div class="line">        <span class="keyword">this</span>.sex = sex;</div><div class="line">        <span class="keyword">this</span>.grade = grade;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取幼儿学号</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCNum</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> cNum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置幼儿学号</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> cNum</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNum</span><span class="params">(<span class="keyword">int</span> cNum)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cNum = cNum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="BitmapUtils图片使用"><a href="#BitmapUtils图片使用" class="headerlink" title="BitmapUtils图片使用"></a>BitmapUtils图片使用</h3><ul>
+<li>使用<code>lru</code>算法，缓存以及多线程等，便于更好的管理图片下载，和加载操作。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">x.image().bind(imageView, url, imageOptions);</div><div class="line"></div><div class="line"><span class="comment">// assets file</span></div><div class="line">x.image().bind(imageView, <span class="string">"assets://test.gif"</span>, imageOptions);</div><div class="line"></div><div class="line"><span class="comment">// local file</span></div><div class="line">x.image().bind(imageView, <span class="keyword">new</span> File(<span class="string">"/sdcard/test.gif"</span>).toURI().toString(), imageOptions);</div><div class="line">x.image().bind(imageView, <span class="string">"/sdcard/test.gif"</span>, imageOptions);</div><div class="line">x.image().bind(imageView, <span class="string">"file:///sdcard/test.gif"</span>, imageOptions);</div><div class="line">x.image().bind(imageView, <span class="string">"file:/sdcard/test.gif"</span>, imageOptions);</div><div class="line"></div><div class="line">x.image().bind(imageView, url, imageOptions, <span class="keyword">new</span> Callback.CommonCallback&lt;Drawable&gt;() &#123;...&#125;);</div><div class="line">x.image().loadDrawable(url, imageOptions, <span class="keyword">new</span> Callback.CommonCallback&lt;Drawable&gt;() &#123;...&#125;);</div><div class="line">x.image().loadFile(url, imageOptions, <span class="keyword">new</span> Callback.CommonCallback&lt;File&gt;() &#123;...&#125;);</div></pre></td></tr></table></figure>
+<h3 id="LogUtils输出日志"><a href="#LogUtils输出日志" class="headerlink" title="LogUtils输出日志"></a>LogUtils输出日志</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 自动添加TAG，格式： className.methodName(L:lineNumber)</span></div><div class="line"><span class="comment">// 可设置全局的LogUtils.allowD = false，LogUtils.allowI = false...，控制是否输出log。</span></div><div class="line"><span class="comment">// 自定义log输出LogUtils.customLogger = new xxxLogger();</span></div><div class="line">LogUtils.d(<span class="string">"wyouflf"</span>);</div></pre></td></tr></table></figure>
+<h3 id="混淆时注意事项："><a href="#混淆时注意事项：" class="headerlink" title="混淆时注意事项："></a>混淆时注意事项：</h3><ul>
+<li>添加Android默认混淆配置${sdk.dir}/tools/proguard/proguard-android.txt</li>
+<li>不要混淆xUtils中的注解类型，添加混淆配置：-keep class <em> extends java.lang.annotation.Annotation { </em>; }</li>
+<li>对使用DbUtils模块持久化的实体类不要混淆，或者注解所有表和列名称@Table(name=”xxx”)，@Id(column=”xxx”)，@Column(column=”xxx”),@Foreign(column=”xxx”,foreign=”xxx”);</li>
+</ul>
+<p>附言：本人算是IT技术小白，使用xUtils尚且不熟悉，且与此做个笔记记录，希望于人于己有所帮助。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/01/22/AndroidStudio使用CMake编译jni的C-C++文件/" data-toggle="tooltip" data-placement="top" title="AndroidStudio使用CMake编译jni的C/C++文件">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/01/11/RK3288爬坑笔记/" data-toggle="tooltip" data-placement="top" title="xUtils开源框架简要使用说明">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#xUtils" title="xUtils">xUtils</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

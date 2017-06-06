@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          图片缓存LruCache和DiskLruCache的使用 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/03/21/图片缓存LruCache和DiskLruCache使用/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#Lrucache" title="Lrucache">Lrucache</a>
+                        
+                    </div>
+                    <h1>图片缓存LruCache和DiskLruCache的使用</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-03-21
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>##前言</p>
+<p>作为一个Android技术小白，感觉自己各方面知识与技能都存在欠缺、不足，知识体系不够系统。是时候整理一下学习知识和技术点，慢慢梳理，架构体系，如此才能有利于自身技术的更好发展。Android属于开源操作系统，若要快速开发App，最好是学会很好的使用各种优秀的开源框架，一方面完成工作项目，同行也是提升自己代码能力。<br>今天就先从内存缓存的优秀框架DiskLruCache和LruCache开始学习，毕竟Android新手开发都会经历一个OOM的处理问题，一个优秀的App开发中必须考虑资源优化的问题。闲言少续，言归正传。<br>这里声明学习了<a href="http://blog.csdn.net/guolin_blog" target="_blank" rel="external">郭霖</a>大神的几篇文章<a href="http://blog.csdn.net/guolin_blog/article/details/9316683" target="_blank" rel="external">LruCache</a>、<a href="http://blog.csdn.net/guolin_blog/article/details/28863651" target="_blank" rel="external">DiskLruCache</a>以及两者结合使用的<a href="http://blog.csdn.net/guolin_blog/article/details/34093441" target="_blank" rel="external">Demo解析</a>。<br>在此膜拜一下~~。</p>
+<p>##LruCache<br>Android开发中我们都知道，大量的加载图片会导致内存泄露，也就是OOM，通常我们都会根据原始图片尺寸、设备屏幕尺寸、分辨率以及显示图片的view控件的大小，来使用图片压缩方式，减少资源占用。<br>然而尽管如此，大量的图片资源消耗的内存也是相当惊人的。不论是listView还是GridView中，我们都会做定期的资源缓存和无用资源清理。<br>若是从网络段加载图片，我们就要考虑到用户流量的问题，流量也是资源！除了使用图片压缩，就需要结合使用图片内存缓存技术了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 解析图片，生成Bitmap对象。</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,  </span></span></div><div class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) &#123;  </div><div class="line">    <span class="comment">// 第一次解析将inJustDecodeBounds设置为true，来获取图片大小  </span></div><div class="line">    <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();  </div><div class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;  </div><div class="line">    BitmapFactory.decodeResource(res, resId, options);  </div><div class="line">    <span class="comment">// 调用下面定义的方法计算inSampleSize值  </span></div><div class="line">    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);  </div><div class="line">    <span class="comment">// 使用获取到的inSampleSize值再次解析图片  </span></div><div class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;  </div><div class="line">    <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);  </div><div class="line">&#125;  </div><div class="line"><span class="comment">/**</span></div><div class="line"> * 计算图片缩放比例</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(BitmapFactory.Options options,  </span></span></div><div class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) &#123;  </div><div class="line">    <span class="comment">// 源图片的高度和宽度  </span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;  </div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;  </div><div class="line">    <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;  </div><div class="line">    <span class="keyword">if</span> (height &gt; reqHeight || width &gt; reqWidth) &#123;  </div><div class="line">        <span class="comment">// 计算出实际宽高和目标宽高的比率  </span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> heightRatio = Math.round((<span class="keyword">float</span>) height / (<span class="keyword">float</span>) reqHeight);  </div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> widthRatio = Math.round((<span class="keyword">float</span>) width / (<span class="keyword">float</span>) reqWidth);  </div><div class="line">        <span class="comment">// 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高  </span></div><div class="line">        <span class="comment">// 一定都会大于等于目标的宽和高。  </span></div><div class="line">        inSampleSize = heightRatio &lt; widthRatio ? heightRatio : widthRatio;  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">return</span> inSampleSize;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>此处找到一个关于图片压缩的比较不错的博客<a href="http://blog.csdn.net/jdsjlzx/article/details/44228935" target="_blank" rel="external">一叶飘舟–Bitmap压缩</a>。<br>LruCache是Google官方提供的内存缓存类，其内部源码详解请移步上面大牛的博客。此处仅作简单的使用说明：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> LruCache&lt;String, Bitmap&gt; mMemoryCache;  <span class="comment">//LruCache对象</span></div><div class="line">  </div><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </div><div class="line">    <span class="comment">// 获取到可用内存的最大值，使用内存超出这个值会引起OutOfMemory异常。  </span></div><div class="line">    <span class="comment">// LruCache通过构造函数传入缓存值，以KB为单位。  </span></div><div class="line">    <span class="keyword">int</span> maxMemory = (<span class="keyword">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);  </div><div class="line">    <span class="comment">// 使用最大可用内存值的1/8作为缓存的大小。  </span></div><div class="line">    <span class="keyword">int</span> cacheSize = maxMemory / <span class="number">8</span>;  </div><div class="line">    mMemoryCache = <span class="keyword">new</span> LruCache&lt;String, Bitmap&gt;(cacheSize) &#123;  </div><div class="line">        <span class="meta">@Override</span>  </div><div class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">sizeOf</span><span class="params">(String key, Bitmap bitmap)</span> </span>&#123;  </div><div class="line">            <span class="comment">// 重写此方法来衡量每张图片的大小，默认返回图片数量。  </span></div><div class="line">            <span class="keyword">return</span> bitmap.getByteCount() / <span class="number">1024</span>;  </div><div class="line">        &#125;  </div><div class="line">    &#125;;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">//首次使用，将图片资源添加到内存中</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBitmapToMemoryCache</span><span class="params">(String key, Bitmap bitmap)</span> </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (getBitmapFromMemCache(key) == <span class="keyword">null</span>) &#123;  </div><div class="line">        mMemoryCache.put(key, bitmap);  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">//从内存缓存获取图片资源</span></div><div class="line"><span class="function"><span class="keyword">public</span> Bitmap <span class="title">getBitmapFromMemCache</span><span class="params">(String key)</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> mMemoryCache.get(key);  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="comment">//加载图片时候，会看看有没有缓存，没有的话，在重新构建，有则使用缓存</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadBitmap</span><span class="params">(<span class="keyword">int</span> resId, ImageView imageView)</span> </span>&#123;  </div><div class="line">    <span class="keyword">final</span> String imageKey = String.valueOf(resId);  </div><div class="line">    <span class="keyword">final</span> Bitmap bitmap = getBitmapFromMemCache(imageKey);  </div><div class="line">    <span class="keyword">if</span> (bitmap != <span class="keyword">null</span>) &#123;  </div><div class="line">        imageView.setImageBitmap(bitmap);  </div><div class="line">    &#125; <span class="keyword">else</span> &#123;  </div><div class="line">        imageView.setImageResource(R.drawable.image_placeholder);  </div><div class="line">        BitmapWorkerTask task = <span class="keyword">new</span> BitmapWorkerTask(imageView);  </div><div class="line">        task.execute(resId);  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="comment">//后台Task加载图片资源</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BitmapWorkerTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span>&lt;<span class="title">Integer</span>, <span class="title">Void</span>, <span class="title">Bitmap</span>&gt; </span>&#123;  </div><div class="line">    <span class="comment">// 在后台加载图片。  </span></div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span><span class="params">(Integer... params)</span> </span>&#123;  </div><div class="line">        <span class="keyword">final</span> Bitmap bitmap = decodeSampledBitmapFromResource(  </div><div class="line">                getResources(), params[<span class="number">0</span>], <span class="number">100</span>, <span class="number">100</span>);  </div><div class="line">        addBitmapToMemoryCache(String.valueOf(params[<span class="number">0</span>]), bitmap);  </div><div class="line">        <span class="keyword">return</span> bitmap;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在此说明一下，以前认为的使用什么软引用、弱引用来保存资源引用的方式，不再提倡，而且也不能保证优化效果了，因为高版本的Android中Java回收机制，会偏向于回收这些引用，从而并不能很好的起到缓存的作用。</p>
+<p>##DiskLruCache<br>DiskLruCache类似于LruCache，其是将资源缓存在外部存储磁盘上，而不是内存，这样就可以有相对更为充足的资源空间，缓存更多的数据。具体的原理介绍，同样烦请移步上面大神的博客。此处仅作简要使用说明：</p>
+<ul>
+<li><p>先贴出DiskLruCache中使用到的工具类文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//DiskLruCache中使用到的工具方法</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Utils</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取缓存文件夹，这里优先选择SD卡下面的android/data/packageName/cache/路径，若没有SD卡，就选择data/data/packageName/cache</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> context    上下文环境</div><div class="line">     * <span class="doctag">@param</span> uniqueName 缓存文件夹名称</div><div class="line">     * <span class="doctag">@return</span> 返回缓存文件</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">getDiskCacheDir</span><span class="params">(Context context, String uniqueName)</span> </span>&#123;</div><div class="line">        String cachePath;</div><div class="line">        <span class="keyword">if</span> (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())</div><div class="line">                || !Environment.isExternalStorageRemovable()) &#123;</div><div class="line">            cachePath = context.getExternalCacheDir().getPath();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            cachePath = context.getCacheDir().getPath();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> File(cachePath + File.separator + uniqueName);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取本App的版本号</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> context context上下文</div><div class="line">     * <span class="doctag">@return</span> 返回版本号</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getAppVersion</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), <span class="number">0</span>);</div><div class="line">            <span class="keyword">return</span> info.versionCode;</div><div class="line">        &#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 给字符串来个md5加密，</div><div class="line">     * <span class="doctag">@param</span> key 需要加密的string</div><div class="line">     * <span class="doctag">@return</span> 返回加密后的string ，或者加密失败，就返回string的哈希值</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">hashKeyForDisk</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        String cacheKey;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//md5加密</span></div><div class="line">            MessageDigest mDigest = MessageDigest.getInstance(<span class="string">"MD5"</span>);</div><div class="line">            mDigest.update(key.getBytes());</div><div class="line">            cacheKey = bytesToHexString(mDigest.digest());</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="comment">//若md5加密失败，就用哈希值</span></div><div class="line">            cacheKey = String.valueOf(key.hashCode());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> cacheKey;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 字节数组转为十六进制字符串</div><div class="line">     * <span class="doctag">@param</span> bytes 字节数组</div><div class="line">     * <span class="doctag">@return</span> 返回十六进制字符串</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">bytesToHexString</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> </span>&#123;</div><div class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">byte</span> b : bytes) &#123;</div><div class="line">            String hex = Integer.toHexString(<span class="number">0xFF</span> &amp; b);</div><div class="line">            <span class="keyword">if</span> (hex.length()==<span class="number">1</span>)&#123;</div><div class="line">                sb.append(<span class="string">'0'</span>);</div><div class="line">            &#125;</div><div class="line">            sb.append(hex);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sb.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>DiskLruCache的使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">    DiskLruCache mDiskLruCache = <span class="keyword">null</span>;<span class="comment">//diskLruCache的对象</span></div><div class="line">    String imgUrl = <span class="string">"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg"</span>;<span class="comment">//图片链接</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        <span class="comment">//初始化缓存配置</span></div><div class="line">        openCache();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化缓存配置</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">openCache</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//缓存图片数据的文件夹</span></div><div class="line">            File cacheDir = Utils.getDiskCacheDir(<span class="keyword">this</span>, <span class="string">"bitmap"</span>);</div><div class="line">            <span class="keyword">if</span> (!cacheDir.exists()) &#123;</div><div class="line">                <span class="comment">//使用mkdirs可以连同上级文件夹一同创建，否则mkdir可能会报错</span></div><div class="line">                cacheDir.mkdirs();</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//参数，1、缓存目录；2、app版本号，因为它认为版本升级，缓存就没必要保存。3、一个key值对应多少个缓存文件，一般1个。4、单个缓存多大，10M就够了。</span></div><div class="line">            <span class="comment">//超过最大缓存限制的，就会被自动清除了，所以一般不用程序中调用removeCache。</span></div><div class="line">            mDiskLruCache = DiskLruCache.open(cacheDir, Utils.getAppVersion(<span class="keyword">this</span>), <span class="number">1</span>, <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 写入缓存</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeCache</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="comment">//将图片的url地址md5 加密后，生成的key来作为缓存的唯一标志key，那么就可以实现图片和缓存对应起来。</span></div><div class="line">                String key = Utils.hashKeyForDisk(imgUrl);</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    DiskLruCache.Editor editor = mDiskLruCache.edit(key);</div><div class="line">                    <span class="keyword">if</span> (editor != <span class="keyword">null</span>) &#123;</div><div class="line">                        <span class="comment">//此处传入0参数的含义是，缓存的编号，因为DiskLruCache.open时候，传入了最大缓存个数为1，所以次数就是0就好。</span></div><div class="line">                        OutputStream outputStream = editor.newOutputStream(<span class="number">0</span>);</div><div class="line">                        <span class="comment">//根据现在成功与否，来决定是否提交缓存</span></div><div class="line">                        <span class="keyword">if</span> (downloadImage(imgUrl, outputStream)) &#123;</div><div class="line">                            editor.commit();</div><div class="line">                        &#125; <span class="keyword">else</span> &#123;</div><div class="line">                            editor.abort();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">//刷新，写入</span></div><div class="line">                    mDiskLruCache.flush();</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 下载图片</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> imgUrl       图片网址链接</div><div class="line">     * <span class="doctag">@param</span> outputStream 输出流对象</div><div class="line">     * <span class="doctag">@return</span> 返回时候完成下载成功</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">downloadImage</span><span class="params">(String imgUrl, OutputStream outputStream)</span> </span>&#123;</div><div class="line">        HttpURLConnection urlConnection = <span class="keyword">null</span>;</div><div class="line">        BufferedOutputStream out = <span class="keyword">null</span>;</div><div class="line">        BufferedInputStream in = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            URL url = <span class="keyword">new</span> URL(imgUrl);</div><div class="line">            urlConnection = (HttpURLConnection) url.openConnection();</div><div class="line">            in = <span class="keyword">new</span> BufferedInputStream(urlConnection.getInputStream(), <span class="number">8</span> * <span class="number">1024</span>);<span class="comment">//Buffer输入流，8M大小的缓存</span></div><div class="line">            out = <span class="keyword">new</span> BufferedOutputStream(outputStream, <span class="number">8</span> * <span class="number">1024</span>);</div><div class="line">            <span class="keyword">int</span> b;<span class="comment">//正在读取的byte</span></div><div class="line">            <span class="keyword">while</span> ((b = in.read()) != -<span class="number">1</span>) &#123;</div><div class="line">                out.write(b);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//关闭资源</span></div><div class="line">        <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (urlConnection != <span class="keyword">null</span>) &#123;</div><div class="line">                urlConnection.disconnect();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (out != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    out.close();</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    in.close();</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 读取缓存</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readCache</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="comment">//使用DiskLruCache获取缓存，需要传入key，而key是imageUrl加密后的字符串，</span></div><div class="line">        String key = Utils.hashKeyForDisk(imgUrl);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//通过key获取的只是一个快照，需要从快照获取输入流，转化为数据对象</span></div><div class="line">            DiskLruCache.Snapshot snapshot = mDiskLruCache.get(key);</div><div class="line">            <span class="keyword">if</span> (snapshot != <span class="keyword">null</span>) &#123;</div><div class="line">                InputStream inputStream = snapshot.getInputStream(<span class="number">0</span>);<span class="comment">//类似写缓存时候，传入的是缓存的编号</span></div><div class="line">                <span class="comment">//可以使用bitmapFactory</span></div><div class="line">                Drawable drawable = Drawable.createFromStream(inputStream, <span class="string">"drawable"</span>);</div><div class="line">                ImageView imageView = (ImageView) findViewById(R.id.iv_cache);</div><div class="line">                imageView.setImageDrawable(drawable);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 清除缓存</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeCache</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        String key = Utils.hashKeyForDisk(imgUrl);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//清除指定key的缓存</span></div><div class="line">            mDiskLruCache.remove(key);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 演示DiskLruCache的其他api</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">otherAPI</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//缓存目录大小</span></div><div class="line">        mDiskLruCache.size();</div><div class="line">        <span class="comment">//将内存中的操作记录，同步到日志文件（journal），一般不要频繁操作，在Activity的onPause中调用于此就好。</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mDiskLruCache.flush();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//关闭缓存,一般在Activity的onDestroy中调用就好</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mDiskLruCache.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//清空缓存，不同于remove，这是清空全部缓存</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mDiskLruCache.delete();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/*</span></div><div class="line">         * journal文件分析</div><div class="line">         * 前五行基本就是open相关的参数的配置信息</div><div class="line">         * 第六行开始，DIRTY开头的，表示脏数据记录，每次调用DiskLruCache.edit都会有一个记录，</div><div class="line">         * 调用commit时候，会写入CLEAN记录，而调用abort，则写入REMOVE记录。</div><div class="line">         * 日志里item还会记录缓存的大小。READ就是调用get时候写入的记录。journal的记录不知无止境的，2000条左右计数，就会重构。</div><div class="line">         */</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>单独的使用内存缓存或者外部缓存，都未必是是最好的，一个优秀的开发者，必然会考虑到两者的结合使用。上面大神也有提供一个演示用的demo，在其博客中也有简介。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/03/21/Hexo学习笔记/" data-toggle="tooltip" data-placement="top" title="Hexo使用说明笔记">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/02/Github上fork同步/" data-toggle="tooltip" data-placement="top" title="Github项目fork同步">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#Lrucache" title="Lrucache">Lrucache</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

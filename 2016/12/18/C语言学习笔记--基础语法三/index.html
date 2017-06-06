@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          C语言学习笔记--基础语法三 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2016/12/18/C语言学习笔记--基础语法三/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#C" title="C">C</a>
+                        
+                    </div>
+                    <h1>C语言学习笔记--基础语法三</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2016-12-18
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="C語言學習筆記–基礎語法三"><a href="#C語言學習筆記–基礎語法三" class="headerlink" title="C語言學習筆記–基礎語法三"></a>C語言學習筆記–基礎語法三</h1><h2 id="1、共用體與位域"><a href="#1、共用體與位域" class="headerlink" title="1、共用體與位域"></a>1、共用體與位域</h2><p>​    <strong>共用體</strong>，是一種特殊的數據類型，允許在相同的內存位置，存儲不同的數據類型。可以定義一個帶有多個成員的共用體，但是使用的時候，只能有一個成員有效的擁有數值。</p>
+<p>​    共用體提供了一種使用相同內存的有效方式。</p>
+<ul>
+<li><p>定義共用體</p>
+<p><code>union</code>關鍵字，類似與結構體的定義。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">union</span> [<span class="keyword">union</span> tag]&#123;</div><div class="line">  member definition;</div><div class="line">  member definition;</div><div class="line">  ...</div><div class="line">  member definition;</div><div class="line">&#125;[one <span class="keyword">or</span> more <span class="keyword">union</span> variables];</div></pre></td></tr></table></figure>
+<p>union tag爲可選項，類似結構體的定義，可以先聲明，也可以聲明並定義。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#inclued <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="comment">//這個共用體，聲明了一個Data共用體，它的變量data，以及包含了三種數據類型，i、f、str[20]，共用一個內存地址，這塊內存大小由共用體內最大成員決定。此處就是char類型的str，有20個字節位置。</span></div><div class="line"><span class="keyword">union</span> Data &#123;</div><div class="line">  <span class="keyword">int</span> i;</div><div class="line">  <span class="keyword">float</span> f;</div><div class="line">  <span class="keyword">char</span> str[<span class="number">20</span>];</div><div class="line">&#125;;</div><div class="line"><span class="comment">//main()函數</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//聲明共用體變量。</span></div><div class="line">  <span class="keyword">union</span> Data data;</div><div class="line">  <span class="comment">//顯示共用體內存佔用大小</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"data的內存佔用：%d \n"</span>,<span class="keyword">sizeof</span>(data));</div><div class="line">&#125;</div><div class="line"><span class="comment">//編譯運行，結果會顯示爲20</span></div></pre></td></tr></table></figure>
+<p>共用體成員的訪問也類似與結構體，使用<code>.</code>符號。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="keyword">union</span> Data &#123;</div><div class="line">  <span class="keyword">int</span> i;</div><div class="line">  <span class="keyword">float</span> f;</div><div class="line">  <span class="keyword">char</span> str[<span class="number">20</span>];</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">union</span> Data data;</div><div class="line">  <span class="comment">//賦值</span></div><div class="line">  data.i = <span class="number">10</span>;</div><div class="line">  data.f = <span class="number">220.5</span>;</div><div class="line">  <span class="built_in">strcpy</span>(data.str,<span class="string">"C Programming"</span>);</div><div class="line">  <span class="comment">//輸出</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"data.i: %d \n"</span>,data.i);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"data.f: %f \n"</span>,data.f);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"data.str: %s \n"</span>,data.str);</div><div class="line">  <span class="comment">//這樣的輸出結果，只有最後一次會輸出正確的結果，上兩次都會數據損壞，因爲共用體只有一個可用內存變量。</span></div><div class="line">  <span class="comment">//如果每次賦值後都輸出一下，是沒問題的，或者同時使用同一個成員變量，可以更改變量值，也是可行的。</span></div><div class="line">  data.i = <span class="number">20</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"data.i: %d \n"</span>,data.i);</div><div class="line">  data.i = <span class="number">99</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"data.i %d \n"</span>,data.i);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>位域</p>
+<p>位域雖然上一節也有講，但是不清楚，這麼理解吧，位域、結構體、共用體三個概念比較理解，結構體和位域用<code>struct</code>,而共用體用<code>union</code>關鍵字</p>
+<p>| 名稱   | 是否共用內存                              | 備注                                       |<br>| —- | ———————————– | —————————————- |<br>| 結構體  | 內部成員各自有自己聲明的內存空間                    | 看作JAVA語言中的一個bean實體類                      |<br>| 共用體  | 內部成員共享內存地址和空間，最大的決定整體空間大小           | 類似與槍支，可能適配多個型號的子彈，但是每一次開槍，槍管裏就只能一個類型的子彈（姑且這麼比喻吧） |<br>| 位域   | 類似共用體，但是算作特殊的結構體，可以單個指定成員佔用的內存二進制位數 | 算是一個只有一種類型成員的共用體，暫且這麼理解。                 |</p>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sring.h&gt;</span></span></div><div class="line"><span class="comment">//定義簡單的結構體</span></div><div class="line"><span class="class"><span class="keyword">struct</span>&#123;</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> widthValidated;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> heightValidated;</div><div class="line">&#125; status1;</div><div class="line"><span class="comment">//定義位域</span></div><div class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> widthValidated : <span class="number">1</span>;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> heightValidated :<span class="number">1</span>;</div><div class="line">&#125; status2;</div><div class="line"><span class="comment">//main()</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"status1佔用內存：%d \n"</span>,<span class="keyword">sizeof</span>(status1));</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"status2佔用內存：%d \n"</span>,<span class="keyword">sizeof</span>(status2));</div><div class="line">&#125;</div><div class="line"><span class="comment">//結果會分別是8位和4位，因爲結構體算是兩個成員獨立佔用，而位域，算是兩個成員共用，而且雖然佔用4個字節，但是數據只用了1位，若是int widthValidated : 5; 那麼就會是8位了吧，位域不恩那個超出的，也不太清楚了，以後再回來看</span></div></pre></td></tr></table></figure>
+<p>位域的聲明</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">  <span class="comment">/*type爲整數類型，決定了如何解釋位域的值,</span></div><div class="line">  member_name爲位域的名稱，</div><div class="line">  width爲位域中位的數量，不能大於制定類型的位寬度，不如int，就不能大於4個字節。</div><div class="line">  */</div><div class="line">  type [member_name] : width;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>位域指定了變量的位數，也就限制了數值的範圍，超出後會無法正確完成</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="comment">//define a bitrange</span></div><div class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">  <span class="comment">//限定範圍了，0--7</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> age:<span class="number">3</span>;</div><div class="line">&#125; Age;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  Age.age = <span class="number">4</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Sizeof(Age):%d \n"</span>,<span class="keyword">sizeof</span>(Age));</div><div class="line">  pringf(<span class="string">"Age.age : %d \n"</span>,Age.age);</div><div class="line">  <span class="comment">//但是不能超過3位二進制數的大小，</span></div><div class="line">  Age.age = <span class="number">8</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Age.age : %d \n"</span>,Age.age);</div><div class="line">  <span class="comment">//這時候編譯會警告，數值就會是默認的0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>typedef</p>
+<p><code>typedef</code>C語言提供的一個用於給類型起新名字的關鍵字。類似與linux系統<code>alias</code>命令，就是用於自定義別名的一個關鍵字指令。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定義unsigned char 爲BYTE</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> BYTE;</div><div class="line"><span class="comment">//那麼就可以用來聲明變量</span></div><div class="line">BYTE b1;<span class="comment">//就相當與unsigned char b1;</span></div></pre></td></tr></table></figure>
+<p>習慣性的將<code>typedef</code>別名化的類型寫作大寫，當然也可以小寫。可以作用與基本數據類型，也可以作用與結構體、共用體、位域之類的自定義類型。</p>
+</li>
+<li><p>typedef 和 #define</p>
+<p><code>#define</code>是C指令，用於定義數據類型的別名，類似<code>typedef</code></p>
+<ul>
+<li>typedef僅用於爲類型定義別名，而#define也可以定義數值的別名，如1可以定義爲ONE</li>
+<li>typedef由編譯器執行解釋，#define由預編譯器處理</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">//定義</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRUE 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TWO 22</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"TURE:%d,TWO:%d \n"</span>,TURE,TWO);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>I/O</p>
+<p>C語言提供了一系列的內置函數用於輸入和輸出操作。</p>
+<blockquote>
+<ul>
+<li><p>標準文件</p>
+<p>C語言把左右設備都當作文件處理，類似與linux下，一切皆文件。</p>
+<p>| 標準文件 | 文件指針   | 設備   |<br>| —- | —— | —- |<br>| 標準輸入 | stdin  | 鍵盤   |<br>| 標準輸出 | stdout | 屏幕   |<br>| 標準錯誤 | stderr | 您的屏幕 |</p>
+<p>文件指針是訪問文件的方式。</p>
+</li>
+<li><p>getchar()和putchar()函數</p>
+<p><code>int getchar(void)</code>函數從屏幕讀取下一個可用字符，一次讀一個，可以房子循環裏面使用。</p>
+<p><code>int putchar(Int c)</code>函數向屏幕輸出字符，一次輸一個，循環使用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stido.h&gt;</span></span></div><div class="line">&gt;   <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">int</span> c;</div><div class="line">&gt;     <span class="built_in">printf</span>(<span class="string">"請輸入字符："</span>);</div><div class="line">&gt;     c = getchar();</div><div class="line">&gt;     <span class="built_in">printf</span>(<span class="string">"\n 您輸入的字符是："</span>);</div><div class="line">&gt;     <span class="built_in">putchar</span>(c);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>gets()和puts()</p>
+<p><strong>char *gets(char *s)</strong>函數從<code>stdin</code>讀取一行到<code>s</code>所指向的緩衝區，一知道遇到終止符或者<code>EOF</code>。</p>
+<p><strong>int puts(const char *s)</strong>函數把字符串s和一個尾隨的換行符寫入到<code>stdout</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">&gt;   <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">char</span> str[<span class="number">100</span>];<span class="comment">//緩存區域</span></div><div class="line">&gt;     <span class="built_in">printf</span>(<span class="string">"Enter a value："</span>);</div><div class="line">&gt;     gets(str);</div><div class="line">&gt;     <span class="built_in">printf</span>(<span class="string">"\n Your value:"</span>);</div><div class="line">&gt;     <span class="built_in">puts</span>(str);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>scanf()和printf()</p>
+<p><code>int scanf(const char \*format,...)</code>函數從標準輸入流<code>stdin</code>讀取輸入，根據<code>fromat</code>來瀏覽輸入。</p>
+<p><code>int printf(const char \*format,...)</code>函數吧輸出以<code>format</code>格式顯示，可以是<code>%s、%d、%c、%f</code>等。</p>
+</li>
+</ul>
+<p><strong>Note:</strong><code>scanf()</code>讀取輸入，需要輸入的數據格式跟<code>format</code>的一樣才行，不然會報錯。遇到空格會停止讀取，便認爲結束了一個字符的讀取。</p>
+</blockquote>
+</li>
+<li><p>文件讀寫</p>
+<ul>
+<li>打開文件，<code>fopen()</code>函數來創建一個新的，或者打開已有的文件。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">FILE *<span class="title">fopen</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> * filename,<span class="keyword">const</span> <span class="keyword">char</span> * mode)</span></span>;</div></pre></td></tr></table></figure>
+<p>其中<code>finename</code>是字符串，命名文件用的。<code>mode</code>是讀寫模式</p>
+<p>| mode | description                          |<br>| —- | ———————————— |<br>| r    | 打開一個已有的文本文件，允許讀取文件                   |<br>| w    | 打開一個文本文件，允許寫入文件。若不存在，會新建文件，從頭開始寫起    |<br>| a    | 打開一個文本文件，追加模式寫入，不存在則新建               |<br>| r+   | 打開一個文本文件，允許讀寫文件                      |<br>| w+   | 打開一個文本文件，允許讀寫。若已存在，文件會被截斷爲另長度，不存在則新建 |<br>| a+   | 打開一個文本文件，允許讀寫。不存在則新建，讀取從頭開始，寫入則是追加模式 |</p>
+<p>若是處理的是二進制文件，寫法有點差異,多個<code>b</code>字符</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"rb"</span>,<span class="string">"wb"</span>,<span class="string">"ab"</span>,<span class="string">"rb+"</span>,<span class="string">"r+b"</span>,<span class="string">"wb+"</span>,<span class="string">"w+b"</span>,<span class="string">"ab+"</span>,<span class="string">"a+b"</span></div></pre></td></tr></table></figure>
+<ul>
+<li>關閉文件，<code>fclose()</code>關閉文件的函數</li>
+</ul>
+<p><code>int fclose(FILE *fp);</code>若關閉成功，返回<code>0</code>，關閉失敗，返回<code>EOF</code>（定義在<code>stdio.h</code>中的常量）</p>
+<ul>
+<li><p>寫入文件</p>
+<p><code>fputc()</code>函數，將c的字符，寫入到fp的輸出流，成功則返回寫入的字符，失敗返回EOF。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span><span class="params">(<span class="keyword">int</span> c,FILE *fp)</span></span>;</div></pre></td></tr></table></figure>
+<p><code>fputc()</code>函數也可以吧字符串s寫入到fp的輸出流中，成功返回非負值，失敗返回EOF。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *s,FILE *fp)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fpuintf</span><span class="params">(FILE *fp,<span class="keyword">const</span> <span class="keyword">char</span> *format,...)</span></span>;</div></pre></td></tr></table></figure>
+<p>示例，會在當前文件夾下，生成text文檔，含有兩句話。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  FILE *fp;</div><div class="line">  fp = fopen(<span class="string">"./text.txt"</span>,<span class="string">"w+"</span>);</div><div class="line">  <span class="built_in">fprintf</span>(fp,<span class="string">"This is testing for fprintf...\n"</span>);</div><div class="line">  <span class="built_in">fputs</span>(<span class="string">"這是測試fputs輸入\n"</span>,fp);</div><div class="line">  fclose(fp);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>讀取文件</p>
+<p><code>fgetc</code>和<code>fgets</code>函數</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//讀取一個字符，正確返回該字符，錯誤返回EOF</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fgetc</span><span class="params">(FILE * fp)</span></span>;</div><div class="line"><span class="comment">//讀取字符串流，直到讀取到null的標識符，所以之前讀取了有效的n-1個,要是遇到\n或者EOF則會返回讀取的字符。</span></div><div class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *buf,<span class="keyword">int</span> n,FILE *fp)</span></span>;</div><div class="line"><span class="comment">//從文件中讀取，遇到空格會停止</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fscanf</span><span class="params">(FILE *fp,<span class="keyword">const</span> <span class="keyword">char</span> *format,...)</span></span>;</div></pre></td></tr></table></figure>
+<p>示例，讀取上面的文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  FILE *fp;</div><div class="line">  <span class="keyword">char</span> buff[<span class="number">255</span>];</div><div class="line">  fp = fopen(<span class="string">"./text.txt"</span>,<span class="string">"r"</span>);</div><div class="line">  <span class="comment">//只會讀取第一個單詞，因爲遇到空格了</span></div><div class="line">  <span class="built_in">fscanf</span>(fp,<span class="string">"%s"</span>,buff);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"1: %s\n"</span>,buff);</div><div class="line">  <span class="comment">//會讀取一句話，遇到\n或者EOF結束</span></div><div class="line">  fgets(buff,<span class="number">255</span>,(FILE*)fp);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"2: %s\n"</span>,buff);</div><div class="line">  </div><div class="line">  fgets(buff,<span class="number">255</span>,(FILE*)fp);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"3: %s\n"</span>,buff);</div><div class="line">  fclose(fp);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先<code>fscanf</code>只讀取了<code>This</code>，因爲它遇到了空格，之後調用<code>fgets</code>讀取剩餘部分，知道遇到<code>\n</code>或者EOF，而第二次調用<code>fgets</code>讀取了一整句。</p>
+</li>
+<li><p>二進制讀寫函數</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">size_t</span> fread(<span class="keyword">void</span> *ptr,<span class="keyword">size_t</span> size_of_elements,<span class="keyword">size_t</span> number_of_elements,FILE *a_file);</div><div class="line"><span class="keyword">size_t</span> fwrite(<span class="keyword">const</span> <span class="keyword">void</span> *ptr,<span class="keyword">size_t</span> size_of_elements,<span class="keyword">size_t</span> size_of_elements,FILE *a_file);</div></pre></td></tr></table></figure>
+<p>常用與存儲塊的讀寫，通常<strong>數組</strong>或<strong>結構體</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、預處理器"><a href="#2、預處理器" class="headerlink" title="2、預處理器"></a>2、預處理器</h2><p>預處理器不是編譯器的組成部分，其會在編譯器實際編譯之前，指示編譯器做一些預處理工作。C與處理器(C Preprocessor)簡稱<code>CPP</code>，以<code>#</code>開頭，位於行首，文件首。</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#define</td>
+<td>定義宏</td>
+</tr>
+<tr>
+<td>#include</td>
+<td>包含一個源代碼文件</td>
+</tr>
+<tr>
+<td>#undef</td>
+<td>取消已定義的宏</td>
+</tr>
+<tr>
+<td>#ifdef</td>
+<td>如果定義了宏，返回真</td>
+</tr>
+<tr>
+<td>#ifndef</td>
+<td>如果沒有定義宏，返回真</td>
+</tr>
+<tr>
+<td>#if</td>
+<td>條件語句，滿足條件，則執行下面代碼</td>
+</tr>
+<tr>
+<td>#else</td>
+<td>與if搭配使用</td>
+</tr>
+<tr>
+<td>#elif</td>
+<td>也就是else if語句快</td>
+</tr>
+<tr>
+<td>#endif</td>
+<td>結束一個#if…#else語句塊</td>
+</tr>
+<tr>
+<td>#error</td>
+<td>遇到標準錯誤時，輸出錯誤</td>
+</tr>
+<tr>
+<td>#pragma</td>
+<td>使用標準化方法，向編譯器發布特殊指令</td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定義常量別名,預處理指令，不需要;分行寫</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 10</span></div><div class="line"><span class="comment">//引入頭文件</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myheader.h"</span></span></div><div class="line"><span class="comment">//取消宏定義，並更改</span></div><div class="line"><span class="meta">#<span class="meta-keyword">undef</span> FILE_SIZE</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FILE_SIZE 88;</span></div><div class="line"><span class="comment">//條件判斷，預處理的，與代碼塊的if..else不用弄混哦</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MSG</span></div><div class="line">	<span class="meta">#<span class="meta-keyword">define</span> MSG <span class="meta-string">"message"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>預定義宏</p>
+<p><strong>ANSI C</strong>定義了許多宏，但是不能直接修改</p>
+<p>| 宏        | 描述                     |<br>| ——– | ———————- |<br>| _DATE_ | 當前日期，”MMM DD YYYY”格式顯示 |<br>| _TIME_ | 當前時間，”HH:MM:SS”格式顯示    |<br>| _FILE_ | 這會包含當前文件名，一個字符串常量      |<br>| _LINE_ | 這會包含當前行號，一個十進制常量       |<br>| _STDC_ | 當編譯器以ANSI標準編譯時，則定義爲1   |</p>
+</li>
+<li><p>預處理器運算符</p>
+<ul>
+<li><p>宏延伸<code>\</code></p>
+<p>一個宏通常寫在一行，若是太長，可以用<code>\</code>符號延伸</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> message_for(a,b) \</span></div><div class="line">	printf(#a<span class="meta-string">"and"</span>#b <span class="meta-string">":Hello\n"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>字符串常量化<code>#</code></p>
+<p>定義宏時候，參數轉化爲字符常量，需要用<code>#</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> msg(a,b) \</span></div><div class="line">	printf(#a <span class="meta-string">"和"</span> #b <span class="meta-string">"是朋友"</span>);<span class="comment">//此處就是用了#符號，</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  msg(<span class="string">"小白"</span>,<span class="string">"小黑"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>輸出結果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">小白和小黑是朋友</div></pre></td></tr></table></figure>
+</li>
+<li><p>標記粘貼<code>##</code></p>
+<p>合並兩個參數</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> paster(n) printf(<span class="meta-string">"token："</span> #n <span class="meta-string">" = %d"</span>,token##n)</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> tocken22 = <span class="number">80</span>;</div><div class="line">  paster(<span class="number">22</span>);<span class="comment">//這裏輸入22,在paster函數內合並參數，就得到了token22,然後輸出token22這個變量，就得到了下面的結果，分寫一下printf函數，字符token+#n，也就是token22,token##n，代表了上面定義int token22</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>輸出結果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">token22 = <span class="number">80</span></div></pre></td></tr></table></figure>
+<p>可以判斷定義</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#inclue <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined(MSG)</span></div><div class="line">	<span class="meta">#<span class="meta-keyword">define</span> MSG <span class="meta-string">"hahaha"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"msg == %s\n"</span>,MSG);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>參數化的宏</p>
+<p>CPP可以使用參數化的宏來模擬函數</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//求平方的函數</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">square</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</div><div class="line">  <span class="keyword">return</span> x * x;</div><div class="line">&#125;</div><div class="line"><span class="comment">//使用宏來定義,名稱和參數的括號之間不能有空格，且緊跟#define</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> square(x) ((x)*(x))</span></div></pre></td></tr></table></figure>
+<p>然後就可以在源文件中使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX(x,y) ((x)&gt;(y)?(x):(y))</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Max between 20 and 10 is : %d\n"</span>,MAX(<span class="number">20</span>,<span class="number">10</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>頭文件</p>
+<p><code>.h</code>文件，包含了C函數聲明和宏定義，被多個源文件共享。分爲<strong>編譯器自帶</strong>和<strong>程序員自定義</strong>兩類。用<code>#include</code>導入。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;&gt;包裹的，是系統的.h文件，""包裹的，是程序員自定義的.h文件</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myheader.h"</span></span></div><div class="line"><span class="comment">//都可以通過編譯源碼時候，-l選項，將文件置於列表前。</span></div></pre></td></tr></table></figure>
+<p>其實，頭文件，就相當與復制，類似與java中的導入包和文件類。導入一次就夠了，不用多次導入。一般需要判斷一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> HEADER</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HEADER</span></div><div class="line">...</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<p>有條件引用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> SYSTEM_1</span></div><div class="line">	<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"system_1.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> SYSTEM_2</span></div><div class="line">	<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"system_2.h"</span></span></div><div class="line"><span class="comment">//太多的話，可以宏定義一下</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SYSTEM_H <span class="meta-string">"system_1.h"</span></span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="3、類型轉換"><a href="#3、類型轉換" class="headerlink" title="3、類型轉換"></a>3、類型轉換</h2><p>編程語言中常見的數據類型轉換，從低類型轉高類型，從高類型轉低類型。向下轉換不安全的，會丟失數據精度。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(type_name) variable;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>整數提升</p>
+<p>其實也就是一種類型轉換，將小範圍類型，轉爲大範圍的，char–int</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> i = <span class="string">'c'</span>;<span class="comment">//ascii碼 99</span></div><div class="line"><span class="keyword">int</span> a = <span class="number">17</span>;</div><div class="line"><span class="keyword">int</span> sum = i + c;</div><div class="line"><span class="comment">//得到的sum值，就是int的，116</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>常用轉換</p>
+<p>一般都會隱式的向上轉型，向下轉型會丟失精度，且需要強制轉型。</p>
+<p><img src="http://img.blog.csdn.net/20161218194455669?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmluZ2x1bWVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="translate"></p>
+<p>這並不適合<code>賦值運算符</code>、邏輯運算符的<code>&amp;&amp;</code>、<code>||</code></p>
+</li>
+<li><p>錯誤處理</p>
+<p>C語言不提供對錯誤的處理，其返回值出錯時多是1或者NULL，同時生成錯誤碼errno，可以在<code>&lt;error.h&gt;</code>中找到各種錯誤碼。通常通過返回值查找錯誤。一般初始化設這errno=0;</p>
+<p><strong>errno、perror()和strerror()</strong>，C語言提供了兩個函數來顯示errno的錯誤信息。</p>
+<ul>
+<li>perror()函數顯示您傳送的字符串，後面一個冒號、一個空格、和當前errno的文本描述</li>
+<li>strerror()函數返回一個指針，指針指向errno的錯誤描述。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> errno;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  FILE * pf;</div><div class="line">  <span class="keyword">int</span> errnum;</div><div class="line">  <span class="comment">//以二進制形式打開文件，此處文件不存在，用於模擬錯誤</span></div><div class="line">  pf = fopen(<span class="string">"./no.txt"</span>,<span class="string">"rb"</span>);</div><div class="line">  <span class="keyword">if</span>(pf==<span class="literal">NULL</span>)&#123;</div><div class="line">    errnum = errno;</div><div class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"錯誤號： %d \n"</span>,errno);</div><div class="line">    perror(<span class="string">"通過perror函數輸出錯誤"</span>);</div><div class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"strerror函數顯示，打開文件錯誤： %s \n"</span>,strerror(errnum));</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    fclose(pf);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>錯誤種類很多，非法參數，數組越界之類的。程序正常退出時候會帶有一個EXIT_SUCCESS值，其爲宏定義，爲0。錯誤時候EXIT_FAILURE，爲-1。</p>
+</li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/19/C语言学习笔记--基础语法四/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法四">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/17/C语言学习笔记--基础语法二/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法二">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#C" title="C">C</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

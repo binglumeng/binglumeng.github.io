@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android开源控件搜集----Button - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/03/27/Android开源控件搜集--Button/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android开源控件搜集----Button</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-03-27
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android开源控件搜集–Button"><a href="#Android开源控件搜集–Button" class="headerlink" title="Android开源控件搜集–Button"></a>Android开源控件搜集–Button</h1><p><strong>Note：</strong>本篇博客长期维护更新，欢迎各位网友共同合作，共享知识与技术。</p>
+<p>本篇博客主要搜集个人任务比较优秀的Android开源控件，大多来自github，并附上链接，自己学习之余，亦希望于大家有所帮助。</p>
+<p>Android的控件还算比较多，官方和第三方自定义优秀控件数不胜数，搜集难免不全，逐步更新丰富吧。</p>
+<h2 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h2><p>Button可以说是Android中仅次于Text View的，比较重要的一个控件，下面主要是搜集一些第三方优化效果的Button,其中有的也算是菜单Menu，或者progressbar，以后再修改分类吧。</p>
+<ol>
+<li><p>FloatingActionButton </p>
+<p>悬浮式的actionbutton，效果：</p>
+<p><img src="https://github.com/futuresimple/android-floating-action-button/raw/master/screenshots/menu.gif" alt="floatingbutton"></p>
+<p>github:<a href="https://github.com/futuresimple/android-floating-action-button" target="_blank" rel="external">https://github.com/futuresimple/android-floating-action-button</a></p>
+</li>
+<li><p>floatingButton</p>
+<p>类似上面，这是一个可以监视滑动事件的floatingButton，效果：</p>
+<p><img src="https://github.com/makovkastar/FloatingActionButton/raw/master/art/demo.gif" alt="button"></p>
+<p>github:<a href="https://github.com/makovkastar/FloatingActionButton" target="_blank" rel="external">https://github.com/makovkastar/FloatingActionButton</a></p>
+</li>
+<li><p>circularProgressbutton</p>
+<p>带有圆形进度的button，效果：</p>
+<p><img src="https://github.com/dmytrodanylyk/circular-progress-button/raw/master/screenshots/intro.gif" alt="button"></p>
+<p>github:<a href="https://github.com/dmytrodanylyk/circular-progress-button" target="_blank" rel="external">https://github.com/dmytrodanylyk/circular-progress-button</a></p>
+</li>
+<li><p>FloatingButton</p>
+<p>这个真是个全面的悬浮按钮button，效果：</p>
+<p><img src="https://github.com/Clans/FloatingActionButton/raw/master/screenshots/menu_custom_opened.png" alt="button"></p>
+<p><img src="https://github.com/Clans/FloatingActionButton/raw/master/screenshots/progress_background.png" alt="button"></p>
+<p>github:<a href="https://github.com/Clans/FloatingActionButton" target="_blank" rel="external">https://github.com/Clans/FloatingActionButton</a></p>
+</li>
+<li><p>SwitchButton</p>
+<p>包含各式各样的开关button，效果：</p>
+<p><img src="https://github.com/kyleduo/SwitchButton/raw/master/preview/demo_140.jpg" alt="switch"></p>
+<p>github:<a href="https://github.com/kyleduo/SwitchButton" target="_blank" rel="external">https://github.com/kyleduo/SwitchButton</a></p>
+</li>
+<li><p>ProcessButton</p>
+<p>带有进度加载的Button，效果：</p>
+<p><img src="https://github.com/dmytrodanylyk/android-process-button/raw/master/screenshots/sample1_small2.gif" alt="button"></p>
+<p>github:<a href="https://github.com/dmytrodanylyk/android-process-button" target="_blank" rel="external">https://github.com/dmytrodanylyk/android-process-button</a></p>
+</li>
+<li><p>ShineButton</p>
+<p>点赞的Button，效果：</p>
+<p><img src="https://github.com/ChadCSong/ShineButton/raw/master/demo_shine_others.gif" alt="button"></p>
+<p>github:<a href="https://github.com/ChadCSong/ShineButton" target="_blank" rel="external">https://github.com/ChadCSong/ShineButton</a></p>
+</li>
+<li><p>ToggleButton</p>
+<p>类似IOS开关效果的button，效果：</p>
+<p><img src="https://github.com/zcweng/ToggleButton/raw/master/ToggleButtonSample/21879.gif" alt="button"></p>
+<p>github:<a href="https://github.com/zcweng/ToggleButton" target="_blank" rel="external">https://github.com/zcweng/ToggleButton</a></p>
+</li>
+<li><p>FlatButton</p>
+<p>扁平风格的可变色button，效果：</p>
+<p><img src="https://raw.githubusercontent.com/hoang8f/android-flat-button/master/screenshot/screenshot.gif" alt="button"></p>
+<p>github:<a href="https://github.com/hoang8f/android-flat-button" target="_blank" rel="external">https://github.com/hoang8f/android-flat-button</a></p>
+</li>
+<li><p>RapidFloatingButton</p>
+<p>好多floatingbutton啊，这个也是大同小异，效果：</p>
+<p><img src="https://raw.githubusercontent.com/wangjiegulu/RapidFloatingActionButton/master/screenshot/rfab_card_view.gif" alt="button"></p>
+<p>github:<a href="https://github.com/wangjiegulu/RapidFloatingActionButton" target="_blank" rel="external">https://github.com/wangjiegulu/RapidFloatingActionButton</a></p>
+</li>
+<li><p>ArrowDoanloadButton</p>
+<p>准确的说这个是progressbutton更合适，效果：</p>
+<p><img src="https://github.com/fenjuly/ArrowDownloadButton/raw/master/screenshots/arrowdownloadbutton.gif" alt="button"></p>
+<p>github:<a href="https://github.com/fenjuly/ArrowDownloadButton" target="_blank" rel="external">https://github.com/fenjuly/ArrowDownloadButton</a></p>
+</li>
+<li><p>fab</p>
+<p>可以说是拥有不同效果的floatingbutton，效果：</p>
+<p><img src="https://github.com/Scalified/fab/raw/master/demo/animation_fade_in_fade_out.gif" alt="button"></p>
+<p>github:<a href="https://github.com/Scalified/fab" target="_blank" rel="external">https://github.com/Scalified/fab</a></p>
+</li>
+<li><p>FloatingNavButton</p>
+<p>悬浮式的导航菜单按钮button，效果：</p>
+<p><img src="https://raw.githubusercontent.com/andremion/Floating-Navigation-View/master/art/sample.gif" alt="button"></p>
+<p>github:<a href="https://github.com/andremion/Floating-Navigation-View" target="_blank" rel="external">https://github.com/andremion/Floating-Navigation-View</a></p>
+</li>
+<li><p>FabButton</p>
+<p>都是floating了，效果：</p>
+<p><img src="https://github.com/ckurtm/FabButton/raw/master/example.gif?raw=true" alt="button"></p>
+<p>github:<a href="https://github.com/ckurtm/FabButton" target="_blank" rel="external">https://github.com/ckurtm/FabButton</a></p>
+</li>
+<li><p>JellyToggleButton</p>
+<p>花样繁多的togglebutton，效果：</p>
+<p><img src="https://github.com/Nightonke/JellyToggleButton/raw/master/img/JellyToggleButton4.gif?raw=true" alt="button"></p>
+<p>github:<a href="https://github.com/Nightonke/JellyToggleButton" target="_blank" rel="external">https://github.com/Nightonke/JellyToggleButton</a></p>
+</li>
+<li><p>fab</p>
+<p>又是一个fab，效果：</p>
+<p><img src="https://github.com/konifar/fab-transformation/raw/master/art/transform_to_toolbar.gif" alt="button"></p>
+<p>github:<a href="https://github.com/konifar/fab-transformation" target="_blank" rel="external">https://github.com/konifar/fab-transformation</a></p>
+</li>
+<li><p>morphingButton</p>
+<p>进度变形的button，效果：</p>
+<p><img src="https://github.com/dmytrodanylyk/android-morphing-button/raw/master/screenshots/intro1.gif" alt="button"></p>
+<p>github:<a href="https://github.com/dmytrodanylyk/android-morphing-button" target="_blank" rel="external">https://github.com/dmytrodanylyk/android-morphing-button</a></p>
+</li>
+<li><p>gooeyMenu</p>
+<p>粘性泡泡效果的菜单button，效果：</p>
+<p><img src="https://github.com/anshulagarwal2k/GooeyMenu/raw/master/gooeyeffect.gif" alt="button"></p>
+<p>github:<a href="https://github.com/anshulagarwal2k/GooeyMenu" target="_blank" rel="external">https://github.com/anshulagarwal2k/GooeyMenu</a></p>
+</li>
+<li><p>SatelliteMenu</p>
+<p>卫星菜单button，效果：</p>
+<p><img src="https://camo.githubusercontent.com/69c60ccfcc45203014ad793da924d2ca10ef0a65/687474703a2f2f692e696d6775722e636f6d2f3049676b6b74642e706e67" alt="button"></p>
+<p>github:<a href="https://github.com/siyamed/android-satellite-menu" target="_blank" rel="external">https://github.com/siyamed/android-satellite-menu</a></p>
+</li>
+<li><p>TagGroup</p>
+<p>tag标签，效果：</p>
+<p><img src="https://camo.githubusercontent.com/8adbb5c44c656151cb108ada6d1383e2c6af38b7/687474703a2f2f7777342e73696e61696d672e636e2f6c617267652f62636532646561396a7731657362736279397635666a323075303077386a78782e6a7067" alt="button"></p>
+<p>github:<a href="https://github.com/2dxgujun/AndroidTagGroup/" target="_blank" rel="external">https://github.com/2dxgujun/AndroidTagGroup/</a></p>
+</li>
+<li><p>ArcMenu</p>
+<p>环形菜单button，效果：</p>
+<p><img src="https://camo.githubusercontent.com/7c3d707678e6aa187cdf2ee3ac701d77fba92f48/68747470733a2f2f646c2e64726f70626f782e636f6d2f752f31313336393638372f70726576696577312e706e67" alt="button"></p>
+<p>github:<a href="https://github.com/daCapricorn/ArcMenu" target="_blank" rel="external">https://github.com/daCapricorn/ArcMenu</a></p>
+</li>
+<li><p>StateButton</p>
+<p>包含多种select效果的button，效果：</p>
+<p><img src="https://github.com/niniloveyou/StateButton/raw/master/stateButton.gif" alt="button"></p>
+<p>github:<a href="https://github.com/niniloveyou/StateButton" target="_blank" rel="external">https://github.com/niniloveyou/StateButton</a></p>
+</li>
+<li><p>AllAnagleButton</p>
+<p>综合卫星菜单和环形菜单的一个button，效果：</p>
+<p><img src="https://github.com/uin3566/AllAngleExpandableButton/raw/master/screenshot/demo.gif" alt="button"></p>
+<p>github:<a href="https://github.com/uin3566/AllAngleExpandableButton" target="_blank" rel="external">https://github.com/uin3566/AllAngleExpandableButton</a></p>
+</li>
+<li><p>ShareButton</p>
+<p>简单含有分享模块的button，效果：</p>
+<p><img src="https://github.com/kayan1990/ShareButton/raw/master/ShareButton/gif/sharebutton.gif" alt="button"></p>
+<p>github:<a href="https://github.com/kayan1990/ShareButton" target="_blank" rel="external">https://github.com/kayan1990/ShareButton</a></p>
+</li>
+<li><p>faceOffButton</p>
+<p>一个修改带有笑脸的togglebutton，效果：</p>
+<p><img src="https://github.com/Nightonke/FaceOffToggleButton/raw/master/img/Animation.gif?raw=true" alt="button"></p>
+<p>github:<a href="https://github.com/Nightonke/FaceOffToggleButton" target="_blank" rel="external">https://github.com/Nightonke/FaceOffToggleButton</a></p>
+</li>
+<li><p>undoBar</p>
+<p>带有撤销功能的button，效果：</p>
+<p><img src="https://camo.githubusercontent.com/a32255c0a1f5abe56607d46bb9782b8f338fd9e3/68747470733a2f2f7261772e6769746875622e636f6d2f6a656e7a7a2f416e64726f69642d556e646f4261722f6d61737465722f6173736574732f53637265656e73686f74352e706e67" alt="button"></p>
+<p>github:<a href="https://github.com/jenzz/Android-UndoBar" target="_blank" rel="external">https://github.com/jenzz/Android-UndoBar</a></p>
+</li>
+<li><p>BootstrapButton</p>
+<p>具有字形效果的button，效果：</p>
+<p><img src="https://camo.githubusercontent.com/51755d59ed6fd53158a0d84696e6d184c3a6f4d5/68747470733a2f2f7261772e6769746875622e636f6d2f426561726465642d48656e2f416e64726f69642d426f6f7473747261702f6d61737465722f696d616765732f626f6f7473747261705f627574746f6e2e706e67" alt="button"></p>
+<p>github:<a href="https://github.com/Bearded-Hen/Android-Bootstrap" target="_blank" rel="external">https://github.com/Bearded-Hen/Android-Bootstrap</a></p>
+</li>
+<li><p>LiquidButton</p>
+<p>又是一个加载的button，效果：</p>
+<p><img src="https://camo.githubusercontent.com/6e51af802823444540390be079ecad75ef60019e/68747470733a2f2f6431337961637572716a676172612e636c6f756466726f6e742e6e65742f75736572732f3333303137342f73637265656e73686f74732f323639353630302f636f6d705f322e676966" alt="button"></p>
+<p>github:<a href="https://github.com/yoruriko/LiquidButton" target="_blank" rel="external">https://github.com/yoruriko/LiquidButton</a></p>
+</li>
+<li><p>MagicButton</p>
+<p>简单的变形button，效果：</p>
+<p><img src="https://github.com/daniel-martins-IR/MagicButton/raw/master/app/src/main/res/drawable/giphy.gif" alt="button"></p>
+<p>github:<a href="https://github.com/daniel-martins-ir/MagicButton" target="_blank" rel="external">https://github.com/daniel-martins-ir/MagicButton</a></p>
+</li>
+<li><p>RingButton</p>
+<p>可以一分为二的button，各自有各自的图标和点击事件，效果：</p>
+<p><img src="https://github.com/yankai-victor/RingButton/raw/master/image/Screenshot.png" alt="button"></p>
+<p>github:<a href="https://github.com/yankai-victor/RingButton" target="_blank" rel="external">https://github.com/yankai-victor/RingButton</a></p>
+</li>
+<li><p>​</p>
+</li>
+</ol>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/03/27/第一篇、Android入门基础/" data-toggle="tooltip" data-placement="top" title="Android入门基础">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/27/Android开源控件搜集--ProgressBar/" data-toggle="tooltip" data-placement="top" title="Android开源控件搜集----ProgressBar">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

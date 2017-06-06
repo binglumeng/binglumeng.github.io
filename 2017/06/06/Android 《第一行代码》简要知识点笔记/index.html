@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android 《第一行代码》简要笔记（一） - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/06/06/Android 《第一行代码》简要知识点笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android 《第一行代码》简要笔记（一）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-06-06
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android-《第一行代码》简要笔记（一）"><a href="#Android-《第一行代码》简要笔记（一）" class="headerlink" title="Android 《第一行代码》简要笔记（一）"></a>Android 《第一行代码》简要笔记（一）</h1><h2 id="第一章，开始启程"><a href="#第一章，开始启程" class="headerlink" title="第一章，开始启程"></a>第一章，开始启程</h2><p>Android系统，2003年10月，Andy Rubin创办Android公司。2005年8月，Google收购Android。</p>
+<ul>
+<li><p>系统架构</p>
+<p>Android系统基于Linux内核，分为：Linux内核层、系统运行库层、应用框架层、应用层。</p>
+</li>
+<li><p>版本信息</p>
+<p>2008年9月，Android 1.0版本发布。之后2.1、2.2、2.3。</p>
+<p>2011年2月，3.0版本，专为平板设计;</p>
+<p>2011年10月，Android 4.0版本，统一移动端平台版本。</p>
+<p>2014年Google I/O大会，发布Android 5.0,属于较大版本更新。ART替换Dalvik，Material Design以及Android Wear、TV、Auto等。</p>
+<p>2015年Google I/O大会，Android 6.0，加入运行时权限。</p>
+<p>2016年Google I/O大会，Android 7.0，加入多窗口模式。</p>
+<p>2017年Google I/O大会，Android 8.0，通知渠道、画中画、自适应图标等新特性。</p>
+</li>
+<li><p>Android应用开发特色</p>
+<p>四大组件：Activity、Service、Broadcast Receiver、Content Provider。</p>
+<p>Intent可用于组件间的信息传递。</p>
+</li>
+<li><p>开发环境</p>
+<ul>
+<li>JDK</li>
+<li>Android SDK</li>
+<li>Android Studio (也可用Eclipse等其他开发工具，但是官方推荐Android Studio，且确实是最优的选择)</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二章、Activity"><a href="#第二章、Activity" class="headerlink" title="第二章、Activity"></a>第二章、Activity</h2><ul>
+<li><p>onCreate()方法，在api&gt;=21时候，出现了两个<code>onCreate</code>方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">       setContentView(R.layout.second_layout);</div><div class="line">       Log.d(TAG, <span class="string">"onCreate: @Nullable Bundle"</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>新版的重载的<code>onCreate</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * 注意，这个onCreate方法，包含两个参数，在api&gt;=21以上才会调用，用于在手机关机等特殊情况下保存Activity的数据，到outPersistentState中</div><div class="line">    * 若是Android 5.0以下的手机，则仅仅有这个方法的话，会不显示Layout布局，所以必须用上面的那个onCreate方法。</div><div class="line">    * 这两个onCreate也就对应两个onSaveInstanceSate方法。</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> savedInstanceState</div><div class="line">    * <span class="doctag">@param</span> persistentState</div><div class="line">    */</div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState)</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>.onCreate(savedInstanceState, persistentState);</div><div class="line">       setContentView(R.layout.second_layout);</div><div class="line">       Log.d(TAG, <span class="string">"onCreate: @Nullable PersistableBundle"</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Intent包含显式意图和隐式意图，在使用隐式意图启动的时候，注意同时匹配<code>action</code>和<code>category</code>两项。</p>
+<ul>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//拨打电话，记得在AndroidManifest.xml中申请相应权限</span></div><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL);</div><div class="line">intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</div><div class="line">intent.setData(Uri.parse(<span class="string">"https://www.google.com"</span>));</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>自定义个Browser响应Action_view的请求</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//只需要将某个Activity的注册intent-filter修改如下</div><div class="line">&lt;intent-filter&gt;</div><div class="line">  &lt;action android:name="android.intent.action.VIEW"/&gt;</div><div class="line">  &lt;category android:name="android.intent.category.DEFAULT"/&gt;</div><div class="line">  &lt;data android:scheme="http"/&gt;</div><div class="line">&lt;/intent-filter&gt;</div></pre></td></tr></table></figure>
+<p><strong>在startActivity的时候，更严谨的做法是，使用<code>PackageManager.queryIntentActivity</code>来查看时候有可以响应inetent的程序，在具体处理。</strong></p>
+</li>
+<li><p>Intent传递数据</p>
+<p>intent.putExtra，然后有接收方使用intent.getExtra获取数据。Activity之间的数据传递，<code>startActivityForResult</code>和<code>setResult</code>，然后在<code>onActivityResult</code>中接收返回的数据。</p>
+</li>
+</ul>
+<h4 id="1、Activity的生命周期"><a href="#1、Activity的生命周期" class="headerlink" title="1、Activity的生命周期"></a>1、Activity的生命周期</h4><p>应用程序App中的Activity一般都是处于<strong>栈</strong>中，属于<code>LIFO</code>模式，即后进先出。</p>
+<p>Activity有四种存在状态：活动、暂停、停止、销毁。</p>
+<ul>
+<li>onCreate()，创建</li>
+<li>onStart()，启动</li>
+<li>onResume()，进入前台模式</li>
+<li>onPause()，退出前台模式，可能是一个Activity被销毁前最后调用到的方法。（这七个方法中）</li>
+<li>onStop()，停止，并非一定会调用到，比如强制销毁程序等非正常操作。</li>
+<li>onDestroy()，销毁</li>
+<li>onRestart()，若在<code>onDestroy</code>之前再次返回这个Activity，就会调用本方法。</li>
+</ul>
+<p><strong>Activity的生命周期，分为三种模式：</strong></p>
+<blockquote>
+<ol>
+<li>完整生命周期，即从<code>onCreate</code>到<code>onDestroy</code>这六个方法包含的全过程。</li>
+<li>可见生命周期，从<code>onStart</code>到<code>onStop</code>之间的生存阶段。</li>
+<li>前台生命周期，在<code>onResume</code>到<code>onPause</code>之间的生存期。</li>
+</ol>
+</blockquote>
+<p><strong>例如：Activity 启动一个Dialog，则其本身只是调用了<code>onPause</code>，不会执行到<code>onStop</code></strong></p>
+<p>Home键，<code>onPause--&gt;onStop</code></p>
+<p>Back键，<code>onPause--&gt;onStop--&gt;onDestroy</code></p>
+<p>程序避免退出前台而数据丢失，可使用<code>onSaveInstanceState</code>方法保存数据，在<code>onCreate</code>中判断非空来取出。Android 5.0之后的版本，这两个方法都多了一个重载。</p>
+<h4 id="2、Activity启动模式"><a href="#2、Activity启动模式" class="headerlink" title="2、Activity启动模式"></a>2、Activity启动模式</h4><p><code>standard</code>、<code>singleTop</code>、<code>singleTask</code>、<code>singleInstance</code>四种启动模式</p>
+<ul>
+<li><p>standard，标准的，每次调用启动，都是新建一个置于栈顶。</p>
+</li>
+<li><p>singleTop，只有该Activity处于栈顶时，不需要新建，若非栈顶，新建置于栈顶。</p>
+</li>
+<li><p>singleTask，本app返回栈内无此Activity则新建，若有，不论是否栈顶，都会清理掉activity之上的所有activity，使之处于栈顶。</p>
+</li>
+<li><p>singleInstance，该Activiy则会独立占用一个新的返回栈，类似与<code>singleTask</code>+<code>taskAffinity</code>。</p>
+<p>App中，Activity界面，A(standard)—&gt;B (singleInstance)—&gt;C(standard)，此时按下返回键，</p>
+<p>C—&gt;A，再按返回，APP销毁，显示B程序，再返回便会销毁B程序。</p>
+</li>
+</ul>
+<p><strong>如何知晓当前是哪个Activity在栈顶，使用BaseActivity，其他Activity继承它，使用<code>getClass().getSimpleName()可知当前Activity</code></strong></p>
+<blockquote>
+<p>随时退出整个App的所有Activity，使用ActivityCollector类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActivityCollector</span> </span>&#123;</div><div class="line">&gt;   <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Activity&gt; activities = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//Activity集合</span></div><div class="line">&gt;   <span class="comment">//加入集合中</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">&gt;     activities.add(activity);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="comment">//从集合中移除</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removeActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">&gt;     activities.remove(activity);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="comment">//关闭所有</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">finishAll</span><span class="params">()</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">for</span>(Activity activity : activities)&#123;</div><div class="line">&gt;       activity.finish();</div><div class="line">&gt;     &#125;</div><div class="line">&gt;   &#125;</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>然后在<code>BaseActivity</code>中添加，移除</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">&gt;   <span class="meta">@override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">&gt;     Log.d(<span class="string">"BaseActivity"</span>,getClass().getSimpleName());</div><div class="line">&gt;     <span class="comment">//将子类的Activity加入到集合中</span></div><div class="line">&gt;     ActivityCollector.addActivity(<span class="keyword">this</span>);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="comment">//子类销毁时候，就从集合中移除</span></div><div class="line">&gt;   <span class="meta">@override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">super</span>.onDestroy();</div><div class="line">&gt;     ActivityCollector.removeActivity(<span class="keyword">this</span>);</div><div class="line">&gt;   &#125;</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>在其他任意地方调用<code>ActivityCollector.finishAll()</code>就能结束所有Activity。</p>
+</blockquote>
+<p>让其他Activity调用本Activity的一个写法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">actionStart</span><span class="params">(Context context,String data1,String data2)</span></span>&#123;</div><div class="line">  Intent intent = <span class="keyword">new</span> Intent(context,<span class="keyword">this</span>);</div><div class="line">  intent.putExtra(<span class="string">"data1"</span>,data1);</div><div class="line">  intent.putExtra(<span class="string">"data2"</span>,data2);</div><div class="line">  context.startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="第三章、UI"><a href="#第三章、UI" class="headerlink" title="第三章、UI"></a>第三章、UI</h2><h3 id="1、View"><a href="#1、View" class="headerlink" title="1、View"></a>1、View</h3><p>View是Android中所有的控件的基类，包括ViewGroup也是继承自View。</p>
+<ol>
+<li><p>Button</p>
+<p><code>textAllCaps=&quot;false&quot;</code>可以在xml中将Button显示的Text文本禁用全部大写。</p>
+</li>
+<li><p>ProgressBar</p>
+<p><code>style=&quot;?android:attr/progressBarStyleHorizontal&quot;</code>使用<code>？</code>来引用Android系统的一些属性</p>
+</li>
+<li><p>AlertDialog</p>
+<p><code>dialog.setCancelable(false);</code>//使在Dialog外部点击，不会消失。另有<code>ProgressDialog</code>。</p>
+</li>
+</ol>
+<h3 id="2、ViewGroup"><a href="#2、ViewGroup" class="headerlink" title="2、ViewGroup"></a>2、ViewGroup</h3><p>继承自View，以前说常用的有五种：<code>AbsoluteLayout</code>（早已经废弃）、<code>RelativeLayout</code>、<code>LinearLayout</code>、<code>TableLayout</code>（少用）、<code>FrameLayout</code></p>
+<p><strong>新的说法：</strong>线性、帧布局、相对布局、百分比布局。</p>
+<p>==另：==Android N，伴随AndroidStudio 2.2出现了一个<code>ConstraintLayout</code>约束布局，据说非常强哦！</p>
+<blockquote>
+<p>线性布局、相对布局、帧布局，需要注意的也就是<code>Layout_gravity</code>与<code>gravity</code>区别，分别是对外和对内。</p>
+<p><code>layout_weight</code>和<code>weight_sum</code>权重。</p>
+<p>表格布局中，注意<code>TableRow</code>中最大列数决定整个表格的列数。</p>
+</blockquote>
+<ul>
+<li><p>PercentLayout</p>
+<p>百分比布局，仅仅对线性、相对布局做了扩展，在Android Studio中添加依赖 <code>compile &#39;com.android.support:percent:24.2.1&#39;</code></p>
+<ul>
+<li>PercentLinearLayout</li>
+<li>PercentFrameLayout</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">                                         xmlns:app="http://schemas.android.com/apk/res-auto"</div><div class="line">android:layout_width="match_parent"</div><div class="line">android:layout_height="match_parent"&gt;</div><div class="line">&lt;!-- 百分比布局中，可以不用有layout_width和layout_height，--&gt;</div><div class="line">&lt;Button</div><div class="line">        android:text="Button Text"</div><div class="line">        android:layout_gravity="right|bottom"</div><div class="line">        app:layout_widthPercent="50%"</div><div class="line">        app:layout_heightPercent="50%"</div><div class="line">&lt;/android.support.percent.PercentFrameLayout&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>\<include></include></p>
+<p>标签，用于引用共享布局。</p>
+</li>
+<li><p>ActionBar</p>
+<p>其实已经不推荐使用ActionBar，而是更好的TitleBar。都是用<code>getActionBar</code>或<code>getSupportActionBar</code>获取。</p>
+</li>
+</ul>
+<p>自定义View或者ViewGroup可以继承自相应的View或者ViewGroup来复写对应的方法，构造函数，<code>onMesure</code>、<code>onLayout</code>和<code>onDraw</code>等。</p>
+<blockquote>
+<p><code>ListView</code>强大的列表控件，配合<code>Adapter</code>，普通列表常用<code>ArrayAdapter</code>。现更推荐使用<code>RecyclerView</code>替代。</p>
+</blockquote>
+<p>同百分比布局类似，<code>RecycleView</code>也需要单独添加依赖<code>compile &#39;com.android.support:recyclerview-v7:24.2.1&#39;</code></p>
+<p>使用<code>RecyclerView</code>需要继承对应的适配器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">MyAdapter</span>.<span class="title">ViewHolder</span>&gt;</span>&#123;</div><div class="line">  <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</div><div class="line">    ....</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> ViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent,<span class="keyword">int</span> viewType)</span></span>&#123;</div><div class="line">    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,flase);</div><div class="line">    ViewHolder holder = <span class="keyword">new</span> ViewHolder(view);</div><div class="line">    <span class="keyword">return</span> holder;</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(ViewHolder holder ,<span class="keyword">int</span> position)</span></span>&#123;</div><div class="line">    ....</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span></span>&#123;</div><div class="line">    ....</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在使用<code>RecyclerView</code>中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rc);</div><div class="line">LinearLayoutManager manager = <span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>);</div><div class="line"><span class="comment">//RelativeLayoutManager,,StaggeredGridLayoutManager(瀑布流动布局);</span></div><div class="line">manager.setOrientation(...)</div><div class="line">recyclerView.setLayoutManager(manager);</div><div class="line">recyclerView.setAdapter(adapter);</div></pre></td></tr></table></figure>
+<p><strong>RecyclerView摒弃了ListView的item点击事件，避免事件冲突，所以在RecyclerView中可以对单个的view控件设置点击事件。</strong></p>
+<p><code>.9</code>图片，用于处理图片在不同屏幕分辨下的正常显示。</p>
+<h2 id="第四章、Fragment"><a href="#第四章、Fragment" class="headerlink" title="第四章、Fragment"></a>第四章、Fragment</h2><p>Fragment的引入使得Android应用可以更为广泛的适配显示屏幕。Fragment的使用，可以在xml中使用<code>fragment</code>标签控件，也可以在java代码中动态增删替换。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 静态的使用fragment标签 --&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">fragment</span></span></div><div class="line">          <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></div><div class="line">          <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">          <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></div><div class="line">          <span class="attr">android:name</span>=<span class="string">"com.example.fragmenttest.LeftFragment"</span></div><div class="line">          <span class="attr">android:id</span>=<span class="string">"@+id/fg_left"</span>/&gt;</div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 动态在代码中替换操作fragment，则需要一个容器来容纳fragment--&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span></span></div><div class="line">             <span class="attr">android:id</span>=<span class="string">"@+id/fl_fragment"</span></div><div class="line">             <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">             <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>/&gt;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>使用代码动态操作Fragment</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//调用本方法，传入需fragment对象，</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">replaceFragment</span><span class="params">(Fragment fragment)</span></span>&#123;</div><div class="line">  FragmentManager manager = getSupportFragmentManager();</div><div class="line">  FragmentTransaction transaction = manager.beginTransaction();</div><div class="line">  transaction.replace(R.id.fl_fragment,fragment);</div><div class="line">  <span class="comment">//添加返回栈，那么按下Back键可以返回到上一步，而非直接关闭本fragment所在Activity</span></div><div class="line">  transaction.addToBackStack(<span class="keyword">null</span>);<span class="comment">//参数是描述状态，可以为null</span></div><div class="line">  transaction.commit();<span class="comment">//使用事务机制，确保操作完整。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong><em>Fragment与Activity通讯：</em></strong>已知Fragment嵌入在Activity中，两者之间关系紧密却也并非通讯容易。</p>
+<ul>
+<li><p>Activity–&gt;Fragment</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过FragmentManager来管理fragment，获取相应的对象，</span></div><div class="line">LeftFragment leftFragment = getSupportFragmentManager().findFragmentById(R.id.fg_left);</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>Fragment–&gt;Activity</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//在Fragment中有个getActivity方法，获得其绑定的Activity对象</span></div><div class="line">MainActivity activity = (MainActivity)getActivity();</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>同理，Fragment之间的通讯，可以借助它们共有的Activity来作为中介，沟通消息。</p>
+<h3 id="1、Fragment生命周期"><a href="#1、Fragment生命周期" class="headerlink" title="1、Fragment生命周期"></a>1、Fragment生命周期</h3><p>类似与Activity，Fragment的生命周期同样有运行、暂停、停止和销毁四个状态。</p>
+<p><code>onAttach()</code>–&gt;<code>onCreateView()</code>–&gt;<code>onActivityCreated()</code>–&gt;<code>onDestroyView()</code>–&gt;<code>onDetach()</code></p>
+<p>为适配不同的移动终端，Android应用需要根据设备显示对应的布局。这里用到了<code>限定符</code>常用的根据屏幕尺寸、分辨率、方向作为限制符。</p>
+<blockquote>
+<p>尺寸：<code>small</code>、<code>normal</code>、<code>large</code>、<code>xlarge</code></p>
+<p>分辨率：<code>ldpi</code>、<code>mdpi</code>、<code>hdpi</code>、<code>xhdpi</code>、<code>xxhdpi</code></p>
+<p>方向：<code>land</code>、<code>port</code></p>
+</blockquote>
+<p><strong>最小宽度限定符：</strong>类似<code>layout_sw600dp</code>表示这个布局使用于宽度600dp以上的设备显示。</p>
+<h2 id="第五章、广播接收者-Broadcast-Receiver"><a href="#第五章、广播接收者-Broadcast-Receiver" class="headerlink" title="第五章、广播接收者 Broadcast Receiver"></a>第五章、广播接收者 Broadcast Receiver</h2><p>Android中广播的消息机制，分为<code>标准广播</code>和<code>有序广播</code>。前者面向所有注册接收者，后者根据优先级逐级分发消息，可以在其中中断消息的传播。</p>
+<p><strong>广播继承Broadcast Receiver，通过Action过滤接收指定的消息。而LocalBroadcast用于App内部广播，不会被其他App接收到。</strong></p>
+<blockquote>
+<p>广播的注册分为<code>静态注册</code>和<code>动态注册</code>。</p>
+<p>静态注册就是在<code>AndroidManifest</code>中注册<code>receiver</code>标签。这样可以不启动app就能激活广播。</p>
+<p>动态注册，实在代码中注册，需要动态注销，避免资源浪费。</p>
+</blockquote>
+<p>注：<code>onReceive()</code>函数内，不要有耗时操作，避免报错。且其中无法开启线程。</p>
+<ul>
+<li>接收广播</li>
+</ul>
+<blockquote>
+<ol>
+<li>继承<code>BroadcastReceiver</code></li>
+<li>注册广播<ul>
+<li>静态注册，在<code>AndroidManifest</code>中注册</li>
+<li>动态注册，在代码中，创建<code>receiver</code>对象，并添加<code>intent-filter</code>过滤<code>action</code></li>
+<li>registerReceiver();</li>
+</ul>
+</li>
+<li>注销广播（动态注册时，才由此步骤，在适当的方法中注销。一般是<code>onStop(),onDestroy()</code>）</li>
+</ol>
+</blockquote>
+<ul>
+<li>发送广播</li>
+</ul>
+<blockquote>
+<p>使用Intent，添加Action，然后<code>sendBroadcast(intent)</code></p>
+<p>发送有序广播，<code>sendOrderedBroadcast(intent,null)</code></p>
+<p>然后receiver根据优先级，逐级接收到消息，可使用<code>abortBroadcast()</code>中断向下传输。</p>
+</blockquote>
+<p>本地广播，使用<code>LocalBroadcastManager</code>获取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="keyword">private</span> LocalReceiver localReceiver;</div><div class="line"><span class="keyword">private</span> LocalBroadcastReceiver localBroadcastManager;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">  <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">  setContentView(R.layout.activity_main);</div><div class="line">  <span class="comment">//获取实例</span></div><div class="line">  localBroadcastManager = LocalBroadcastManager.getInstance(<span class="keyword">this</span>);</div><div class="line">  Button btn = (Button)findViewById(R.id.btn);</div><div class="line">  btn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span></span>&#123;</div><div class="line">      <span class="comment">//发送本地广播</span></div><div class="line">      Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.example.broadcasttest.LOCALBROADCAST"</span>);</div><div class="line">      localBroadcastManager.sendBroadcast(intent);</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其注销，也是用<code>LocalBroadcastManager</code>。在课本示例中有个强制下线功能的演示，通过广播，结合之前的<code>BaseActivity</code>管理所有Activity的方式，关闭app。其中需要注意的是，注册和注销广播分别在<code>BaseActivity</code>的<code>onResume</code>和<code>onPause</code>中，而非<code>onCreate，onStart</code>和<code>onStop，onDestroy</code>中，为的是只让处于前台的Activity响应消息即可，不用每个Activity都去响应。</p>
+<p>》》Git 使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git clone repository_url;</div><div class="line">git init;</div><div class="line">git add/add./add folder/add -A</div><div class="line">git commit -m "commit msg"</div></pre></td></tr></table></figure>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/06/04/Failed-to-open-zip-file-1/" data-toggle="tooltip" data-placement="top" title="Failed to open zip file">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

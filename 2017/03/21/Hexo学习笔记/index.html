@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Hexo使用说明笔记 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/03/21/Hexo学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Hexo" title="Hexo">Hexo</a>
+                        
+                          <a class="tag" href="/tags/#博客" title="博客">博客</a>
+                        
+                    </div>
+                    <h1>Hexo使用说明笔记</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-03-21
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Hexo使用说明笔记"><a href="#Hexo使用说明笔记" class="headerlink" title="Hexo使用说明笔记"></a>Hexo使用说明笔记</h1><p>本文简要介绍如何使用Hexo在github上搭建一个个人博客网站，关于Hexo的详细使用说明，还请参考<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">官方文档</a></p>
+<h2 id="1、文件简介"><a href="#1、文件简介" class="headerlink" title="1、文件简介"></a>1、文件简介</h2><p>在Hexo生成的目录下，大致有一下几个文件夹/文件：</p>
+<ul>
+<li><p>public 生成的网站文件，发布的站点文件。</p>
+</li>
+<li><p>source资源文件夹，用于存放内容。</p>
+</li>
+<li><p>tag 标签文件夹。</p>
+</li>
+<li><p>archive归档文件夹。</p>
+</li>
+<li><p>category分类文件夹。</p>
+</li>
+<li><p>downloads/code include code文件夹。</p>
+</li>
+<li><p>:lang i18n_dir 国际化文件夹。</p>
+</li>
+<li><p>_config.yml 配置文件</p>
+<ul>
+<li>配置说明</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Hexo Configuration</span></div><div class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></div><div class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></div><div class="line"></div><div class="line"><span class="comment"># Site，参数说明：title 网站标题；subtitle 网站副标题；description 网站描述，在搜索引擎中可被搜索的信息，可以配置描述关键字；author 作者姓名；language 网站语言；timezone 网站时区；</span></div><div class="line"><span class="comment"># 默认使用电脑本地时区，可以用时区表指定，如America/New_York，UTC等。</span></div><div class="line"><span class="attr">title:</span> <span class="string">Binglumeng's</span> <span class="string">Blog</span></div><div class="line"><span class="attr">subtitle:</span> <span class="string">Just</span> <span class="string">do</span> <span class="string">what</span> <span class="string">you</span> <span class="string">want</span> <span class="string">!</span></div><div class="line"><span class="attr">author:</span> <span class="string">冰路梦</span></div><div class="line"><span class="attr">language:</span> </div><div class="line"><span class="attr">timezone:</span> </div><div class="line"></div><div class="line"><span class="comment"># URL</span></div><div class="line"><span class="comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span></div><div class="line"><span class="comment"># 参数说明：url 网址；root 网址根目录，要是网站存放在子目录，这里就要配置到子目录路径，如url是https://binglumeng.github.io ,而https://binglumeng.github.io/blog才是文件路径，那么root就要设置为/blog/；</span></div><div class="line"><span class="comment"># permalink 文章永久链接格式，:year/:month/:day/:title/ ;permalink_defaults 永久链接中各部分的默认值。</span></div><div class="line"><span class="attr">url:</span> <span class="attr">https://binglumeng.github.io/</span></div><div class="line"><span class="comment"># root就是网址路径path</span></div><div class="line"><span class="attr">root:</span> <span class="string">/binglumeng/</span></div><div class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></div><div class="line"><span class="attr">permalink_defaults:</span></div><div class="line"></div><div class="line"><span class="comment"># Directory 目录参数说明：source_dir 资源文件夹，用于存放内容，默认值source；public_dir 公共文件夹，存放生成的站点文件，默认值public；</span></div><div class="line"><span class="comment"># tag_dir 标签文件夹 默认值tag；archive_dir 归档文件夹 默认值archives;category_dir 分类文件夹，默认值categories;</span></div><div class="line"><span class="comment"># code_dir include code 文件夹，默认值 downloads/code ;i18n_dir 国际化文件夹 ，默认值 :lang ；skip_render 跳过指定的渲染，可以使用glob表达式来匹配路径。</span></div><div class="line"></div><div class="line"><span class="attr">source_dir:</span> <span class="string">source</span></div><div class="line"><span class="attr">public_dir:</span> <span class="string">public</span></div><div class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></div><div class="line"><span class="attr">archive_dir:</span> <span class="string">i_dont_wanna_use_default_archives</span></div><div class="line"><span class="attr">category_dir:</span> <span class="string">categories</span></div><div class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></div><div class="line"><span class="attr">i18n_dir:</span> <span class="string">:lang</span></div><div class="line"><span class="attr">skip_render:</span></div><div class="line"></div><div class="line"><span class="comment"># Writing 文章相关参数：new_post_name 新文章文件名 ，默认值:title.md ;</span></div><div class="line"><span class="comment"># default_category 预设布局，默认值 post ;</span></div><div class="line"><span class="comment"># auto_spacing 中英文之间加入空格，默认 false；</span></div><div class="line"><span class="comment"># titlecase 把标题转换为title case 默认值 false；</span></div><div class="line"><span class="comment"># external_link 新标签中打开链接 ，默认值 true；</span></div><div class="line"><span class="comment"># filename_case 把文件名转换为(1)小写或(2)大写。默认值0；</span></div><div class="line"><span class="comment"># render_drafts 显示草稿，默认值false；</span></div><div class="line"><span class="comment"># post_asset_folder 启动Asset文件夹，默认值false；</span></div><div class="line"><span class="comment"># relative_link 把链接改为与根目录的相对路径位置，默认值false；</span></div><div class="line"><span class="comment"># future 显示未来的文章，默认值true；</span></div><div class="line"><span class="comment"># highlight 代码块设置</span></div><div class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></div><div class="line"><span class="attr">default_layout:</span> <span class="string">post</span> </div><div class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></div><div class="line"><span class="attr">external_link:</span> <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></div><div class="line"><span class="attr">filename_case:</span> <span class="number">0</span></div><div class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></div><div class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></div><div class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></div><div class="line"><span class="attr">future:</span> <span class="literal">true</span></div><div class="line"><span class="attr">highlight:</span></div><div class="line"><span class="attr">  enable:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  line_number:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  auto_detect:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  tab_replace:</span></div><div class="line"></div><div class="line"><span class="comment"># Category &amp; Tag 分类和标签 ，default_categorty 默认分类，默认值 uncategorized;</span></div><div class="line"><span class="comment"># category_map 分类别名；tag_map 标签别名</span></div><div class="line"><span class="attr">default_category:</span> <span class="string">uncategorized</span></div><div class="line"><span class="attr">category_map:</span></div><div class="line"><span class="attr">tag_map:</span></div><div class="line"></div><div class="line"><span class="comment"># Date / Time format 日期时间格式 date_format 日期格式 ，默认是YYYY-MM-DD ；time_format 时间格式 ，H:mm:ss</span></div><div class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></div><div class="line"><span class="comment">## You can customize the date format as defined in</span></div><div class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></div><div class="line"><span class="attr">date_format:</span> <span class="string">YYYY-MM-DD</span></div><div class="line"><span class="attr">time_format:</span> <span class="attr">HH:mm:ss</span></div><div class="line"></div><div class="line"><span class="comment"># Pagination 分页 per_page 每页显示的文章数，0表示关闭分页。默认值10；</span></div><div class="line"><span class="comment"># pagination_dir 分页目录，默认值page</span></div><div class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></div><div class="line"><span class="attr">per_page:</span> <span class="number">10</span></div><div class="line"><span class="attr">pagination_dir:</span> <span class="string">page</span></div><div class="line"></div><div class="line"><span class="comment"># Extensions 扩展，theme 当前主题的名称 ，false表示禁止使用主题。</span></div><div class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></div><div class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></div><div class="line"><span class="attr">theme:</span> <span class="string">binglumeng</span></div><div class="line"></div><div class="line"><span class="comment"># Deployment 部署的设置</span></div><div class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></div><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">  type:</span> <span class="string">git</span></div><div class="line"><span class="attr">  repo:</span> <span class="attr">https://github.com/</span></div><div class="line"><span class="attr">  branch:</span> <span class="string">master</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>package.json 包信息</p>
+</li>
+</ul>
+<h1 id="指令说明"><a href="#指令说明" class="headerlink" title="指令说明"></a>指令说明</h1><p>使用hexo首先要安装node.js和git。本文演示为windows系统下，linux和mac请参照官方文档。</p>
+<ul>
+<li>init</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo init [folder] # 在cmd命令下，cd到你所需要建立博客的文件夹，执行此命令，其中folder为可选指令，若不写，则默认当前目录。</div></pre></td></tr></table></figure>
+<ul>
+<li>new</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new [layout] &lt;title&gt; <span class="comment"># layout为可选项，默认使用_config.yml中的default_layout。新建文章的指令</span></div></pre></td></tr></table></figure>
+<ul>
+<li>generate</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo generate <span class="comment"># 生成静态文件，</span></div><div class="line"><span class="comment"># 可选参数：</span></div><div class="line">-d ,--deploy 文件生成后立即部署网站</div><div class="line">-w , --watch 件事文件变动</div></pre></td></tr></table></figure>
+<p>该指令可以简写为<code>hexo g</code></p>
+<ul>
+<li>publish</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo publish [layout] &lt;filename&gt; <span class="comment"># 发布草稿</span></div></pre></td></tr></table></figure>
+<ul>
+<li>server</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hexo server <span class="comment"># 启动server，就可以在本地预览效果。</span></div><div class="line"><span class="comment"># 参数，默认网址http://localhost:4000/</span></div><div class="line">-p , --port 重设端口</div><div class="line">-s , --static 只是用静态文件</div><div class="line">-l , --<span class="built_in">log</span> 启动日志记录，使用覆盖记录格式</div><div class="line">-i , --ip 重新制定服务器ip</div></pre></td></tr></table></figure>
+<ul>
+<li>deploy</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo deploy <span class="comment"># 发布到网站，这里就是发布到_config.yml中deploy中设置的网址上。</span></div><div class="line"><span class="comment"># 参数</span></div><div class="line">-g , --generate 部署前生成静态文件</div></pre></td></tr></table></figure>
+<p>该命令可以简写<code>hexo g</code></p>
+<ul>
+<li>render</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo render &lt;file1&gt; [file2] ... <span class="comment"># 渲染文件</span></div><div class="line"><span class="comment"># 参数</span></div><div class="line">-o , --output 设置输出路径</div></pre></td></tr></table></figure>
+<ul>
+<li>migrate</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo migrate &lt;<span class="built_in">type</span>&gt; <span class="comment"># 从其他博客系统迁移内容</span></div></pre></td></tr></table></figure>
+<ul>
+<li>clean</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo clean <span class="comment"># 清除缓存文件(db.json)和已生成的静态文件(public)，通常更换主题后，无效时，可以运行此命令。</span></div></pre></td></tr></table></figure>
+<ul>
+<li>list</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo list &lt;<span class="built_in">type</span>&gt; <span class="comment"># 列出网站资料</span></div></pre></td></tr></table></figure>
+<ul>
+<li>version</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo version <span class="comment"># 显示hexo版本信息</span></div></pre></td></tr></table></figure>
+<h4 id="选项指令"><a href="#选项指令" class="headerlink" title="选项指令"></a>选项指令</h4><blockquote>
+<ul>
+<li>选项指令</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt; hexo --safe <span class="comment"># 安全模式，会禁用插件和脚本。</span></div><div class="line">&gt; hexo --debug <span class="comment"># debug 模式</span></div><div class="line">&gt; hexo --silent <span class="comment"># 简洁模式，隐藏终端信息</span></div><div class="line">&gt; hexo --config custom.yml <span class="comment"># 自定义配置文件路径，如此就不会使用_config.yml了。</span></div><div class="line">&gt; hexo --draft <span class="comment"># 显示草稿，也就是source/_drafts</span></div><div class="line">&gt; hexo --cwd /path/to/cwd <span class="comment"># 自定义当前工作目录</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>迁移文章</p>
+<ul>
+<li><p>RSS 使用RSS需要安装<code>hexo-migrator-rss</code>插件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;     npm install hexo-migrator-rss --save</div><div class="line">&gt;     <span class="comment">#可使用如下命令，从RSS迁移所有文章</span></div><div class="line">&gt;     hexo migrate rss &lt;<span class="built_in">source</span>&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>Jekyll 将<code>_post</code>文件夹内的文件复制到<code>source/posts</code>下，在<code>_config.yml</code>修改<code>new_post_name</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">&gt;     new_post_name: :year-:month-:day-:title.md</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>Octopress</p>
+<p>将Octopress中<code>source/_posts</code>文件复制到Hexo的对应目录下，在修改<code>_config.yml</code>中<code>new_post_name</code>参数</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">&gt;     new_post_name: :year-:month-:day-:title.md</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>WordPress</p>
+<p>需要安装<code>hexo-migrator-wordpress</code>插件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;     npm install hexo-migrator-wordpress --save</div><div class="line">&gt;     <span class="comment"># wordpress导出数据,然后hexo迁移</span></div><div class="line">&gt;     hexo migrate wordpress &lt;<span class="built_in">source</span>&gt; <span class="comment"># source可以是网址，或者文件夹</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>Joomla</p>
+<p>安装<code>hexo-migrator-joomla</code>插件，类似wordpress迁移。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;     npm install hexo-migrator-joomla</div><div class="line">&gt;     hexo migrate joomla &lt;<span class="built_in">source</span>&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h2 id="3、写作"><a href="#3、写作" class="headerlink" title="3、写作"></a>3、写作</h2><p>你可以执行下列命令来创建一篇新文章。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new [layout] &lt;title&gt;</div></pre></td></tr></table></figure>
+<p>您可以在命令中指定文章的布局（layout），默认为 <code>post</code>，可以通过修改 <code>_config.yml</code> 中的 <code>default_layout</code> 参数来指定默认布局。</p>
+<h4 id="布局（Layout）"><a href="#布局（Layout）" class="headerlink" title="布局（Layout）"></a>布局（Layout）</h4><p>Hexo 有三种默认布局：<code>post</code>、<code>page</code> 和 <code>draft</code>，它们分别对应不同的路径，而您自定义的其他布局和 <code>post</code> 相同，都将储存到 <code>source/_posts</code> 文件夹。</p>
+<table>
+<thead>
+<tr>
+<th>布局</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>post</code></td>
+<td><code>source/_posts</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>draft</code></td>
+<td><code>source/_drafts</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>不要处理我的文章</strong> 如果你不想你的文章被处理，你可以将 Front-Matter 中的<code>layout:</code> 设为 <code>false</code> 。</p>
+</blockquote>
+<h4 id="文件名称"><a href="#文件名称" class="headerlink" title="文件名称"></a>文件名称</h4><p>Hexo 默认以标题做为文件名称，但您可编辑 <code>new_post_name</code> 参数来改变默认的文件名称，举例来说，设为 <code>:year-:month-:day-:title.md</code> 可让您更方便的通过日期来管理文章。</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:title</code></td>
+<td>标题（小写，空格将会被替换为短杠）</td>
+</tr>
+<tr>
+<td><code>:year</code></td>
+<td>建立的年份，比如， <code>2015</code></td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>建立的月份（有前导零），比如， <code>04</code></td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>建立的月份（无前导零），比如， <code>4</code></td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>建立的日期（有前导零），比如， <code>07</code></td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>建立的日期（无前导零），比如， <code>7</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h4><p>刚刚提到了 Hexo 的一种特殊布局：<code>draft</code>，这种布局在建立时会被保存到 <code>source/_drafts</code> 文件夹，您可通过 <code>publish</code> 命令将草稿移动到 <code>source/_posts</code> 文件夹，该命令的使用方式与 <code>new</code> 十分类似，您也可在命令中指定 <code>layout</code> 来指定布局。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo publish [layout] &lt;title&gt;</div></pre></td></tr></table></figure>
+<p>草稿默认不会显示在页面中，您可在执行时加上 <code>--draft</code> 参数，或是把 <code>render_drafts</code> 参数设为 <code>true</code>来预览草稿。</p>
+<h2 id="4、模版（Scaffold）"><a href="#4、模版（Scaffold）" class="headerlink" title="4、模版（Scaffold）"></a>4、模版（Scaffold）</h2><p>在新建文章时，Hexo 会根据 <code>scaffolds</code> 文件夹内相对应的文件来建立文件，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new photo &quot;My Gallery&quot;</div></pre></td></tr></table></figure>
+<p>在执行这行指令时，Hexo 会尝试在 <code>scaffolds</code> 文件夹中寻找 <code>photo.md</code>，并根据其内容建立文章，以下是您可以在模版中使用的变量：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layout</code></td>
+<td>布局</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>标题</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>文件建立日期</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5、Front-matter"><a href="#5、Front-matter" class="headerlink" title="5、Front-matter"></a>5、Front-matter</h2><p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，举例来说：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">title: Hello World</div><div class="line">date: 2013/7/13 20:46:25</div><div class="line">---</div></pre></td></tr></table></figure>
+<p>以下是预先定义的参数，您可在模板中使用这些参数值并加以利用。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layout</code></td>
+<td>布局</td>
+<td></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>标题</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>建立日期</td>
+<td>文件建立日期</td>
+</tr>
+<tr>
+<td><code>updated</code></td>
+<td>更新日期</td>
+<td>文件更新日期</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>开启文章的评论功能</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>标签（不适用于分页）</td>
+<td></td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>分类（不适用于分页）</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>覆盖文章网址</td>
+</tr>
+</tbody>
+</table>
+<h4 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h4><p>只有文章支持分类和标签，您可以在 Front-matter 中设置。在其他系统中，分类和标签听起来很接近，但是在 Hexo 中两者有着明显的差别：分类具有顺序性和层次性，也就是说 <code>Foo, Bar</code> 不等于 <code>Bar, Foo</code>；而标签没有顺序和层次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">categories:</div><div class="line">- Diary</div><div class="line">tags:</div><div class="line">- PS3</div><div class="line">- Games</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>分类方法的分歧</strong></p>
+<p>如果您有过使用WordPress的经验，就很容易误解Hexo的分类方式。WordPress支持对一篇文章设置多个分类，而且这些分类可以是同级的，也可以是父子分类。但是Hexo不支持指定多个同级分类。下面的指定方法：<br>categories:DiaryLife<br>会使分类<code>Life</code>成为<code>Diary</code>的子分类，而不是并列分类。因此，有必要为您的文章选择尽可能准确的分类。</p>
+</blockquote>
+<h4 id="JSON-Front-matter"><a href="#JSON-Front-matter" class="headerlink" title="JSON Front-matter"></a>JSON Front-matter</h4><p>除了 YAML 外，你也可以使用 JSON 来编写 Front-matter，只要将 <code>---</code> 代换成 <code>;;;</code> 即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;title&quot;: &quot;Hello World&quot;,</div><div class="line">&quot;date&quot;: &quot;2013/7/13 20:46:25&quot;</div><div class="line">;;;</div></pre></td></tr></table></figure>
+<p>标签插件和 Front-matter 中的标签不同，它们是用于在文章中快速插入特定内容的插件。</p>
+<h2 id="6、-标签插件（Tag-Plugins）"><a href="#6、-标签插件（Tag-Plugins）" class="headerlink" title="6、 标签插件（Tag Plugins）"></a>6、 标签插件（Tag Plugins）</h2><p>标签插件和 Front-matter 中的标签不同，它们是用于在文章中快速插入特定内容的插件。</p>
+<ul>
+<li><h4 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h4></li>
+</ul>
+<p>在文章中插入引言，可包含作者、来源和标题。</p>
+<p><strong>别号：</strong> quote</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% blockquote [author[, source]] [link] [source_link_title] %&#125;</div><div class="line">content</div><div class="line">&#123;% endblockquote %&#125;</div></pre></td></tr></table></figure>
+<h4 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h4><p><strong>没有提供参数，则只输出普通的 blockquote</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% blockquote %&#125;</div><div class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</div><div class="line">&#123;% endblockquote %&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
+<p><strong>引用书上的句子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% blockquote David Levithan, Wide Awake %&#125;</div><div class="line">Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</div><div class="line">&#123;% endblockquote %&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
+<p><strong>David Levithan</strong>Wide Awake</p>
+</blockquote>
+<p><strong>引用 Twitter</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %&#125;</div><div class="line">NEW: DevDocs now comes with syntax highlighting. http://devdocs.io</div><div class="line">&#123;% endblockquote %&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/" target="_blank" rel="external">http://devdocs.io</a></p>
+<p><strong>@DevDocs</strong><a href="https://twitter.com/devdocs/status/356095192085962752" target="_blank" rel="external">twitter.com/devdocs/status/356095192085962752</a></p>
+</blockquote>
+<p><strong>引用网络上的文章</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %&#125;</div><div class="line">Every interaction is both precious and an opportunity to delight.</div><div class="line">&#123;% endblockquote %&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Every interaction is both precious and an opportunity to delight.</p>
+<p><strong>Seth Godin</strong><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html" target="_blank" rel="external">Welcome to Island Marketing</a></p>
+</blockquote>
+<ul>
+<li><h4 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h4></li>
+</ul>
+<p>在文章中插入代码。</p>
+<p><strong>别名：</strong> code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% codeblock [title] [lang:language] [url] [link text] %&#125;</div><div class="line">code snippet</div><div class="line">&#123;% endcodeblock %&#125;</div></pre></td></tr></table></figure>
+<h4 id="样例-1"><a href="#样例-1" class="headerlink" title="样例"></a>样例</h4><p><strong>普通的代码块</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% codeblock %&#125;</div><div class="line">alert(&apos;Hello World!&apos;);</div><div class="line">&#123;% endcodeblock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alert(&apos;Hello World!&apos;);</div></pre></td></tr></table></figure>
+<p><strong>指定语言</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% codeblock lang:objc %&#125;</div><div class="line">[rectangle setX: 10 y: 10 width: 20 height: 20];</div><div class="line">&#123;% endcodeblock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[rectangle setX: 10 y: 10 width: 20 height: 20];</div></pre></td></tr></table></figure>
+<p><strong>附加说明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% codeblock Array.map %&#125;</div><div class="line">array.map(callback[, thisArg])</div><div class="line">&#123;% endcodeblock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Array.map</div><div class="line">array.map(callback[, thisArg])</div></pre></td></tr></table></figure>
+<p><strong>附加说明和网址</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;% codeblock _.compact http://underscorejs.org/#compact Underscore.js %&#125;</div><div class="line">_.compact([0, 1, false, 2, &apos;&apos;, 3]);</div><div class="line">=&gt; [1, 2, 3]</div><div class="line">&#123;% endcodeblock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">_.compactUnderscore.js</div><div class="line">_.compact([0, 1, false, 2, &apos;&apos;, 3]);</div><div class="line">=&gt; [1, 2, 3]</div></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="反引号代码块"><a href="#反引号代码块" class="headerlink" title="反引号代码块"></a>反引号代码块</h4></li>
+</ul>
+<p>另一种形式的代码块，不同的是它使用三个反引号来包裹。</p>
+<p>\<figure class="highlight plain"><figcaption><span>[title] [url] [link text] code snippet ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Pull Quote</div><div class="line"></div><div class="line">在文章中插入 Pull quote。</div></pre></td></tr></table></figure></p>
+<blockquote class="pullquote [class]"><p>content</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### jsFiddle</div><div class="line"></div><div class="line">在文章中嵌入 jsFiddle。</div></pre></td></tr></table></figure>
+<iframe scrolling="no" width="[width]" height="[height]" src="//jsfiddle.net/shorttag/embedded/[tabs]/[skin]" frameborder="0" allowfullscreen></iframe>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Gist</div><div class="line"></div><div class="line">在文章中嵌入 Gist。</div></pre></td></tr></table></figure>
+<script src="//gist.github.com/gist_id.js?file=[filename]"></script>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### iframe</div><div class="line"></div><div class="line">在文章中插入 iframe。</div></pre></td></tr></table></figure>
+<iframe src="url" width="[width]" height="[height]" frameborder="0" allowfullscreen></iframe>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Image</div><div class="line"></div><div class="line">在文章中插入指定大小的图片。</div></pre></td></tr></table></figure>
+<img src="/path/to/image" class="[class names]" title="[width] [height] [title text [alt text]]">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Link</div><div class="line"></div><div class="line">在文章中插入链接，并自动给外部链接添加 `target=&quot;_blank&quot;` 属性。</div></pre></td></tr></table></figure>
+<a>text url [external] [title]</a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Include Code</div><div class="line"></div><div class="line">插入 `source` 文件夹内的代码文件。</div></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Youtube</div><div class="line"></div><div class="line">在文章中插入 Youtube 视频。</div></pre></td></tr></table></figure>
+<div class="video-container"><iframe src="//www.youtube.com/embed/video_id" frameborder="0" allowfullscreen></iframe></div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Vimeo</div><div class="line"></div><div class="line">在文章中插入 Vimeo 视频。</div></pre></td></tr></table></figure>
+<div class="video-container"><iframe src="//player.vimeo.com/video/video_id" frameborder="0" allowfullscreen></iframe></div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### 引用文章</div><div class="line"></div><div class="line">引用其他文章的链接。</div></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### 引用资源</div><div class="line"></div><div class="line">引用文章的资源。</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- #### Raw</div><div class="line"></div><div class="line">如果您想在文章中插入 Swig 标签，可以尝试使用 Raw 标签，以免发生解析异常。</div></pre></td></tr></table></figure>
+
+content
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&gt; ==其上上面那么一大段，主要是用于编辑文章时候的文档语法，如果有自己的markdown编辑器，则可以用md文件，那么md语法就相对便捷。==[Markdown语法简介](http://blog.csdn.net/binglumeng/article/details/52949717)，注意有时候hexo不完全支持所有markdown的语法显示。</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">## 7、Asset资源文件夹</div><div class="line"></div><div class="line">Asset用于存放除了`source`文件夹中的文章意外的文件，比如图片、CSS/JS文件等。若仅有少量的图片，可以在`source/images`中存放，在文章中用`![](images/img.jpg)`引用。</div><div class="line"></div><div class="line">如果在`_config.yml`中配置了`post_asset_folder:true`那么Hexo创建新文章时候，会同时创建一个文件夹，存放相关资源。</div><div class="line"></div><div class="line">**注意：**有时候的markdown相对引用在文章中显示正常，但是发布后不一定可以，新版Hexo 3 中可以使用标签</div><div class="line"></div><div class="line">```yaml</div><div class="line">&#123;% asset_path slug %&#125;</div><div class="line">&#123;% asset_img slug [title] %&#125;</div><div class="line">&#123;% asset_link slug [title] %&#125;</div></pre></td></tr></table></figure>
+<p>比如使用相对引用图片资源时候</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">&#123;%</span> <span class="string">asset_img</span> <span class="string">img.jpg</span> <span class="string">avaster</span> <span class="string">%&#125;</span> <span class="comment"># 这就可以正常的显示相对引用的图片资源</span></div></pre></td></tr></table></figure>
+<h2 id="8、数据文件"><a href="#8、数据文件" class="headerlink" title="8、数据文件"></a>8、数据文件</h2><p>Hexo 3中增加了<code>数据文件</code>的功能，便于资源复用。通过加载<code>source/_data</code>下的<code>yaml 或json</code>文件。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 例如在source/_data下menu.yaml</span></div><div class="line"><span class="attr">Home:</span> <span class="string">/</span></div><div class="line"><span class="attr">Gallery:</span> <span class="string">/gallery/</span></div><div class="line"><span class="attr">Archives:</span> <span class="string">/archivers/</span></div><div class="line"><span class="comment">#那么就可以在模板中使用</span></div><div class="line"><span class="string">&#123;%</span> <span class="string">for</span> <span class="string">link</span> <span class="string">in</span> <span class="string">site.data.menu</span> <span class="string">%&#125;</span></div><div class="line">	<span class="string">&lt;a</span> <span class="string">href="&#123;&#123;</span> <span class="string">link</span> <span class="string">&#125;&#125;"&gt;&#123;&#123;</span> <span class="string">loop.key</span> <span class="string">&#125;&#125;&lt;/a&gt;</span></div><div class="line"><span class="string">&#123;%</span> <span class="string">endfor</span> <span class="string">%&#125;</span></div></pre></td></tr></table></figure>
+<h2 id="9、部署"><a href="#9、部署" class="headerlink" title="9、部署"></a>9、部署</h2><p>在<code>_config.yml</code>中配置参数，就可以部署到服务器。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span></div><div class="line">	<span class="attr">type:</span> <span class="string">git</span> </div><div class="line"><span class="comment"># 可以多个type,通过缩进表示层级 ,冒号后面要有空格！</span></div><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">- type:</span> <span class="string">git</span></div><div class="line">	<span class="attr">repo:</span></div><div class="line"><span class="bullet">-</span> <span class="string">type</span> <span class="string">:heroku</span></div><div class="line">	<span class="attr">repo:</span></div></pre></td></tr></table></figure>
+<ul>
+<li>git</li>
+</ul>
+<p>安装<code>hexo-deploy-git</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-deployer-git</span> <span class="bullet">--save</span></div></pre></td></tr></table></figure>
+<p>配置<code>_config.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span></div><div class="line">	<span class="attr">type:</span> <span class="string">git</span></div><div class="line">	<span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span></div><div class="line"><span class="attr">    branch:</span> <span class="string">[branch]</span></div><div class="line"><span class="attr">    message:</span> <span class="string">[message]</span> <span class="comment">#用与git自动提交的信息说明，默认格式Site updated:&#123;&#123;now('YYYY-MM-DD HH:mm:ss)&#125;&#125;</span></div></pre></td></tr></table></figure>
+<h2 id="10、永久链接"><a href="#10、永久链接" class="headerlink" title="10、永久链接"></a>10、永久链接</h2><p><code>_config.yml</code>配置调用永久链接或在每篇文章的Front-matter中指定</p>
+<ul>
+<li>变量</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:year</code></td>
+<td>文章的发表年份（4 位数）</td>
+</tr>
+<tr>
+<td><code>:month</code></td>
+<td>文章的发表月份（2 位数）</td>
+</tr>
+<tr>
+<td><code>:i_month</code></td>
+<td>文章的发表月份（去掉开头的零）</td>
+</tr>
+<tr>
+<td><code>:day</code></td>
+<td>文章的发表日期 (2 位数)</td>
+</tr>
+<tr>
+<td><code>:i_day</code></td>
+<td>文章的发表日期（去掉开头的零）</td>
+</tr>
+<tr>
+<td><code>:title</code></td>
+<td>文件名称</td>
+</tr>
+<tr>
+<td><code>:id</code></td>
+<td>文章 ID</td>
+</tr>
+<tr>
+<td><code>:category</code></td>
+<td>分类。如果文章没有分类，则是 <code>default_category</code> 配置信息。</td>
+</tr>
+</tbody>
+</table>
+<p>修改<code>permalink_defaluts:</code>参数为空，就可以永久变量。</p>
+<ul>
+<li>多语言支持</li>
+</ul>
+<p>修改<code>new_post_name</code>和<code>permalink</code>参数：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">new_post_name:</span> <span class="string">:lang/:title.md</span></div><div class="line"><span class="attr">permalink:</span> <span class="string">:lang/:title/</span></div><div class="line"><span class="comment">#新建文章时候</span></div><div class="line"><span class="string">hexo</span> <span class="string">new</span> <span class="string">"hello world"</span> <span class="bullet">--lang</span> <span class="string">tw</span></div><div class="line"><span class="comment"># 则输出 =&gt; source/_posts/tw/hello-world.md,访问网址也会变成url/tw/hello-world/</span></div></pre></td></tr></table></figure>
+<h2 id="11、主题"><a href="#11、主题" class="headerlink" title="11、主题"></a>11、主题</h2><p>创建Hexo主题，在<code>themes</code>文件夹内，新增任意文件夹，修改<code>_config.yml</code>内<code>theme</code>设置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 主题的结构</span></div><div class="line"><span class="string">.</span></div><div class="line"><span class="string">|---</span> <span class="string">_config.yml</span></div><div class="line"><span class="string">|---</span> <span class="string">languages</span></div><div class="line"><span class="string">|---</span> <span class="string">layout</span></div><div class="line"><span class="string">|---</span> <span class="string">scripts</span></div><div class="line"><span class="string">|___</span> <span class="string">source</span></div></pre></td></tr></table></figure>
+<h2 id="12、模板"><a href="#12、模板" class="headerlink" title="12、模板"></a>12、模板</h2><p>每个主题都必须有个<code>index</code>的模板，用于决定网站内容的呈现方式</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>用途</th>
+<th>回调</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index</code></td>
+<td>首页</td>
+<td></td>
+</tr>
+<tr>
+<td><code>post</code></td>
+<td>文章</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>分页</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>归档</td>
+<td><code>index</code></td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>分类归档</td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>标签归档</td>
+<td><code>archive</code></td>
+</tr>
+</tbody>
+</table>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/03/27/hello-world/" data-toggle="tooltip" data-placement="top" title="Hello World">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/21/图片缓存LruCache和DiskLruCache使用/" data-toggle="tooltip" data-placement="top" title="图片缓存LruCache和DiskLruCache的使用">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Hexo" title="Hexo">Hexo</a>
+                        
+                          <a class="tag" href="/tags/#博客" title="博客">博客</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          C语言学习笔记--基础语法二 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2016/12/17/C语言学习笔记--基础语法二/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#C" title="C">C</a>
+                        
+                    </div>
+                    <h1>C语言学习笔记--基础语法二</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2016-12-17
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="C语言基础部分二"><a href="#C语言基础部分二" class="headerlink" title="C语言基础部分二"></a>C语言基础部分二</h1><h2 id="1、函数"><a href="#1、函数" class="headerlink" title="1、函数"></a>1、函数</h2><p>函数，可以称为方法、子例程或程序等等。定义一个函数需要<strong>声明</strong>函数名称、返回类型和参数。函数就是一组执行特定任务和逻辑的代码语句。C程序至少有一个函数—main();<br><strong>main函數要有返回值，void類型或者int，float等，有的編譯器要求必須int，需注意這點，有的竟然还可以不写返回类型，编译器标准不同，c89,c99,c11之类的，好吧，最好写上吧。</strong></p>
+<ul>
+<li><p>定义函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">return_type <span class="title">function_name</span><span class="params">(parameter <span class="built_in">list</span>)</span></span>&#123;</div><div class="line">  body of the function;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>函数的构成：</p>
+<ul>
+<li>返回类型，若有则是返回数据的数据类型，若无则是void，或者不写。</li>
+<li>函数名称，也就是函数的实际名，与参数列表一起构成函数签名。</li>
+<li>参数，参数类似与占位符，用于接收传递过来的参数，在函数内部调用使用，参数可选，函数可无参数。</li>
+<li>函数主体，也就是执行一定的任务逻辑的代码语句。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * 函数返回两个数字中较大的那个数。</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> num1,<span class="keyword">int</span> num2)</span></span>&#123;</div><div class="line">  <span class="comment">//声明局部变量</span></div><div class="line">  <span class="keyword">int</span> result;</div><div class="line">  <span class="keyword">if</span>(num1&gt;num2)&#123;</div><div class="line">    result = num1;</div><div class="line">  &#125;esle&#123;</div><div class="line">    result = num2;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Note:</strong>函数声明包含返回类型、函数名、参数列表。而不必有函数主体。</p>
+<p>C语言中，函数声明参数列表中的参数名并不重要，只要有参数类型亦可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//如此也是合法的</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span>,<span class="keyword">int</span>)</span></span>;</div></pre></td></tr></table></figure>
+<p>函数参数多类似为形式参数，调用者需要传递实际参数。</p>
+<p>| 调用类型 | 描述                                       |<br>| —- | —————————————- |<br>| 传值调用 | 调用方将数值传递给形参，如果形参在函数内修改数值，但不会形象到外部的实际参数值。C 语言多用此方式。 |<br>| 引用调用 | 调用方将参数的地址复制给形参，此时在函数内形参修改数值，会同步影响到外部实际参数的。 |<br>| 指针形式 | 通过指针传递的方式，形参为实参的指针，操作会影响到实际参数的数据。        |</p>
+</li>
+<li><p>作用域</p>
+<p>任何一个编程语言中，定义的变量都应有其作用范围，称为作用域</p>
+<ul>
+<li>局部变量，作用与函数内。</li>
+<li>全局变量，作用与函数外部所有范围。</li>
+<li>形式参数，在函数的参数定义中，也就在函数内有效。类似局部变量了。</li>
+</ul>
+<p><strong>C语言中，函数的局部参数可以和全局参数同名称，但是内部仅使用局部变量的值。局部变量需要手动初始化，全局变量会自动初始化。</strong></p>
+</li>
+<li><p>数组</p>
+<p>C语言数组和Java的数组类似，用于存储一类相同类型的数值，声明一个变量，用序列编号指定元素数据。</p>
+<p>| 元素         | 元素         | 元素     | 元素         |<br>| ———- | ———- | —— | ———- |<br>| numbers[0] | numbers[1] | …… | numbers[n] |</p>
+<p>声明与初始化：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//声明</span></div><div class="line">type arrayName[arraySize]</div><div class="line"><span class="keyword">double</span> balance[<span class="number">10</span>];</div><div class="line"><span class="keyword">double</span> balance[<span class="number">3</span>] = &#123;<span class="number">12.0</span>,<span class="number">3.5</span>,<span class="number">8.8</span>&#125;;</div><div class="line"><span class="keyword">double</span> balance[] = &#123;<span class="number">7.9</span>,<span class="number">0.1</span>,<span class="number">3.2</span>&#125;</div><div class="line"><span class="comment">//单个元素赋值</span></div><div class="line">balacne[<span class="number">0</span>] = <span class="number">8.9</span>;</div></pre></td></tr></table></figure>
+<p>  数组的访问使用数组下标，从左至右依次为0—-n，某个元素则为arrayName[i];</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多维数组</td>
+<td>即数组的元素又是数组，常见的为二维数组。</td>
+</tr>
+<tr>
+<td>传递数组函数</td>
+<td>通过指定不带索引的数组名称，来给函数传递一个数组的指针。也就是作为形参。</td>
+</tr>
+<tr>
+<td>从函数返回数组</td>
+<td>函数的返回类型。</td>
+</tr>
+<tr>
+<td>指向数组的指针</td>
+<td>通过指定不带索引的数组名称，来生成一个指向数组中第一个元素的指针。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2、指针"><a href="#2、指针" class="headerlink" title="2、指针"></a>2、指针</h2><p>C语言指针是简单而有趣的一个概念，便于简化程序任务，比如动态内存分配等。</p>
+<p>每一个变量都有一个内存地址，这个地址是有一个编号的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> var1;</div><div class="line">  <span class="keyword">char</span> var2[<span class="number">10</span>];</div><div class="line">  <span class="comment">//printf函数参数为可变参数，必有string哦，不然会报错。和java不同。</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"var1变量的地址：%x \n"</span>,&amp;var1);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"varsb变量的地址：%x \n"</span>,&amp;var2);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>指针</p>
+<p>是一个特殊变量，它的值是另一个变量的地址，内存位置的直接地址。类似其他变量和常量，在使用指针存储其他变量的地址之前，需要声明和存储。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//type为指针的基类型，var-name为指针变量的名称。星号用于标示一个变量是指针。</span></div><div class="line">type *var-name;</div><div class="line"><span class="comment">//指针示例</span></div><div class="line"><span class="keyword">int</span> *ip;</div><div class="line"><span class="keyword">double</span> *dp;</div><div class="line"><span class="keyword">float</span> *fp;</div><div class="line"><span class="keyword">char</span> *cp;</div><div class="line"><span class="comment">//不管基类型为何种类型，指针的实际数据类型，都是一个代表内存地址的十六进制数。</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>如何使用指针</p>
+<p>使用指针涉及以下操作：</p>
+<ul>
+<li>定义指针变量</li>
+<li>把另一变量地址赋值给指针</li>
+<li>访问指针变量中可用地址的值</li>
+</ul>
+<p><code>*</code>用来返回位于操作数所指定的地址的变量的值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> var  = <span class="number">20</span>;<span class="comment">//实际变量的声明</span></div><div class="line">  <span class="keyword">int</span> *ip;<span class="comment">//指针变量的声明</span></div><div class="line">  </div><div class="line">  ip = &amp;var;<span class="comment">//在指针变量中存储var变量的地址，也就是给指针变量赋值</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"var变量的地址：%x\n"</span>,&amp;var);<span class="comment">//C语言printf函数不会换行，所以习惯都是内部加上\n，初学者可别弄混了哦。</span></div><div class="line">  <span class="comment">//在指针变量中存储的地址</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"在ip中存储的地址：%x \n"</span>,ip);</div><div class="line">  <span class="comment">//使用指针方位实际变量的值，也就用指针指向的内存地址，读取地址里面的数值。</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"指针所指向地址的存储数据：%d \n"</span>,*ip);<span class="comment">//使用*ip格式来获取指针对应的实际数值。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用*符号来作用与指针，便可得到指针所指向地址内的实际数值。</strong></p>
+</li>
+<li><p>Null指针</p>
+<p>变量声明的时候，如果没有明确赋值，最好给指针赋值一个NULL值，如此为空指针。</p>
+<p><code>NULL</code>指针是定义在标准库中值为零的常量。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> *ip=null;</div><div class="line">  <span class="comment">//输出ip的值，就是0</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"ip的值是：%x \n"</span>,ip);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Note:</strong>弄清几个概念，&amp;var表示var的地址，*var是指var指针所指向地址的储存的数值。</p>
+<p>多数操作系统都不允许访问地址为0的内存，其为系统保留内存，有特殊含义，表明指针不指向可访问的内存位置。依据惯例指针包含空值，则认为它不指向任何地址。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(ptr)<span class="comment">//表示，如果ptr非空，则完成</span></div><div class="line"><span class="keyword">if</span>(!ptr)<span class="comment">//表示，如果ptr为空，则完成。</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>指针详解</p>
+<p>| 概念      | 描述                           |<br>| ——- | —————————- |<br>| 指针的算数运算 | 指针可以进行四种算术运算++、–、+、-        |<br>| 指针数组    | 可以定义用来存储指针的数组                |<br>| 指向指针的指针 | C语言允许指向指针的指针                 |<br>| 传递指针给函数 | 通过引用过地址传递参数，使传递的参数在调用的函数中被改变 |<br>| 从函数返回指针 | C允许函数返回指针到局部变量、静态变量和动态内存分配   |</p>
+</li>
+</ul>
+<ul>
+<li><p>字符串</p>
+<p>C语言中字符串实际上是使用<code>null</code>字符<code>\0</code>终止的一维字符数组。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> cs[<span class="number">6</span>] = &#123;<span class="string">'H'</span>,<span class="string">'e'</span>,<span class="string">'l'</span>,<span class="string">'l'</span>,<span class="string">'o'</span>,<span class="string">'\0'</span>&#125;;</div><div class="line"><span class="comment">//这就是hello字符串，用的是null字符'\0'结尾的一个字符数组,所以数组长度比字符串数字多1,因为末尾是null的字符标记。也可以写作：</span></div><div class="line"><span class="keyword">char</span> cs[] = <span class="string">"Hello"</span>;</div></pre></td></tr></table></figure>
+<p>C/C++中定义的字符串的内存表示：</p>
+<p><img src="http://img.blog.csdn.net/20161217213357762?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmluZ2x1bWVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="string"></p>
+<p>其实可以不必写出null标记，C编译器会自动追加，在初始化时候。</p>
+<p>常用的C语言字符串操作函数：</p>
+<p>| 函数            | 描述                                   |<br>| ————- | ———————————— |<br>| strcpy(s1,s2) | 复制字符串s2到s1                           |<br>| strcat(s1,s2) | 连接字符串s2到s1末尾                         |<br>| strlen(s1)    | 返回字符串s1的长度                           |<br>| strcmp(s1,s2) | s1==s2则返回0,<code>s1&lt;s2</code>则返回小于0,s1&gt;s2则返回大于0 |<br>| strchr(s1,ch) | 返回一个指针，指向字符串s1中字符ch的第一次出现的位置         |<br>| strstr(s1,s2) | 返回一直指针，指向字符串s1中字符串s2的第一次出现的位置        |</p>
+</li>
+</ul>
+<h2 id="3、结构体"><a href="#3、结构体" class="headerlink" title="3、结构体"></a>3、结构体</h2><p>C语言中数组是存储一类相同类型的数据变量，而<code>结构</code>则可以存储不同类型的数据项。有点类似面向对象的编程语言中的实体类<code>bean</code>的封装。</p>
+<ul>
+<li><p>定义结构</p>
+<p><code>struct</code>语句，可以定义一个包含多个成员的数据类型。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> [<span class="title">structure</span> <span class="title">tag</span>]&#123;</span></div><div class="line">  member definition;</div><div class="line">  member definition;</div><div class="line">  ...</div><div class="line">  member definition;</div><div class="line">&#125;[one <span class="keyword">or</span> more structure variables]</div></pre></td></tr></table></figure>
+<p>其中<code>structure tag</code>是可选的，每个<code>member definition</code>是标准的变量定义，比如<code>int i;double d;</code>如下示例，定义一个Book结构的方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Books</span>&#123;</span></div><div class="line">  <span class="keyword">char</span> title[<span class="number">50</span>];</div><div class="line">  <span class="keyword">char</span> author[<span class="number">50</span>];</div><div class="line">  <span class="keyword">char</span> subject[<span class="number">100</span>];</div><div class="line">  <span class="keyword">int</span> book_id;</div><div class="line">&#125; book;</div></pre></td></tr></table></figure>
+</li>
+<li><p>访问结构成员</p>
+<p>使用成员运算符<code>.</code>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="comment">//定义结构体</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Books</span>&#123;</span></div><div class="line">    <span class="keyword">char</span> title[<span class="number">50</span>];</div><div class="line">	<span class="keyword">char</span> author[<span class="number">50</span>];</div><div class="line">	<span class="keyword">char</span> subject[<span class="number">100</span>];</div><div class="line">	<span class="keyword">int</span> book_id;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//main函数</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//声明结构体的变量，使用关键词struct</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Books</span> <span class="title">Book1</span>;</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Books</span> <span class="title">Book2</span>;</span></div><div class="line">  <span class="comment">//初始化变量的内部数据,结构体成员，用变量名.成员名</span></div><div class="line">  <span class="built_in">strcpy</span>(Book1.title,<span class="string">"C语言编程"</span>);</div><div class="line">  <span class="built_in">strcpy</span>(Book1.author,<span class="string">"谭浩强"</span>);</div><div class="line">  <span class="built_in">strcpy</span>(Book1.subject,<span class="string">"C语言编程入门"</span>);</div><div class="line">  Book1.book_id = <span class="number">10086</span>;</div><div class="line">  <span class="comment">//输出Book1信息</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Book1的标题：%s \n"</span>,Book1.title);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Book1的作者：%s \n"</span>,Book1.author);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Book1的副标题：%s \n"</span>,Book1.subject);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Book1的编号：%d \n"</span>,Book1.book_id);</div><div class="line">  <span class="comment">//Book2类似</span></div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>结构体作为函数参数</p>
+<p>结构体也可以作为参数传递给函数调用，类似变量和指针。不同与Java语言的方法函数，这里需要先声明结构函数，然后实现，在调用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Books</span></span></div><div class="line">&#123;</div><div class="line">   <span class="keyword">char</span>  title[<span class="number">50</span>];</div><div class="line">   <span class="keyword">char</span>  author[<span class="number">50</span>];</div><div class="line">   <span class="keyword">char</span>  subject[<span class="number">100</span>];</div><div class="line">   <span class="keyword">int</span>   book_id;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/* 函数声明 */</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printBook</span><span class="params">( struct Books book )</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( )</span></span></div><div class="line">&#123;</div><div class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">Books</span> <span class="title">Book1</span>;</span>        <span class="comment">/* 声明 Book1，类型为 Book */</span></div><div class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">Books</span> <span class="title">Book2</span>;</span>        <span class="comment">/* 声明 Book2，类型为 Book */</span></div><div class="line"> </div><div class="line">   <span class="comment">/* Book1 详述 */</span></div><div class="line">   <span class="built_in">strcpy</span>( Book1.title, <span class="string">"C Programming"</span>);</div><div class="line">   <span class="built_in">strcpy</span>( Book1.author, <span class="string">"Nuha Ali"</span>); </div><div class="line">   <span class="built_in">strcpy</span>( Book1.subject, <span class="string">"C Programming Tutorial"</span>);</div><div class="line">   Book1.book_id = <span class="number">6495407</span>;</div><div class="line"></div><div class="line">   <span class="comment">/* Book2 详述 */</span></div><div class="line">   <span class="built_in">strcpy</span>( Book2.title, <span class="string">"Telecom Billing"</span>);</div><div class="line">   <span class="built_in">strcpy</span>( Book2.author, <span class="string">"Zara Ali"</span>);</div><div class="line">   <span class="built_in">strcpy</span>( Book2.subject, <span class="string">"Telecom Billing Tutorial"</span>);</div><div class="line">   Book2.book_id = <span class="number">6495700</span>;</div><div class="line"> </div><div class="line">   <span class="comment">/* 输出 Book1 信息 */</span></div><div class="line">   printBook( Book1 );</div><div class="line"></div><div class="line">   <span class="comment">/* 输出 Book2 信息 */</span></div><div class="line">   printBook( Book2 );</div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printBook</span><span class="params">( struct Books book )</span></span></div><div class="line">&#123;</div><div class="line">   <span class="built_in">printf</span>( <span class="string">"Book title : %s\n"</span>, book.title);</div><div class="line">   <span class="built_in">printf</span>( <span class="string">"Book author : %s\n"</span>, book.author);</div><div class="line">   <span class="built_in">printf</span>( <span class="string">"Book subject : %s\n"</span>, book.subject);</div><div class="line">   <span class="built_in">printf</span>( <span class="string">"Book book_id : %d\n"</span>, book.book_id);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>指向结构的指针</p>
+<p>可以定义结构体的指针，类似变量和指针，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//声明指针</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Books</span> *<span class="title">struct_pointer</span>;</span></div><div class="line"><span class="comment">//将变量的地址，赋值给指针</span></div><div class="line">struct_pointer = &amp;Book1;</div><div class="line"><span class="comment">//要想让这个指针能够访问到结构体中的某个成员，就需要用-&gt;运算符</span></div><div class="line">struct_pointer-&gt;title;<span class="comment">//指针访问结构体中的title变量的值</span></div></pre></td></tr></table></figure>
+<p><strong>上例使用指针模式：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//其他不变</span></div><div class="line">...</div><div class="line">printBook(&amp;Book1);<span class="comment">//这里传入的是指针</span></div><div class="line">...</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printBook</span><span class="params">(struct Books *book)</span></span>&#123;<span class="comment">//结构体的指针，作为参数，传递给函数</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Book title:%s \n"</span>,book-&gt;title);<span class="comment">//使用-&gt;运算符访问结构体成员</span></div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>位域</p>
+<p>又称”位段”，为了节省空间，仅存储占用一个或者几个二进制位的数据字节，满足一些特殊需要，如开关变量0和1,只用一个二进制位即可满足。</p>
+<p>所谓位域，就是吧一个字节中的二进制位，划分为几个不同的区域，位域有域名，可以在程序中用域名来操作，从而可以把不同的对象用一个字节的二进制位域来表示。</p>
+<blockquote>
+<p>位域定义和变量说明</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;<span class="class"><span class="keyword">struct</span> 位域结构名&#123;</span></div><div class="line">&gt;  位域列表</div><div class="line">&gt;&#125;;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>其中位域列表的形式：</p>
+<p><code>类型说明符 位域名:位域长度</code></p>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bs</span>&#123;</span></div><div class="line">  <span class="keyword">int</span> a:<span class="number">8</span>;</div><div class="line">  <span class="keyword">int</span> b:<span class="number">2</span>;</div><div class="line">  <span class="keyword">int</span> c:<span class="number">6</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>位域变量的说明与结构变量的说明方式相同，可采用先定义后说明，同时定义说明或者直接说明三种方式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bs</span>&#123;</span></div><div class="line">  <span class="keyword">int</span> a:<span class="number">8</span>;<span class="comment">//占用的二进制位数8个</span></div><div class="line">  <span class="keyword">int</span> b:<span class="number">2</span>;</div><div class="line">  <span class="keyword">int</span> c:<span class="number">6</span>;</div><div class="line">&#125; data;</div></pre></td></tr></table></figure>
+<p>如上则是同时定义和说明一个<code>bs</code>的变量<code>data</code>，占用两个字节(两个8位)。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">packed_stuct</span>&#123;</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> f1:<span class="number">1</span>;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> f2:<span class="number">1</span>;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> f3:<span class="number">1</span>;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> f4:<span class="number">1</span>;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> type:<span class="number">4</span>;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> my_int:<span class="number">9</span>;<span class="comment">//注意此处，前面有int，和下面的注意事项中不能超过一个字节的要求，并不矛盾，</span></div><div class="line">&#125; pack;</div></pre></td></tr></table></figure>
+<p>这里pack_struct就包含了6个成员，四个1位的标识符，一个4位的type，还有一个9位的my_int。</p>
+</li>
+<li><p>位于定义的注意事项</p>
+<ul>
+<li><p>一个位域必须存储在同一个字节中，不能跨两个字节，但是可以指定位域的开始位置：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bs</span>&#123;</span></div><div class="line">  <span class="keyword">unsigned</span> a:<span class="number">4</span>;</div><div class="line">  <span class="keyword">unsigned</span>  :<span class="number">4</span>;<span class="comment">//空域</span></div><div class="line">  <span class="keyword">unsigned</span> b:<span class="number">4</span>;<span class="comment">//从下一单元开始存放，而不是使用上面空的那4个</span></div><div class="line">  <span class="keyword">unsigned</span> c:<span class="number">4</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>位域不恩你个跨两个字节，所以位域长度不能超过8,超过了的话，可能会被重叠，或者放入下一个字节了。</p>
+</li>
+<li><p>位域可以是无名位域，之用来占位，其不能使用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">k</span>&#123;</span></div><div class="line">  <span class="keyword">int</span> a:<span class="number">1</span>;</div><div class="line">  <span class="keyword">int</span>  :<span class="number">2</span>;<span class="comment">//占位的，无名位域，不可用</span></div><div class="line">  <span class="keyword">int</span> b:<span class="number">3</span>;</div><div class="line">  <span class="keyword">int</span> c:<span class="number">2</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其实，位域也算是一种结构类型，只不过成员是按照二进制位表示而已。</p>
+</li>
+<li><p>位域的使用</p>
+<p>类似与结构成员的使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">位域变量名.位域名</div></pre></td></tr></table></figure>
+<p>位域允许各种格式输出，示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//定义了一个位域，并声明了一个变量bit，和它的指针变量*pbit</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">bs</span>&#123;</span></div><div class="line">    <span class="keyword">unsigned</span> a:<span class="number">1</span>;</div><div class="line">    <span class="keyword">unsigned</span> b:<span class="number">3</span>;</div><div class="line">    <span class="keyword">unsigned</span> c:<span class="number">4</span>;</div><div class="line">  &#125;bit,*pbit;</div><div class="line">  <span class="comment">//给位域赋值，注意不要超过位域的值的范围。</span></div><div class="line">  bit.a = <span class="number">1</span>;<span class="comment">//就只能是0或1,因为定义占1个二进制位</span></div><div class="line">  bit.b = <span class="number">7</span>;<span class="comment">//0--7,因为占用3个二进制位</span></div><div class="line">  bit.c = <span class="number">15</span>;</div><div class="line">  <span class="comment">//以整型量输出</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d,%d,%d \n"</span>,bit.a,bit.b,bit.c);</div><div class="line">  <span class="comment">//使用位域指针访问成员</span></div><div class="line">  pbit = &amp;bit;<span class="comment">//给指针赋值</span></div><div class="line">  pbit-&gt;a = <span class="number">0</span>;<span class="comment">//指针访问成员，并赋值给成员</span></div><div class="line">  pbit-&gt;b&amp;=<span class="number">3</span>;<span class="comment">//使用了&amp;=运算符，相当与pbit-&gt;b = pbit-&gt;b&amp;3;</span></div><div class="line">  pbit-&gt;c|=<span class="number">1</span>;<span class="comment">//使用了|=运算符，相当与pbit-&gt; = pbit-&gt;b|3;</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d,%d,%d \n"</span>,pbit-&gt;a,pbit-&gt;b,pbit-c);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/18/C语言学习笔记--基础语法三/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法三">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/15/C语言学习笔记--基础语法一/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法一">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#C" title="C">C</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

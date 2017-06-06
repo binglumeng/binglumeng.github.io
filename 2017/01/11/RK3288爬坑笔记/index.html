@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          xUtils开源框架简要使用说明 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/01/11/RK3288爬坑笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#xUtils" title="xUtils">xUtils</a>
+                        
+                          <a class="tag" href="/tags/#RK3288" title="RK3288">RK3288</a>
+                        
+                    </div>
+                    <h1>xUtils开源框架简要使用说明</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-01-11
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="RK3288平台Android系统源码编译爬坑笔记"><a href="#RK3288平台Android系统源码编译爬坑笔记" class="headerlink" title="RK3288平台Android系统源码编译爬坑笔记"></a>RK3288平台Android系统源码编译爬坑笔记</h1><p>博主自认为永远都是IT界的技术小白，最近开始接触Android系统源码的编译，由于工作需要，使用的是国产<strong>瑞芯微rk3288芯片</strong>平台的核心板，选择的服务商是阿里巴巴上相对知名的<strong>葡萄雨科技</strong>，虽然他们提供了系统源码和简单的操作步骤，但是实际过程中，任然很多问题，在此简要笔记之，亦希望有助于其他网友。</p>
+<h2 id="1、平台环境"><a href="#1、平台环境" class="headerlink" title="1、平台环境"></a>1、平台环境</h2><p>使用Linux操作系统，搭建服务器环境以及编译系统，不同的硬件平台、软件环境，可能引发的问题也不相同，在此有必要简要列举一下本次工作的软硬件环境：</p>
+<ul>
+<li>Dell Vostro 商用台式机，i7、8G</li>
+<li>Ubuntu-16.04.1-server-amd64</li>
+</ul>
+<blockquote>
+<p>Note:改型电脑安装系统时，会出现一些问题，反正对戴尔没啥好感，呵呵。Linux系统的安装步骤，在此也就不详细赘述，无非就是：1、使用<strong>Ultra ISO软碟通、LinuxLiveCreater</strong>等工具制作启动U盘；2、电脑USB启动U盘，进入安装，按步骤走就是了。</p>
+<p><a href="http://blog.csdn.net/binglumeng/article/details/52909645" target="_blank" rel="external">Linux系统安装</a>、<a href="http://blog.csdn.net/binglumeng/article/details/50195649" target="_blank" rel="external">Windows系统安装</a>、<a href="http://blog.csdn.net/binglumeng/article/details/50195991" target="_blank" rel="external">PE系统制作</a>、有时出现CD-ROM的问题，请移步<a href="http://blog.csdn.net/binglumeng/article/details/54287010；" target="_blank" rel="external">http://blog.csdn.net/binglumeng/article/details/54287010；</a></p>
+</blockquote>
+<h2 id="2、依赖安装"><a href="#2、依赖安装" class="headerlink" title="2、依赖安装"></a>2、依赖安装</h2><p>Google官方推荐使用Ubuntu LST版本的系统作为Android系统源码开发环境，虽说其他Linux发行版也可以，但是毕竟可能会出现这样那样的问题，普通开发者没必要去自找太多坑。</p>
+<p>Android官网的教程<a href="https://source.android.com/source/initializing.html" target="_blank" rel="external">Android源码编译</a>教程还是Ubuntu14.04，此处本人使用的是Ubuntu Server16.04，稍有不同，还是建议网友使用和官方一致的版本比较好。环境配置搭建参照了官方的教程，也有网上的<a href="http://blog.csdn.net/fuchaosz/article/details/51487585" target="_blank" rel="external">梧桐那时雨</a>的一篇博客，以及<a href="http://stackoverflow.com/questions/36048358/building-android-from-sources-unsupported-reloc-43" target="_blank" rel="external">StackOverFlow</a>上的解答。一同表示感谢。</p>
+<p>不论是RK平台、MTK平台、高通或者其他平台的Android系统编译，其实都是Google官方Android的一个定制修改，需求环境也大体相同。</p>
+<ul>
+<li><p>源码下载</p>
+<p>本文简述的是RK3288芯片平台的Android系统编译，源码也基本都是服务商提供，博主使用的是<strong>葡萄雨科技</strong>的系统源码，而关于Android官方的系统编译，可以参照如上<a href="https://source.android.com/source/initializing.html" target="_blank" rel="external">源码链接</a>的教程。</p>
+<blockquote>
+<p>使用Google源码的话，需要Out door，作为技术员这应该是基本技能哦。</p>
+</blockquote>
+</li>
+<li><p>安装JDK</p>
+<p>根据Google官方要求，5.x–6.x使用的是openjdk7、不支持Oracle的JDK，否则会提示错误，如有兴趣，你也可以去跳坑:monkey:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:openjdk-r/ppa</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install openjdk-7-jdk</div></pre></td></tr></table></figure>
+<p>可能你会安装多个jdk版本，是有时候，最好根据要求，使用对应版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo update-alternatives --config java</div><div class="line">sudo update-alternatives --config javac</div></pre></td></tr></table></figure>
+<p>然后添加到系统环境变量中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/profile</div></pre></td></tr></table></figure>
+<p>在文件末尾追加</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> Edit by binglumeng Add jdk environment</span></div><div class="line">export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64  ## 注释，此处为openjdk的安装路径，请根据自己电脑的时间安装路径来修改</div><div class="line">export JRE_HOME=$JAVA_HOME/jre</div><div class="line">export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$JAVA_HOME/lib/tools.jar</div><div class="line">export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</div></pre></td></tr></table></figure>
+<p>然后保存运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">source /etc/profile</div><div class="line"><span class="meta">#</span><span class="bash"> 运行java命令，确认环境变量配置是否成功</span></div><div class="line">java</div><div class="line">javac</div><div class="line">java -version</div></pre></td></tr></table></figure>
+<p><strong>注意：建议使用root用户操作Ubuntu，虽然普通用户可以使用sudo，但是有时候可能还会出现权限的问题</strong></p>
+</li>
+</ul>
+<ul>
+<li><p>安装依赖指令与库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install repo bc vim gcc g++ ssh git python m4 lzop</div><div class="line">sudo apt install zip unzip git-core gnupg flex bison gperf build-essential curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils xsltproc</div></pre></td></tr></table></figure>
+<p>修改配置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="built_in">export</span>  CCACHE_DIR=~/.ccache &gt;&gt;~/.bashrc</div><div class="line"><span class="built_in">echo</span> <span class="built_in">export</span> USE_CCACHE=1 &gt;&gt; ~/.bashrc</div><div class="line"><span class="comment">## 在源码工程根目录下,提高编译器的效率，设置缓存</span></div><div class="line">prebuilds/misc/linux-x86/ccache/ccache -M 50G</div></pre></td></tr></table></figure>
+<p>更新和升级系统</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo apt update</div><div class="line">sudo apt upgrade</div><div class="line">sudo apt autoremove</div><div class="line">sudo apt autoclean</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改文件</p>
+<p>此处鉴于本人编译源码过程中，所遇问题以及搜索的解决方案，在此先罗列出需要修改的文件和内容</p>
+<ul>
+<li><p>{project}/art/build/Android.common_build.mk</p>
+<p>在rk3288，葡萄雨提供的源码中，暂时没有修改该文件，其实可以修改一下，找到下面内容</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Host.</span></div><div class="line">ART_HOST_CLANG := <span class="literal">false</span></div><div class="line">ifneq ($(WITHOUT_HOST_CLANG),<span class="literal">true</span>)</div><div class="line">  <span class="comment"># By default, host builds use clang for better warnings.</span></div><div class="line">  ART_HOST_CLANG := <span class="literal">true</span></div><div class="line">endif</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>修改第三行的<code>true</code>为<code>false</code></p>
+</li>
+<li><p>{project}/build/core/clang/HOST_x86_common.mk</p>
+<p>找到<code>CLANG_CONFIG_x86_LINUX_HOST_EXTRA_ASFLAGS</code>在下面增加<code>-B$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/x86_64-linux/bin \</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Shared by HOST_x86.mk and HOST_x86_64.mk.</span></div><div class="line"></div><div class="line">ifeq ($(HOST_OS),darwin)</div><div class="line"><span class="comment"># nothing required here yet</span></div><div class="line">endif</div><div class="line"></div><div class="line">ifeq ($(HOST_OS),linux)</div><div class="line">CLANG_CONFIG_x86_LINUX_HOST_EXTRA_ASFLAGS := \</div><div class="line">  --gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \</div><div class="line">  --sysroot=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/sysroot \</div><div class="line">  -B$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/x86_64-linux/bin \</div><div class="line">  -no-integrated-as</div><div class="line"></div><div class="line">CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CFLAGS := \</div><div class="line">  --gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \</div><div class="line">  -no-integrated-as</div></pre></td></tr></table></figure>
+</li>
+<li><p>{project}/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/x86_64-linux/bin</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#就是用linux系统的ld文件替换源码中的ld文件</span></div><div class="line">cp /usr/bin/ld.gold /prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/x86_64-linux/bin/ld</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、系统编译"><a href="#3、系统编译" class="headerlink" title="3、系统编译"></a>3、系统编译</h2><p>  Android原生AOSP系统的编译，可以参考官方教程，主要步骤：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> build/envsetup.sh</div><div class="line">lunch</div><div class="line">make -j8</div></pre></td></tr></table></figure>
+<p>其中第二步骤，会出现选项，选择对应平台的编译对象，如<code>arm-eng</code>、<code>arm64-eng</code>等，第三步的<code>-j8</code>表示开启的线程数，一般线程数=core*2也就是cpu核数的2倍，i5一般为双核四线程，算作虚拟4核，可以用<code>-j8</code>，而i7可以用<code>-j16</code>，个人理解，呵呵。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#编译错误，重新编译</span></div><div class="line">make clean </div><div class="line"><span class="comment"># 或者</span></div><div class="line">make clobber</div><div class="line"></div><div class="line"><span class="comment"># 编译成功的话，可以用虚拟机看看镜像如何</span></div><div class="line"><span class="built_in">cd</span> &#123;project&#125;/out/targe/product/generic/</div><div class="line">emulator</div></pre></td></tr></table></figure>
+<ul>
+<li>RK3288系统编译</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#在源码根目录下</span></div><div class="line">sudo vim ./mk.sh</div><div class="line"><span class="comment">#修改里面的JAVA_HOME路径为本机jdk路径</span></div><div class="line">./mk.sh -u <span class="comment">## 编译uboot</span></div><div class="line">./mk.sh -k <span class="comment">## 编译kernel</span></div><div class="line">./mk.sh -s <span class="comment">## 编译文件系统</span></div></pre></td></tr></table></figure>
+<h2 id="4、错误分析"><a href="#4、错误分析" class="headerlink" title="4、错误分析"></a>4、错误分析</h2><ul>
+<li><p>\<add file=""> failed </add></p>
+<p>先前根据Android官方编译教程，设置了<code>OUT_DIR_COMMON_BASE</code>环境变量，这个会让编译出来的文件镜像，到指定的out目录下。但是在rk3288的mk文件中，并未完全使用该变量，以致于生成的<code>release</code>和<code>target</code>目录分开了，<code>target</code>到变量指定的目录下了，<code>release</code>还在工程目录下的<code>out</code>目录下，如此就不能合并打包成功。</p>
+</li>
+<li><p>unsupported reloc 43</p>
+<p>这个问题一般就是因为Android C语言编译mk文件的配置问题，也是上文所说的<code>/build/core/clang/HOST_x86_common.mk</code>中的新增那句话。注意，在Android7.0以下版本，记得要保留<code>-no-integrated-as</code>这句话。</p>
+<p>对于这个问题的解决，有好些说法，修改<code>/art/build/Android.common_build.mk</code>和<code>cp /usr/bin/ld.gold</code>等，最好都用一下。</p>
+</li>
+<li><p>Api deprecation</p>
+<p>问题好似是这么个描述，意思就是系统级的java源码，有些是不公开的，会提示要么将java文件注释<code>@hide</code>要么就运行<code>make update-api</code>一般运行一下<code>make update-api</code>即可。</p>
+</li>
+<li><p>其他问题</p>
+<p>由于硬件以及系统平台的差异，可能有些文档中没有提及一些简单的工具包的安装，rk3288平台的Android系统编译中，就需要<code>lzop,bc,zip,unzip</code>等工具，本文也在上文中列举安装了，若是平台遇到<code>command not found</code>之类的错误，根据提示，安装相应的工具，再次编译尝试。</p>
+</li>
+</ul>
+<p><strong>注</strong>：本文为简要笔记，难免不全，容后再做充实，希望对其他网友有点帮助。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/01/21/xUtils3简要说明/" data-toggle="tooltip" data-placement="top" title="xUtils3开源框架简要使用说明">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/01/09/Linux出现require CD-ROM问题/" data-toggle="tooltip" data-placement="top" title="UbuntuServer/CentOS安装require CD-ROM问题">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#xUtils" title="xUtils">xUtils</a>
+                        
+                          <a class="tag" href="/tags/#RK3288" title="RK3288">RK3288</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

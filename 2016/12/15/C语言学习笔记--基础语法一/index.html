@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          C语言学习笔记--基础语法一 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2016/12/15/C语言学习笔记--基础语法一/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#C" title="C">C</a>
+                        
+                    </div>
+                    <h1>C语言学习笔记--基础语法一</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2016-12-15
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="C语言学习笔记"><a href="#C语言学习笔记" class="headerlink" title="C语言学习笔记"></a>C语言学习笔记</h1><p>C语言是一种通用的、面向过程的计算机编程语言。不同于Java、C#之类的面向对象的语言，C语言适用于底层开发，执行效率接近于汇编语言。</p>
+<h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><ul>
+<li><p>程序结构</p>
+<p>C程序主要包括以下部分</p>
+<ul>
+<li>预处理器指令，如<code>#include &lt;stdio.h&gt;</code></li>
+<li>函数，如main()</li>
+<li>变量</li>
+<li>语句&amp;表达式</li>
+<li>注释,<code>//</code>，<code>/***/</code>单行或多行注释</li>
+</ul>
+</li>
+<li><p>基本语法</p>
+<p>C程序由各种令牌组成，<code>Tokens</code>，<code>;</code>分号结束语句。</p>
+<p>标识符用数字、字母、下划线组成，类似Java，数字不能开头。</p>
+<p>| auto     | else   | long     | switch   |<br>| ——– | —— | ——– | ——– |<br>| break    | enum   | register | typedef  |<br>| case     | extern | return   | union    |<br>| char     | float  | short    | unsigned |<br>| const    | for    | signed   | void     |<br>| continue | goto   | sizeof   | volatile |<br>| default  | if     | static   | while    |<br>| do       | int    | struct   | _Packed  |<br>| double   |        |          |          |</p>
+</li>
+<li><p>数据类型</p>
+<p>C语言数据类型</p>
+<ul>
+<li>基本类型，整数型、浮点型。</li>
+<li>枚举类型，也算是算数类型，但是枚举定义了一定的变量数值。</li>
+<li>void类型，无可用值。</li>
+<li>派生类型，包括指针类型、数组类型、结构类型、共用体类型和函数类型。</li>
+</ul>
+<p>整数型<code>char</code>、<code>unsigned char</code>、<code>signed char</code>、<code>int</code>、<code>unsigned int</code>、<code>short</code>、<code>unsigned short</code>、<code>long</code>、<code>unsigned long</code></p>
+<p>浮点型、<code>float</code>、<code>double</code>、<code>long double</code>之类的。windows下32位、64位系统，变量的值占用字节大小一致，而类Unix下，不完全一致。</p>
+<p>可以用<code>sizeof()</code>函数来确定大小范围。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></div><div class="line"><span class="comment">//主函数入口，有时候会写void，int返回类型，都一样。但是不能不寫，而且有的編譯器要求必須是int返回類型</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"int 存储大小：%1u \n"</span>,<span class="keyword">sizeof</span>(<span class="keyword">int</span>));<span class="comment">//注意和Java之类的不同。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>void类型，可以作为返回类型、参数、或者指针的返回指向。</p>
+</li>
+<li><p>变量</p>
+<p>变量定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义变量</span></div><div class="line"><span class="keyword">int</span> i,j,k;</div><div class="line"><span class="keyword">char</span> a;</div><div class="line"><span class="keyword">float</span> f = <span class="number">2.2f</span>;</div><div class="line"><span class="comment">//声明变量，而不用，在函数外。</span></div><div class="line"><span class="keyword">extern</span> value;</div></pre></td></tr></table></figure>
+<p>C语言有左值(Lvalue)和右值(Rvalue)。其实左值就是变量名的意思，右值可理解为具体数值。</p>
+</li>
+<li><p>常量</p>
+<p>整数常量，有十进制、八进制、十六进制，用0x或0X表示十六进制。0表示八进制，整数常量可以带一个后缀，U或者L分辨表示<code>unsigned</code>和<code>long</code>，也可以小写。</p>
+<p>浮点常量、字符常量。</p>
+<p>| 转义序列     | 含义          |<br>| ——– | ———– |<br>| \\      | \           |<br>| \‘      | ‘           |<br>| \“      | “           |<br>| \?      | ?           |<br>| \a       | 警报铃声        |<br>| \b      | 退格键         |<br>| \f      | 换页符         |<br>| \n      | 换行符         |<br>| \r      | 回车          |<br>| \t      | 水平制表符       |<br>| \v       | 垂直制表符       |<br>| \ooo    | 一到三位的八进制    |<br>| \xhh… | 一到多位数字的十六进制 |</p>
+<p>char是单引号<code>&#39;&#39;</code>，字符串是双引号<code>&quot;&quot;</code>。</p>
+<p><strong>定义常量</strong></p>
+<ul>
+<li>使用#define</li>
+<li>使用const关键字</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LENGTH 10</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> WIDTH 5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NEWLINE <span class="meta-string">'\n'</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> area;</div><div class="line">  </div><div class="line">  area = LENGTH * WIDTH;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"value of area: %d"</span>,area);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%c"</span>,NEWLINE);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>const关键字</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">const</span> <span class="keyword">int</span> LENGTH = <span class="number">10</span>;</div><div class="line">  <span class="keyword">const</span> <span class="keyword">int</span> WIDTH = <span class="number">5</span>;</div><div class="line">  <span class="keyword">const</span> <span class="keyword">int</span> NEWLINE = <span class="string">'\n'</span>;</div><div class="line">  ....</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>C存储类</p>
+<p>存储类定义C程序中的变量或函数的范围、可见性和生命周期。</p>
+<ul>
+<li><p>auto，存储类是所有==<strong>局部</strong>==变量默认的存储类。</p>
+</li>
+<li><p>register，定义存储在==<strong>寄存器</strong>==而不是ARM中的局部变量，大小通常为一个词，且不能应用一元的<code>&amp;</code>运算。比较快访问，但不一定就在寄存器内存储啊，切记。</p>
+</li>
+<li><p>static，存储周期为整个程序的生命周期，它也可以用于修饰全局变量，但是会将变量限制在声明的文件内。有点类似JAVA中的静态。</p>
+</li>
+<li><p>extern，也是提供一个全局变量，会对所有程序文件可见，若是没有初始化，其会自动指向上次存储的数值，也可以修饰函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="keyword">int</span> count;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">write_extern</span><span class="params">()</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  count = <span class="number">5</span>;</div><div class="line">  write_extern();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> count;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_extern</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"count is %d \n"</span>,count);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>C语言运算符</p>
+<ul>
+<li>算术运算符：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>%</code>、<code>++</code>、<code>--</code>、分别是加减乘除和取模、自增、1、自减1。</li>
+<li>关系运算符：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code></li>
+<li>逻辑运算符：<code>&amp;&amp;</code>、<code>||</code>、<code>!</code>逻辑与、或、非</li>
+<li>位运算符：<code>&amp;</code>、<code>|</code>、<code>^</code>、<code>~</code>、<code>&lt;&lt;</code>、<code>&gt;&gt;</code>，分别是按位与、按位或、按位异或、反转、左移、右移。</li>
+<li>赋值运算符：<code>=</code>、<code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code>、<code>&lt;&lt;=</code>、<code>&gt;&gt;=</code>、<code>&amp;=</code>、<code>^=</code>、<code>|=</code></li>
+<li>杂项运算符：<code>sizeof()</code>、<code>&amp;</code>、<code>*</code>、<code>?:</code>分别表示求算大小范围的函数、返回变量的地址、指向一个变量、条件表达式(三目运算符，示例：a&gt;b?x:y，表示如果a&gt;b为真，则取x值，否则取y值。)</li>
+</ul>
+<p>运算符存在优先级，一般可以用<code>()</code>括号来改变。</p>
+<p>| 类别      | 运算符                                     | 结合性  |<br>| ——- | ————————————— | —- |<br>| 后缀      | () 、[]、 -&gt; 、. 、++、 - -                  | 从左到右 |<br>| 一元      | + 、- 、! 、~ 、++、 - -、 (type)<em>、 &amp;、 sizeof | 从右到左 |<br>| 乘除      | </em>、 / 、%                                 | 从左到右 |<br>| 加减      | + 、-                                    | 从左到右 |<br>| 移位      | &lt;&lt; 、&gt;&gt;                                  | 从左到右 |<br>| 关系      | &lt; &lt;= 、&gt; &gt;=                              | 从左到右 |<br>| 相等      | ==、 !=                                  | 从左到右 |<br>| 位与 AND  | &amp;                                       | 从左到右 |<br>| 位异或 XOR | ^                                       | 从左到右 |<br>| 位或 OR   | |                                      | 从左到右 |<br>| 逻辑与 AND | &amp;&amp;                                      | 从左到右 |<br>| 逻辑或 OR  | ||                                    | 从左到右 |<br>| 条件      | ?:                                      | 从右到左 |<br>| 赋值      | =、 +=、 -=、 <em>=、 /=、 %=、&gt;&gt;= 、&lt;&lt;=、 &amp;= 、^=  | 从右到左 |<br>| 逗号      | ,                                       | 从左到右 |<br><em>*Note:</em></em>逗号运算符，C++中有描述，用于分隔一系列的运算表达式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a = <span class="number">10</span>,b = <span class="number">12</span>,c = <span class="number">20</span>;</div><div class="line"><span class="keyword">int</span> d = <span class="number">0</span>;</div><div class="line"><span class="comment">//逗号用于分隔不同的运算式，但是赋值，仅区最后一项运算结果</span></div><div class="line"><span class="comment">/*</span></div><div class="line"> d = (a++,b--,c+=15);</div><div class="line">//此时d值就是c+15 = 35,而同样此时，a值已经++，b值已经--，</div><div class="line">printf("d = %d\n",d);</div><div class="line">/*</div><div class="line">//注释掉上面的赋值运算了，</div><div class="line">d = (a++,b--,a+90);</div><div class="line">//那么此时，d的值就是101，既，a++,a+90;</div></pre></td></tr></table></figure>
+</li>
+<li><p>判断与循环</p>
+<p>1、<code>if</code>、<code>if...else</code>、<code>if嵌套</code>、<code>switch</code>、<code>switch嵌套</code>也可以三目运算符<code>? :</code></p>
+<p>2、<code>while</code>、<code>for</code>、<code>do...while</code>、<code>嵌套循环</code>，配合循环控制语句<code>break</code>、<code>continue</code>、<code>goto</code>(控制转移到被标记的语句，一般不建议使用。)；条件为永远为真的循环，为无限循环，程序用应避免这个。还有就是控制条件为空语句，那么就是无限循环了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(;;)&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"无限循环中......"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/17/C语言学习笔记--基础语法二/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法二">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/11/21/正则表达式学习笔记/" data-toggle="tooltip" data-placement="top" title="正则表达式">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#C" title="C">C</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

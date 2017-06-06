@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          C++学习笔记 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2016/12/20/C++学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#C++" title="C++">C++</a>
+                        
+                    </div>
+                    <h1>C++学习笔记</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2016-12-20
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="C-学习笔记"><a href="#C-学习笔记" class="headerlink" title="C++学习笔记"></a>C++学习笔记</h1><p>鉴于C++可看作是C语言的扩展，或者说是面向对象的C语言版本。其语法方面多有类似指出，此笔记也就简要写出C++中与C不同和新增的语法部分。</p>
+<p>当然C与C++依然算作是两种语言，此处本人小白，亦不做辩论，只在此方便笔记而已。</p>
+<h2 id="1、基本语法"><a href="#1、基本语法" class="headerlink" title="1、基本语法"></a>1、基本语法</h2><ul>
+<li><p>简介</p>
+<p>linux下C语言用gcc，C++用g++编译；C++含有对象、类、方法、即使变量等概念。</p>
+</li>
+</ul>
+<p>C++ 的预编译库包含了绝大多数C语言的库，自身格式略有不同</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;<span class="comment">//使用标准的命名空间</span></div><div class="line"><span class="comment">//C语言是&lt;stdio.h&gt;</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"hello C++"</span>;<span class="comment">//输出语法是cout &lt;&lt; ，有时候还要用endl;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>关键字</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>asm</th>
+<th>else</th>
+<th>new</th>
+<th>this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>auto</td>
+<td>enum</td>
+<td>operator</td>
+<td>throw</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>explicit</td>
+<td>private</td>
+<td>true</td>
+</tr>
+<tr>
+<td>break</td>
+<td>export</td>
+<td>protected</td>
+<td>try</td>
+</tr>
+<tr>
+<td>case</td>
+<td>extern</td>
+<td>public</td>
+<td>typedef</td>
+</tr>
+<tr>
+<td>catch</td>
+<td>false</td>
+<td>register</td>
+<td>typeid</td>
+</tr>
+<tr>
+<td>char</td>
+<td>float</td>
+<td>reinterpret_cast</td>
+<td>typename</td>
+</tr>
+<tr>
+<td>class</td>
+<td>for</td>
+<td>return</td>
+<td>union</td>
+</tr>
+<tr>
+<td>const</td>
+<td>friend</td>
+<td>short</td>
+<td>unsigned</td>
+</tr>
+<tr>
+<td>const_cast</td>
+<td>goto</td>
+<td>signed</td>
+<td>using</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>if</td>
+<td>sizeof</td>
+<td>virtual</td>
+</tr>
+<tr>
+<td>default</td>
+<td>inline</td>
+<td>static</td>
+<td>void</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>int</td>
+<td>static_cast</td>
+<td>volatile</td>
+</tr>
+<tr>
+<td>do</td>
+<td>long</td>
+<td>struct</td>
+<td>wchar_t</td>
+</tr>
+<tr>
+<td>double</td>
+<td>mutable</td>
+<td>switch</td>
+<td>while</td>
+</tr>
+<tr>
+<td>dynamic_cast</td>
+<td>namespace</td>
+<td>template</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>三字字符</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>三字符组</th>
+<th>替换</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>??=</td>
+<td>#</td>
+</tr>
+<tr>
+<td>??/</td>
+<td>\</td>
+</tr>
+<tr>
+<td>??’</td>
+<td>^</td>
+</tr>
+<tr>
+<td>??(</td>
+<td>[</td>
+</tr>
+<tr>
+<td>??)</td>
+<td>]</td>
+</tr>
+<tr>
+<td>??!</td>
+<td>\</td>
+<td></td>
+</tr>
+<tr>
+<td>??&lt;</td>
+<td>{</td>
+</tr>
+<tr>
+<td>??&gt;</td>
+<td>}</td>
+</tr>
+<tr>
+<td>??-</td>
+<td>~</td>
+</tr>
+</tbody>
+</table>
+<p>这些都是古老程序，当时为了表示键盘上没有的字符而设计的。</p>
+<ul>
+<li><p>数据类型</p>
+<p>bool、char、int、float、double、void、wchar_t(宽字符型)，以及signed、unsigned、short、long等修饰符</p>
+<ul>
+<li><strong>typedef</strong>定义新名称</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> feet;<span class="comment">//那么就可以用feet代替int类型定义变量了</span></div></pre></td></tr></table></figure>
+<ul>
+<li>枚举</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> enum_name&#123;<span class="built_in">list</span> of names&#125; var-<span class="built_in">list</span>;</div><div class="line"><span class="comment">//示例</span></div><div class="line"><span class="keyword">enum</span> color&#123;red,green,blue&#125; c;</div><div class="line">c = blue;</div><div class="line"><span class="comment">//默认情况，第一个值=0，第二个=1，依次+1，也可以直接定义</span></div><div class="line"><span class="keyword">enum</span> shape &#123;rectangle,circle=<span class="number">5</span>,square&#125; sp;</div><div class="line"><span class="comment">//那么此时，square=6，比上一个+1.</span></div></pre></td></tr></table></figure>
+<p>const声明常量，成员变量自动初始化，char=‘\0’;默认初始值</p>
+<p>有符号和无符号的修饰符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span>　<span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span>　<span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">short</span> <span class="keyword">int</span> i;<span class="comment">//有符号短整数</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> j;<span class="comment">//无符号的</span></div><div class="line">  j = <span class="number">50000</span>;<span class="comment">//赋值</span></div><div class="line">  i = j;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" , "</span> &lt;&lt; j;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//输出结果</span></div><div class="line"><span class="number">-15536</span> , <span class="number">50000</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>C++限定符</p>
+<ul>
+<li>const 常量修饰符</li>
+<li>volatile 告知编译器，其修饰的变量可能会被未知方式修改</li>
+<li>restrict修饰的指针，是一种唯一访问它所修饰对象的方式</li>
+</ul>
+</li>
+<li><p>C++存储类</p>
+<p>auto、register、static、extern、mutable(用于对象修饰，允许对象成员代替常量，mutable成员可通过const成员修改)</p>
+</li>
+<li><p>String类</p>
+<p>相比char字符类型，增加了许多常用便捷操作</p>
+</li>
+<li><p>引用</p>
+<p>引用不同于指针</p>
+<ul>
+<li>没有空引用，可以用空指针</li>
+<li>一旦引用被初始化为一个对象，就不能指向其他对象，指针可以随时变向</li>
+<li>引用必须创建时初始化，指针可以随时</li>
+</ul>
+<p>引用使用<code>&amp;</code>符号</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//变量的声明初始化</span></div><div class="line"><span class="keyword">int</span> i = <span class="number">17</span>;</div><div class="line"><span class="comment">//声明变量i的引用</span></div><div class="line"><span class="keyword">int</span>&amp; r = i;<span class="comment">//成为r是初始化为i的整形引用</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>基本输入输出</p>
+<p>I/O库</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;iostream&gt;、&lt;iomanip&gt;、&lt;fstream&gt;等</div></pre></td></tr></table></figure>
+<ul>
+<li>标准输出cout，输入cin</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">char</span> str[] = <span class="string">"Hello C++"</span>;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Value of Str is : "</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  <span class="keyword">char</span> name[<span class="number">30</span>];</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please input your name"</span>;</div><div class="line">  <span class="built_in">cin</span> &gt;&gt; name;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"your name is : "</span>&lt;&lt;name&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//endl  --  end line;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>标准错误流cerr，日志流clog</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、面向对象"><a href="#2、面向对象" class="headerlink" title="2、面向对象"></a>2、面向对象</h2><ul>
+<li><p>对象类</p>
+<p><strong>class</strong>关键字</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Box</span> &#123;</span></div><div class="line">  <span class="keyword">public</span> :<span class="comment">//还有private、protected，friend有点不同</span></div><div class="line">  	<span class="keyword">double</span> length;</div><div class="line">  	<span class="keyword">double</span> breadth;</div><div class="line">  	<span class="keyword">double</span> height;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//声明类对象</span></div><div class="line">Box box1;</div><div class="line"><span class="comment">//然后用.符号访问类成员</span></div><div class="line">box1.length</div></pre></td></tr></table></figure>
+</li>
+<li><p>继承</p>
+<p>C++可以多继承</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//格式</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">derived</span>-<span class="title">class</span> :</span> access-specifier base-<span class="class"><span class="keyword">class</span></span></div><div class="line">//示例</div><div class="line"><span class="title">class</span> <span class="title">Rectangle</span> : <span class="keyword">public</span> Shape&#123;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>权限修饰符public、private、protected</p>
+<p>| 访问   | public | protected | private |<br>| —- | —— | ——— | ——- |<br>| 同一个类 | yes    | yes       | yes     |<br>| 派生类  | yes    | yes       | no      |<br>| 外部类  | yes    | no        | no      |</p>
+<p>派生类可以继承所有基类的方法，例外</p>
+<ul>
+<li>基类的构造函数、析构函数和拷贝构造函数</li>
+<li>积累的重载运算符(就是重新定义基本的运算符)</li>
+<li>基类的友元函数(friend修饰的函数)</li>
+</ul>
+<p><strong>注意</strong>一般继承类型选择public，少用private和protected，因为使用对应的修饰符，基类的成员在派生类中将变成对应修饰符的权限级别。如使用private，则基类的public和protected成员，在派生类也会private化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> &lt;sub-name&gt;:</span>&lt;visit&gt;&lt;base1&gt;,&lt;visit&gt;&lt;base2&gt;</div><div class="line">  &#123;</div><div class="line">    ...</div><div class="line">  &#125;;</div><div class="line"><span class="comment">//示例</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>:</span><span class="keyword">public</span> Shape,<span class="keyword">public</span> PaintCost&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重载运算符和重载函数</p>
+<p>函数重载也就是Java之类的面向对象里的方法重载，既同一个方法名，不同的方法签名。</p>
+<ul>
+<li>运算符重载</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Box <span class="keyword">operator</span>+(<span class="keyword">const</span> Box&amp;);</div><div class="line"><span class="comment">//格式如上，必须有operator关键字，内部传入引用</span></div><div class="line"><span class="comment">//如此box1+box2就被如下重载定义</span></div><div class="line">Box <span class="keyword">operator</span>+(<span class="keyword">const</span> Box&amp; b)&#123;</div><div class="line">  Box box;</div><div class="line">  box.length = <span class="keyword">this</span>-&gt;length + b.length;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 下面是可重载的运算符列表：</p>
+<p>| +    | -    | <em>    | /      | %      | ^         |<br>| —- | —- | —- | —— | —— | ——— |<br>| &amp;    | |   | ~    | !      | ,      | =         |<br>| &lt;    | &gt;    | &lt;=   | >=     | ++     | –        |<br>| &lt;&lt;   | >&gt;   | ==   | !=     | &amp;&amp;     | ||      |<br>| +=   | -=   | /=   | %=     | ^=     | &amp;=        |<br>| |=  | </em>=   | &lt;&lt;=  | >&gt;=    | []     | ()        |<br>| -&gt;   | -&gt;*  | new  | new [] | delete | delete [] |</p>
+<p>下面是不可重载的运算符列表：</p>
+<p><code>::</code>、<code>.*</code>、<code>.</code>、<code>?:</code></p>
+</li>
+<li><p>多态</p>
+<p>面向对象编程语言三大特性，封装、继承、多态。</p>
+<p>所谓多态，也就是一个方法或属性，在不同的派生类那里，有不同的具体表现方式。</p>
+<p>但是C++语言里，需要派生类实现的抽象方法，需要使用关键字<code>virtual</code>在基类中修饰，不然的话，子类调用的仍然还是父类方法，而不是自己的具体实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shape</span>&#123;</span></div><div class="line">  ...</div><div class="line">  <span class="keyword">public</span>:</div><div class="line">  ...</div><div class="line">  <span class="comment">//此处若不用virtual修饰，那么子类实现该方法，调用时候，就依然是该方法，而不是子类自己的实现</span></div><div class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">area</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Parent class area:"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//示例子类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>&#123;</span></div><div class="line">  ...</div><div class="line">  <span class="keyword">public</span> :</div><div class="line">  ...</div><div class="line">  <span class="function"><span class="keyword">int</span> <span class="title">area</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Circle class area:"</span> &lt;&lt; end;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  Shape *shape;</div><div class="line">  Circle circle;</div><div class="line">  <span class="comment">//存储circle对象地址</span></div><div class="line">  shape = circle;</div><div class="line">  <span class="comment">//调用,如果Shape类area()函数不用virtual的修饰，那么输出的只能是Shape类的方法，而不是子类Cirle的area()函数。</span></div><div class="line">  shape-&gt;area();</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用virtual修饰的函数成为虚函数，如果虚函数没有方法体，则成为纯虚函数。</p>
+<p>类似于Java中的抽象方法。</p>
+</li>
+<li><p>数据抽象与数据封装</p>
+<p>数据抽象就是私有化数据变量，推外提供set、get方法。数据封装，也就是类似于C中的结构体，或者java中的bean对象类，封装一组数据和函数，成为一个实体类。</p>
+<p><strong>抽象类</strong>一个含有纯虚函数的类。也称为接口。</p>
+</li>
+</ul>
+<h2 id="3、高级教程"><a href="#3、高级教程" class="headerlink" title="3、高级教程"></a>3、高级教程</h2><ul>
+<li>文件和流</li>
+</ul>
+<p><code>iostream</code>标准库，提供了<code>cin</code>、<code>cout</code>方法，而文件标准库<code>fstream</code>提供了三种数据类型<br><code>ofstream</code>、<code>ifstream</code>、<code>fstream</code>分别对应的是输出、输入、和同时具备输入输出的类型。</p>
+<ul>
+<li>打开文件<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//参数表示，文件路径和名称，读取方式</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filename,ios::openmode mode)</span></span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模式标志</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ios::app</td>
+<td>追加模式</td>
+</tr>
+<tr>
+<td>ios::ate</td>
+<td>打开文件，定位到末尾</td>
+</tr>
+<tr>
+<td>ios::in</td>
+<td>读取</td>
+</tr>
+<tr>
+<td>ios::out</td>
+<td>写入</td>
+</tr>
+<tr>
+<td>ios::trunc</td>
+<td>若文件存在，打开前截断为0字节</td>
+</tr>
+</tbody>
+</table>
+<p>这些模式可以结合使用，<code>::</code>符号为<strong>域</strong>定位符号<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ofstream outfile;</div><div class="line">outfile.open(<span class="string">"file.dat"</span>,ios::out | ios::trunc);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>关闭文件</li>
+</ul>
+<p><code>close()</code>函数是fstream、ifsteram、ofstream对象的一个成员。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    </div><div class="line">   <span class="keyword">char</span> data[<span class="number">100</span>];</div><div class="line"></div><div class="line">   <span class="comment">// 以写模式打开文件</span></div><div class="line">   ofstream outfile;</div><div class="line">   outfile.open(<span class="string">"afile.dat"</span>);</div><div class="line"></div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Writing to the file"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter your name: "</span>; </div><div class="line">   <span class="built_in">cin</span>.getline(data, <span class="number">100</span>);</div><div class="line"></div><div class="line">   <span class="comment">// 向文件写入用户输入的数据</span></div><div class="line">   outfile &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>;</div><div class="line"></div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter your age: "</span>; </div><div class="line">   <span class="built_in">cin</span> &gt;&gt; data;</div><div class="line">   <span class="built_in">cin</span>.ignore();</div><div class="line">   </div><div class="line">   <span class="comment">// 再次向文件写入用户输入的数据</span></div><div class="line">   outfile &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>;</div><div class="line"></div><div class="line">   <span class="comment">// 关闭打开的文件</span></div><div class="line">   outfile.close();</div><div class="line"></div><div class="line">   <span class="comment">// 以读模式打开文件</span></div><div class="line">   ifstream infile; </div><div class="line">   infile.open(<span class="string">"afile.dat"</span>); </div><div class="line"> </div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Reading from the file"</span> &lt;&lt; <span class="built_in">endl</span>; </div><div class="line">   infile &gt;&gt; data; </div><div class="line"></div><div class="line">   <span class="comment">// 在屏幕上写入数据</span></div><div class="line">   <span class="built_in">cout</span> &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">   </div><div class="line">   <span class="comment">// 再次从文件读取数据，并显示它</span></div><div class="line">   infile &gt;&gt; data; </div><div class="line">   <span class="built_in">cout</span> &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>; </div><div class="line"></div><div class="line">   <span class="comment">// 关闭打开的文件</span></div><div class="line">   infile.close();</div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>文件位置指针</li>
+</ul>
+<p>istream和ostream都提供了对文件重新定位的函数功能。这些成员函数包括关于 istream 的 seekg（”seek get”）和关于 ostream 的 seekp（”seek put”）。<br>seekg 和 seekp 的参数通常是一个长整型。第二个参数可以用于指定查找方向。查找方向可以是 ios::beg（默认的，从流的开头开始定位），也可以是 ios::cur（从流的当前位置开始定位），也可以是 ios::end（从流的末尾开始定位）。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 定位到 fileObject 的第 n 个字节（假设是 ios::beg）</span></div><div class="line">fileObject.seekg( n );</div><div class="line"></div><div class="line"><span class="comment">// 把文件的读指针从 fileObject 当前位置向后移 n 个字节</span></div><div class="line">fileObject.seekg( n, ios::cur );</div><div class="line"></div><div class="line"><span class="comment">// 把文件的读指针从 fileObject 末尾往回移 n 个字节</span></div><div class="line">fileObject.seekg( n, ios::end );</div><div class="line"></div><div class="line"><span class="comment">// 定位到 fileObject 的末尾</span></div><div class="line">fileObject.seekg( <span class="number">0</span>, ios::end );</div></pre></td></tr></table></figure></p>
+<ul>
+<li>异常处理<br>try…catch ，throw,好像C++中没有throws关键字</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>异常</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>std::exception</strong></td>
+<td>该异常是所有标准 C++ 异常的父类。</td>
+</tr>
+<tr>
+<td>std::bad_alloc</td>
+<td>该异常可以通过 <strong>new</strong> 抛出。</td>
+</tr>
+<tr>
+<td>std::bad_cast</td>
+<td>该异常可以通过 <strong>dynamic_cast</strong> 抛出。</td>
+</tr>
+<tr>
+<td>std::bad_exception</td>
+<td>这在处理 C++ 程序中无法预期的异常时非常有用。</td>
+</tr>
+<tr>
+<td>std::bad_typeid</td>
+<td>该异常可以通过 <strong>typeid</strong> 抛出。</td>
+</tr>
+<tr>
+<td><strong>std::logic_error</strong></td>
+<td>理论上可以通过读取代码来检测到的异常。</td>
+</tr>
+<tr>
+<td>std::domain_error</td>
+<td>当使用了一个无效的数学域时，会抛出该异常。</td>
+</tr>
+<tr>
+<td>std::invalid_argument</td>
+<td>当使用了无效的参数时，会抛出该异常。</td>
+</tr>
+<tr>
+<td>std::length_error</td>
+<td>当创建了太长的 std::string 时，会抛出该异常。</td>
+</tr>
+<tr>
+<td>std::out_of_range</td>
+<td>该异常可以通过方法抛出，例如 std::vector 和 std::bitset&lt;&gt;::operator<a href=""></a>。</td>
+</tr>
+<tr>
+<td><strong>std::runtime_error</strong></td>
+<td>理论上不可以通过读取代码来检测到的异常。</td>
+</tr>
+<tr>
+<td>std::overflow_error</td>
+<td>当发生数学上溢时，会抛出该异常。</td>
+</tr>
+<tr>
+<td>std::range_error</td>
+<td>当尝试存储超出范围的值时，会抛出该异常。</td>
+</tr>
+<tr>
+<td>std::underflow_error</td>
+<td>当发生数学下溢时，会抛出该异常。</td>
+</tr>
+</tbody>
+</table>
+<p>也可以通过继承exception类，重载其<code>what()</code>方法，来自定义异常类<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;exception&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MyException</span> :</span> <span class="keyword">public</span> exception</div><div class="line">&#123;</div><div class="line">  <span class="function"><span class="keyword">const</span> <span class="keyword">char</span> * <span class="title">what</span> <span class="params">()</span> <span class="keyword">const</span> <span class="title">throw</span> <span class="params">()</span></span></div><div class="line">  &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"C++ Exception"</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">try</span></div><div class="line">  &#123;</div><div class="line">    <span class="keyword">throw</span> MyException();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">catch</span>(MyException&amp; e)</div><div class="line">  &#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"MyException caught"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">catch</span>(<span class="built_in">std</span>::exception&amp; e)</div><div class="line">  &#123;</div><div class="line">    <span class="comment">//其他的错误</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>动态内存</p>
+<ul>
+<li><p>堆，程序中未使用，运行时动态分配的内存</p>
+</li>
+<li><p>栈，函数内部声明的变量，都在此。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>new 和 delete 运算符，用于动态分配内存。<br><code>new data-type</code><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span>* pvalue = <span class="literal">NULL</span>;<span class="comment">//初始化为null的指针</span></div><div class="line">pvalue = <span class="keyword">new</span> <span class="keyword">double</span>;<span class="comment">//为变量请求内存，但是可能不一定有内存可分配，需要检查</span></div><div class="line"><span class="keyword">if</span>(!(pvalue = <span class="keyword">new</span> <span class="keyword">double</span>))&#123;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Error : out of memory."</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>C 语言中有<code>malloc()</code>函数，但是C++ 最好用new，因为它可以分配内存，而且还创建了对象。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">delete</span> pvalue;<span class="comment">//释放pvalue所指向的内存。</span></div><div class="line"><span class="comment">//如下示例</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">   <span class="keyword">double</span>* pvalue  = <span class="literal">NULL</span>; <span class="comment">// 初始化为 null 的指针</span></div><div class="line">   pvalue  = <span class="keyword">new</span> <span class="keyword">double</span>;   <span class="comment">// 为变量请求内存</span></div><div class="line"> </div><div class="line">   *pvalue = <span class="number">29494.99</span>;     <span class="comment">// 在分配的地址存储值</span></div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Value of pvalue : "</span> &lt;&lt; *pvalue &lt;&lt; <span class="built_in">endl</span>;</div><div class="line"></div><div class="line">   <span class="keyword">delete</span> pvalue;         <span class="comment">// 释放内存</span></div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>数组动态分配内存</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span>* pvalue = <span class="literal">NULL</span>;<span class="comment">//初始化指针为null</span></div><div class="line">pvalue = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">20</span>];<span class="comment">//请求内存</span></div><div class="line"><span class="keyword">delete</span> [] pvalue;<span class="comment">//删除pvalue指向的数组</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> ROW = <span class="number">2</span>;</div><div class="line"><span class="keyword">int</span> COL = <span class="number">3</span>;</div><div class="line"><span class="keyword">double</span> **pvalue = <span class="keyword">new</span> <span class="keyword">double</span>* [ROW];<span class="comment">//为行分配内存</span></div><div class="line"><span class="comment">//为列分配内存</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;COL;i++)&#123;</div><div class="line">  pvalue[i] = <span class="keyword">new</span> <span class="keyword">double</span>[COL];</div><div class="line">&#125;</div><div class="line"><span class="comment">//释放内存</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;COL;i++)&#123;</div><div class="line">  <span class="keyword">delete</span>[] pvalue[i];</div><div class="line">&#125;</div><div class="line"><span class="keyword">delete</span> [] pvalue;</div></pre></td></tr></table></figure>
+</li>
+<li><p>对象的动态分配内存<br>类似普通数据的动态分配：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Box</span>&#123;</span></div><div class="line">  <span class="keyword">public</span> :</div><div class="line">  <span class="comment">//创建对象时候调用</span></div><div class="line">    Box()&#123;</div><div class="line">      <span class="built_in">cout</span>&lt;&lt;<span class="string">"构造函数"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//删除对象时候调用</span></div><div class="line">    ~Box()&#123;</div><div class="line">      <span class="built_in">cout</span>&lt;&lt;<span class="string">"析构函数"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//声明分配内存</span></div><div class="line">  Box* myBoxArray = <span class="keyword">new</span> Box[<span class="number">4</span>];</div><div class="line">  <span class="comment">//释放内存</span></div><div class="line">  <span class="keyword">delete</span> [] myBoxArray;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>命名空间<br>有点类似包名，或者xml中的命名空间的概念，就是通过一个完整路径定位，来便于区分不同地方的相同名称的函数和类。<br>关键字<code>namespace</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> namespace_name&#123;</div><div class="line">  <span class="comment">//代码声明</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//调用的时候</span></div><div class="line">name::code;<span class="comment">//code代表函数，或者变量</span></div><div class="line"><span class="comment">//需要在文件头使用using namespace指令来说明使用的是哪个空间</span></div><div class="line"><span class="comment">//类似于导入包，可以导入单个类，也可以导入整个包,代码中直接使用某个函数，如下</span></div><div class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>命名空间可以定义在不同的文件中，成为不连续的命名空间。还可以嵌套。<br>调用时候用<code>::</code>定位符<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> name1::name2;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>模板<br>c++ 的模板也就是泛型，可以这么理解<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>&gt; <span class="title">ret</span>-<span class="title">type</span> <span class="title">func</span>-<span class="title">name</span>(<span class="title">parameter</span> <span class="title">list</span>)&#123;</span></div><div class="line">  <span class="comment">//body code</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>示例：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">inline</span> T <span class="keyword">const</span>&amp; <span class="title">Max</span> <span class="params">(T <span class="keyword">const</span>&amp; a, T <span class="keyword">const</span>&amp; b)</span> </span></div><div class="line">&#123; </div><div class="line">    <span class="keyword">return</span> a &lt; b ? b:a; </div><div class="line">&#125; </div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line"> </div><div class="line">    <span class="keyword">int</span> i = <span class="number">39</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">20</span>;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(i, j): "</span> &lt;&lt; Max(i, j) &lt;&lt; <span class="built_in">endl</span>; </div><div class="line"></div><div class="line">    <span class="keyword">double</span> f1 = <span class="number">13.5</span>; </div><div class="line">    <span class="keyword">double</span> f2 = <span class="number">20.7</span>; </div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(f1, f2): "</span> &lt;&lt; Max(f1, f2) &lt;&lt; <span class="built_in">endl</span>; </div><div class="line"></div><div class="line">    <span class="built_in">string</span> s1 = <span class="string">"Hello"</span>; </div><div class="line">    <span class="built_in">string</span> s2 = <span class="string">"World"</span>; </div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(s1, s2): "</span> &lt;&lt; Max(s1, s2) &lt;&lt; <span class="built_in">endl</span>; </div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>以上是函数模板，类模板也差不多<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>&gt; <span class="title">class</span> <span class="title">class</span>-<span class="title">name</span> &#123;</span></div><div class="line">.</div><div class="line">.</div><div class="line">.</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>信号处理<br>C++ 中多了信号处理,在<csignal>文件中</csignal></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIGABRT</td>
+<td>程序的异常终止，如调用 <strong>abort</strong>。</td>
+</tr>
+<tr>
+<td>SIGFPE</td>
+<td>错误的算术运算，比如除以零或导致溢出的操作。</td>
+</tr>
+<tr>
+<td>SIGILL</td>
+<td>检测非法指令。</td>
+</tr>
+<tr>
+<td>SIGINT</td>
+<td>接收到交互注意信号。</td>
+</tr>
+<tr>
+<td>SIGSEGV</td>
+<td>非法访问内存。</td>
+</tr>
+<tr>
+<td>SIGTERM</td>
+<td>发送到程序的终止请求。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>signal()函数<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> (*signal (<span class="keyword">int</span> sig,<span class="keyword">void</span> (*func)(<span class="keyword">int</span>)))(<span class="keyword">int</span>);</div><div class="line"><span class="comment">//第一个参数证书，代表信号编号，第二个是指针，指向信号处理函数。</span></div><div class="line"><span class="comment">//示例：</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;csignal&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">signalHandler</span><span class="params">( <span class="keyword">int</span> signum )</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Interrupt signal ("</span> &lt;&lt; signum &lt;&lt; <span class="string">") received.\n"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 清理并关闭</span></div><div class="line">    <span class="comment">// 终止程序  </span></div><div class="line"></div><div class="line">   <span class="built_in">exit</span>(signum);  </div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// 注册信号 SIGINT 和信号处理程序</span></div><div class="line">    signal(SIGINT, signalHandler);  </div><div class="line"></div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</div><div class="line">       <span class="built_in">cout</span> &lt;&lt; <span class="string">"Going to sleep...."</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">       sleep(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//此时，运行循环，用ctrl c来终端，就会被捕获信号。</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>raise()函数，生成信号<br><code>int raise(signal sig);</code><br>//sig表示信号编号，<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;csignal&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">signalHandler</span><span class="params">( <span class="keyword">int</span> signum )</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Interrupt signal ("</span> &lt;&lt; signum &lt;&lt; <span class="string">") received.\n"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 清理并关闭</span></div><div class="line">    <span class="comment">// 终止程序 </span></div><div class="line"></div><div class="line">   <span class="built_in">exit</span>(signum);  </div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 注册信号 SIGINT 和信号处理程序</span></div><div class="line">    signal(SIGINT, signalHandler);  </div><div class="line"></div><div class="line">    <span class="keyword">while</span>(++i)&#123;</div><div class="line">       <span class="built_in">cout</span> &lt;&lt; <span class="string">"Going to sleep...."</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">       <span class="keyword">if</span>( i == <span class="number">3</span> )&#123;</div><div class="line">          raise( SIGINT);</div><div class="line">       &#125;</div><div class="line">       sleep(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>多线程<br>多任务计算机分为两种，基于进程和基于线程。基于进程的多任务是程序的并发执行；基于线程的多任务是同一程序的片段并发执行。<br>常见操作系统多是用POSIX编写线程。<br>1、创建<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></div><div class="line">pthread_create (thread,attr,start_routine,arg);</div><div class="line"><span class="comment">//参数，thread为指向线程标识符的指针，attr为不透明的属性对象，用来设置线程属性，可以设置NULL</span></div><div class="line"><span class="comment">//start_routine线程运行起始位置，创建线程就被执行。arg运行函数的参数，</span></div><div class="line"><span class="comment">//可以NULL，但是必须把引用作为指针转换为void类型传入。</span></div><div class="line"></div><div class="line"><span class="comment">//终止线程</span></div><div class="line">pthread_exit(status);<span class="comment">//一般不用显式调用，</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>实例：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="comment">// 必须的头文件是</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NUM_THREADS 5</span></div><div class="line"></div><div class="line"><span class="comment">// 线程的运行函数</span></div><div class="line"><span class="function"><span class="keyword">void</span>* <span class="title">say_hello</span><span class="params">(<span class="keyword">void</span>* args)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello Runoob！"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// 定义线程的 id 变量，多个变量使用数组</span></div><div class="line">    <span class="keyword">pthread_t</span> tids[NUM_THREADS];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM_THREADS; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//参数依次是：创建的线程id，线程参数，调用的函数，传入的函数参数</span></div><div class="line">        <span class="keyword">int</span> ret = pthread_create(&amp;tids[i], <span class="literal">NULL</span>, say_hello, <span class="literal">NULL</span>);</div><div class="line">        <span class="keyword">if</span> (ret != <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">           <span class="built_in">cout</span> &lt;&lt; <span class="string">"pthread_create error: error_code="</span> &lt;&lt; ret &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//等各个线程退出后，进程才结束，否则进程强制结束了，线程可能还没反应过来；</span></div><div class="line">    pthread_exit(<span class="literal">NULL</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>连接和分离线程<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">pthread_join(threadid,status)</div><div class="line">pthread_detach(threadid)</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NUM_THREADS     5</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">wait</span><span class="params">(<span class="keyword">void</span> *t)</span></span></div><div class="line">&#123;</div><div class="line">   <span class="keyword">int</span> i;</div><div class="line">   <span class="keyword">long</span> tid;</div><div class="line"></div><div class="line">   tid = (<span class="keyword">long</span>)t;</div><div class="line"></div><div class="line">   sleep(<span class="number">1</span>);</div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sleeping in thread "</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Thread with id : "</span> &lt;&lt; tid &lt;&lt; <span class="string">"  ...exiting "</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">   pthread_exit(<span class="literal">NULL</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">   <span class="keyword">int</span> rc;</div><div class="line">   <span class="keyword">int</span> i;</div><div class="line">   <span class="keyword">pthread_t</span> threads[NUM_THREADS];</div><div class="line">   <span class="keyword">pthread_attr_t</span> attr;</div><div class="line">   <span class="keyword">void</span> *status;</div><div class="line"></div><div class="line">   <span class="comment">// 初始化并设置线程为可连接的（joinable）</span></div><div class="line">   pthread_attr_init(&amp;attr);</div><div class="line">   pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_JOINABLE);</div><div class="line"></div><div class="line">   <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; NUM_THREADS; i++ )&#123;</div><div class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"main() : creating thread, "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">      rc = pthread_create(&amp;threads[i], <span class="literal">NULL</span>, wait, (<span class="keyword">void</span> *)i );</div><div class="line">      <span class="keyword">if</span> (rc)&#123;</div><div class="line">         <span class="built_in">cout</span> &lt;&lt; <span class="string">"Error:unable to create thread,"</span> &lt;&lt; rc &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">         <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">      &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="comment">// 删除属性，并等待其他线程</span></div><div class="line">   pthread_attr_destroy(&amp;attr);</div><div class="line">   <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; NUM_THREADS; i++ )&#123;</div><div class="line">      rc = pthread_join(threads[i], &amp;status);</div><div class="line">      <span class="keyword">if</span> (rc)&#123;</div><div class="line">         <span class="built_in">cout</span> &lt;&lt; <span class="string">"Error:unable to join,"</span> &lt;&lt; rc &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">         <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"Main: completed thread id :"</span> &lt;&lt; i ;</div><div class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"  exiting with status :"</span> &lt;&lt; status &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">"Main: program exiting."</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">   pthread_exit(<span class="literal">NULL</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>//效果<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">main() : creating thread, <span class="number">0</span></div><div class="line">main() : creating thread, <span class="number">1</span></div><div class="line">main() : creating thread, <span class="number">2</span></div><div class="line">main() : creating thread, <span class="number">3</span></div><div class="line">main() : creating thread, <span class="number">4</span></div><div class="line">Sleeping in thread </div><div class="line">Thread with id : <span class="number">4</span>  ...exiting </div><div class="line">Sleeping in thread </div><div class="line">Thread with id : <span class="number">3</span>  ...exiting </div><div class="line">Sleeping in thread </div><div class="line">Thread with id : <span class="number">2</span>  ...exiting </div><div class="line">Sleeping in thread </div><div class="line">Thread with id : <span class="number">1</span>  ...exiting </div><div class="line">Sleeping in thread </div><div class="line">Thread with id : <span class="number">0</span>  ...exiting </div><div class="line">Main: completed thread id :<span class="number">0</span>  exiting with status :<span class="number">0</span></div><div class="line">Main: completed thread id :<span class="number">1</span>  exiting with status :<span class="number">0</span></div><div class="line">Main: completed thread id :<span class="number">2</span>  exiting with status :<span class="number">0</span></div><div class="line">Main: completed thread id :<span class="number">3</span>  exiting with status :<span class="number">0</span></div><div class="line">Main: completed thread id :<span class="number">4</span>  exiting with status :<span class="number">0</span></div><div class="line">Main: program exiting.</div></pre></td></tr></table></figure></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/30/UML类图学习笔记/" data-toggle="tooltip" data-placement="top" title="UML类图笔记">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/19/C语言学习笔记--基础语法四/" data-toggle="tooltip" data-placement="top" title="C语言学习笔记--基础语法四">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#C++" title="C++">C++</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

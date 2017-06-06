@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android分享操作 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/03/27/第二篇、Android分享操作/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android分享操作</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-03-27
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="第二章、Android分享操作"><a href="#第二章、Android分享操作" class="headerlink" title="第二章、Android分享操作"></a>第二章、Android分享操作</h2><h3 id="1-分享简单数据"><a href="#1-分享简单数据" class="headerlink" title="1. 分享简单数据"></a>1. 分享简单数据</h3><ul>
+<li><h4 id="向其他app发送检单数据"><a href="#向其他app发送检单数据" class="headerlink" title="向其他app发送检单数据"></a>向其他app发送检单数据</h4><blockquote>
+<ol>
+<li>Intent发送数据必须有actions，其他对应action的activity响应事件。通过Intent实现分享功能，而ActionBar可使用<code>ShareActionProvider</code>来快速实现分享功能。如下是使用Intent.createChooser实现分享功能的demo：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;Intent sendIntent = <span class="keyword">new</span> Intent();</div><div class="line">&gt;sendIntent.setAction(Intent.ACTION_SEND);</div><div class="line">&gt;sendIntent.putExtra(Intent.EXTRA_TEXT,<span class="string">"This is My Text to send."</span>);</div><div class="line">&gt;sendIntent.setType(<span class="string">"text/plain"</span>);</div><div class="line">&gt;startActivity(Intent.createChooser(sendIntent,<span class="string">"Share to My friends"</span>);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><em>如上，可以显示出多个选择框，列出可响应的分享社交App</em></p>
+<ol>
+<li><p>分享二进制文件，需要指定特定的MIME类型，在EXTRA_STREAM里面放置数据的URI，如下分享一个图片的代码示例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;   Intent shareIntent = <span class="keyword">new</span> Intent();</div><div class="line">&gt;   shareIntent.setAction(Intent.ACTION_SEND);</div><div class="line">&gt;   shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);<span class="comment">//重要，指定URI</span></div><div class="line">&gt;   shareIntent.setType(<span class="string">"image/jpeg"</span>);<span class="comment">//指定MIME类型</span></div><div class="line">&gt;   startActivity(Intent.createChooser(shareIntent,<span class="string">"Share a picture"</span>);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><ul>
+<li>可以使用<code>*/*</code>指定MIME类型，但是仅有能够处理一般数据类型的Activity才能匹配到。因为普通的Activity不能详尽所有MIME类型。</li>
+<li>响应的Activity需要有访问URI的权限。两种方案，一是ContentProvider（per-URI permissions）；二是MediaStore（亦可存储非媒体文件，Android3.0以后。）</li>
+</ul>
+<ol>
+<li><p>多块内容，Multiple。同时分享不同的内容，可使用<code>ACTION_SEND_MULTIPLE</code>及数据URIs。而MIME需根据内容类型调整，可使用*符号。如<code>image/jpeg</code>、<code>image/*</code>、<code>*/*</code>。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;   ArrayList&lt;Uri&gt; imageUris = <span class="keyword">new</span> ArrayList&lt;Uri&gt;();</div><div class="line">&gt;   imageUris.add(imageUri1); <span class="comment">// Add your image URIs here</span></div><div class="line">&gt;   imageUris.add(imageUri2);</div><div class="line">&gt;   <span class="comment">//接收Activity需要有权限哦</span></div><div class="line">&gt;   Intent shareIntent = <span class="keyword">new</span> Intent();</div><div class="line">&gt;   shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);<span class="comment">//复合类型的MIME，Action</span></div><div class="line">&gt;   shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);<span class="comment">//传递数组</span></div><div class="line">&gt;   shareIntent.setType(<span class="string">"image/*"</span>);<span class="comment">//复合MIME</span></div><div class="line">&gt;   startActivity(Intent.createChooser(shareIntent, <span class="string">"Share images to.."</span>));</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><h4 id="接收外App传的数据"><a href="#接收外App传的数据" class="headerlink" title="接收外App传的数据"></a>接收外App传的数据</h4><blockquote>
+<ul>
+<li><p>Activity 在manifest文件 配置，通过Intent Filters来过滤需要处理的数据Action，如下Activity接收单张图片、文本、多张图片时，不同的intent-filer配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".ui.MyActivity"</span> &gt;</span></div><div class="line">&gt;     <span class="comment">&lt;!-- 注释，单类型图片的Action过滤，其Action名称不同--&gt;</span></div><div class="line">&gt;       <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.SEND"</span> /&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"image/*"</span> /&gt;</span></div><div class="line">&gt;       <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;     <span class="comment">&lt;!-- 注释，文本类型的Action过滤--&gt;</span></div><div class="line">&gt;       <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.SEND"</span> /&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></div><div class="line">&gt;       <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;     <span class="comment">&lt;!-- 注释，多种类型图片的Action过滤--&gt;</span></div><div class="line">&gt;       <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.SEND_MULTIPLE"</span> /&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"image/*"</span> /&gt;</span></div><div class="line">&gt;       <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;   <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li>处理接收数据，通过getIntent()来获取extra数据，需要知道传递来的具体类型，结构，做相应处理。有时需要访问权限。若是数据量太大，应考虑避免UI线程的阻塞。</li>
+</ul>
+</blockquote>
+</li>
+<li><h4 id="ActionBar-分享功能"><a href="#ActionBar-分享功能" class="headerlink" title="ActionBar 分享功能"></a>ActionBar 分享功能</h4><blockquote>
+<p>Android4.0引入ActionProvider，其子类ShareActionProvider用于分享数据。ActionBar步骤：</p>
+<ol>
+<li><p>在Menu的xml中定义<code>android:actionProviderClass</code>属性。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;    <span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">&gt;        <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@+id/menu_item_share"</span></span></div><div class="line">&gt;            android:showAsAction="ifRoom"</div><div class="line">&gt;            android:title="Share"</div><div class="line">&gt;            android:actionProviderClass="android.widget.ShareActionProvider" /&gt;</div><div class="line">&gt;      <span class="comment">&lt;!--如上则声明该item需要share action provider来匹配内容 --&gt;</span></div><div class="line">&gt;        ...</div><div class="line">&gt;    <span class="tag">&lt;/<span class="name">menu</span>&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ol>
+<li><p>需要提供intent给ShareActionProvider，示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&gt;    <span class="keyword">private</span> ShareActionProvider mShareActionProvider;</div><div class="line">&gt;    ...</div><div class="line">&gt;    <span class="meta">@Override</span></div><div class="line">&gt;    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</div><div class="line">&gt;        <span class="comment">//菜单布局文件</span></div><div class="line">&gt;        getMenuInflater().inflate(R.menu.share_menu, menu);</div><div class="line">&gt;        <span class="comment">//加载配有ShareActionProvider属性的item</span></div><div class="line">&gt;        MenuItem item = menu.findItem(R.id.menu_item_share);</div><div class="line">&gt;        <span class="comment">// 实例化ShareActionProvider</span></div><div class="line">&gt;        mShareActionProvider = (ShareActionProvider) item.getActionProvider();</div><div class="line">&gt;        <span class="comment">// 返回true表示显示菜单项</span></div><div class="line">&gt;        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&gt;    &#125;</div><div class="line">&gt;    <span class="comment">//回调更新intent，用于分享</span></div><div class="line">&gt;    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setShareIntent</span><span class="params">(Intent shareIntent)</span> </span>&#123;</div><div class="line">&gt;        <span class="keyword">if</span> (mShareActionProvider != <span class="keyword">null</span>) &#123;</div><div class="line">&gt;            mShareActionProvider.setShareIntent(shareIntent);</div><div class="line">&gt;        &#125;</div><div class="line">&gt;    &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-分享文件"><a href="#2-分享文件" class="headerlink" title="2. 分享文件"></a>2. 分享文件</h3><p>​    分享文件最为安全的方式是使用content URI，Android中FileProvider有getUriForFile()创建文件content URI。少量数据可以用intent传递。</p>
+<ul>
+<li><h4 id="建立文件分享"><a href="#建立文件分享" class="headerlink" title="建立文件分享"></a>建立文件分享</h4><blockquote>
+<p>要安全地提供文件分享，需要配置Content URI。</p>
+<ol>
+<li>指定FileProvider，在manifest中定义一个provider的entry，声明Authority等。如下示例：</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">&gt;     package="com.example.myapp"&gt;</div><div class="line">&gt;     <span class="tag">&lt;<span class="name">application</span></span></div><div class="line">&gt;         ...&gt;</div><div class="line">&gt;       <span class="comment">&lt;!-- authorities、meta-data的配置 --&gt;</span></div><div class="line">&gt;         <span class="tag">&lt;<span class="name">provider</span></span></div><div class="line">&gt;             android:name="android.support.v4.content.FileProvider"</div><div class="line">&gt;             android:authorities="com.example.myapp.fileprovider"</div><div class="line">&gt;             android:grantUriPermissions="true"</div><div class="line">&gt;             android:exported="false"&gt;</div><div class="line">&gt;             <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">&gt;                 android:name="android.support.FILE_PROVIDER_PATHS"</div><div class="line">&gt;                 android:resource="@xml/filepaths" /&gt;</div><div class="line">&gt;           <span class="comment">&lt;!-- meta-data指定文件共享目录，在res/xml下 --&gt;</span></div><div class="line">&gt;         <span class="tag">&lt;/<span class="name">provider</span>&gt;</span></div><div class="line">&gt;         ...</div><div class="line">&gt;     <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div><div class="line">&gt; <span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ol>
+<li><p>共享文件的目录，res/xml中配置，filepaths.xml，如下示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;    <span class="tag">&lt;<span class="name">paths</span>&gt;</span></div><div class="line">&gt;      <span class="comment">&lt;!-- 每一个共享目录都是一个item，这里表示共享了files/ 目录下的子目录，files-path这个标签适用于共享应用内部储存，files/下的目录。name=“myimages” 做为content uri中的路径标记--&gt;</span></div><div class="line">&gt;    	<span class="tag">&lt;<span class="name">files-path</span> <span class="attr">path</span>=<span class="string">"images/"</span> <span class="attr">name</span>=<span class="string">"myimages"</span>/&gt;</span></div><div class="line">&gt;    <span class="tag">&lt;/<span class="name">paths</span>&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>   <code>&lt;paths&gt;</code>有多个子标签，各自代表不同共享目录，<code>&lt;files-path&gt;</code>表示内部files/下目录，<code>&lt;external-path&gt;</code>外部存储目录，<code>&lt;cache-path&gt;</code>缓存目录。参考<a href="">FileProvider</a>。注意<em>xml里写的目录，无法在代码中追加和修改</em></p>
+<ul>
+<li>Content URI包含<code>&lt;provider&gt;</code>指定Authority（“com.example.myapp.fileprovider”）;</li>
+<li>路径“myimages/”；</li>
+<li><p>文件名称。</p>
+<p>例如获取上述files/images/下的aa.jpg文件，File Provider提供的URI：</p>
+<p><code>content://com.example.myapp.fileprovider/myimages/aa.jpg</code></p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><h4 id="分享文件"><a href="#分享文件" class="headerlink" title="分享文件"></a>分享文件</h4><blockquote>
+<ul>
+<li>上面创建了共享提供者，此处需要共享请求者。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;  File requestFile = <span class="keyword">new</span> File(mImageFilename[position]);</div><div class="line">&gt;                 <span class="keyword">try</span> &#123;</div><div class="line">&gt;                     fileUri = FileProvider.getUriForFile(</div><div class="line">&gt;                             MainActivity.<span class="keyword">this</span>,</div><div class="line">&gt;                             <span class="string">"com.example.myapp.fileprovider"</span>,</div><div class="line">&gt;                             requestFile);</div><div class="line">&gt;                 &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</div><div class="line">&gt;                     Log.e(<span class="string">"File Selector"</span>,</div><div class="line">&gt;                           <span class="string">"The selected file can't be shared: "</span> +</div><div class="line">&gt;                           clickedFilename);</div><div class="line">&gt;                 &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><em>需要注意的是，能获取content uri的文件，都是在manifest文件中，provider下meta-data配置了<code>&lt;paths&gt;</code>标签内的文件，否则会抛IllegalArgumentException</em></p>
+<ul>
+<li><p>设置文件授权：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="keyword">if</span>(fileUri != <span class="keyword">null</span>)&#123;</div><div class="line">&gt;     <span class="comment">//Grant temporary read permission to the content URI，授权具有临时性，一次性。</span></div><div class="line">&gt;     mResultIntent.addFlags(Intent.FLAG_GRANT_URI_PERMISSION);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>  <strong>Caution:</strong>调用setFlags()授权文件是唯一的安全方法，应避免Context.grantUriPermission(),它需要Context.revokeUriPermission()才能撤销授权。</p>
+</blockquote>
+</li>
+<li><h4 id="请求分享文件"><a href="#请求分享文件" class="headerlink" title="请求分享文件"></a>请求分享文件</h4><blockquote>
+<p>一般文件共享分为共享者与请求者，或者服务器与客户端。服务器需要配置共享清单，客户端需要请求共享，并指定请求类型。</p>
+<ul>
+<li><p>发送文件请求，客户端startActivityForResult()，通过intent的Action，附带data，MIME去请求服务器的共享数据。服务器来显示对应的共享清单。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;      mRequestFileIntent = <span class="keyword">new</span> Intent(Intent.ACTION_PICK);<span class="comment">//Action</span></div><div class="line">&gt;      mRequestFileIntent.setType(<span class="string">"image/jpg"</span>);<span class="comment">//MIME类型</span></div><div class="line">&gt;      ...</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>在onActivityResult()中处理服务器返回的URI，注：<em>刚开始只是处理URI，而无任何实际的文件操作和访问，不会影响服务器文件安全</em>。</p>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&gt;                   <span class="meta">@Override</span></div><div class="line">&gt;            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode,</span></span></div><div class="line">&gt;                           Intent returnIntent) &#123;</div><div class="line">&gt;                       <span class="comment">// If the selection didn't work</span></div><div class="line">&gt;                       <span class="keyword">if</span> (resultCode != RESULT_OK) &#123;</div><div class="line">&gt;                           <span class="comment">// Exit without doing anything else</span></div><div class="line">&gt;                           <span class="keyword">return</span>;</div><div class="line">&gt;                       &#125; <span class="keyword">else</span> &#123;</div><div class="line">&gt;                           <span class="comment">// Get the file's content URI from the incoming Intent</span></div><div class="line">&gt;                           Uri returnUri = returnIntent.getData();</div><div class="line">&gt;                           <span class="comment">/*</span></div><div class="line">&gt;      * Try to open the file for "read" access using the</div><div class="line">&gt;      * returned URI. If the file isn't found, write to the</div><div class="line">&gt;      * error log and return.</div><div class="line">&gt;      */</div><div class="line">&gt;      <span class="keyword">try</span> &#123;</div><div class="line">&gt;               <span class="comment">/*</span></div><div class="line">&gt;                * Get the content resolver instance for this context, and use it</div><div class="line">&gt;                * to get a ParcelFileDescriptor for the file.</div><div class="line">&gt;                */</div><div class="line">&gt;               mInputPFD = getContentResolver().openFileDescriptor(returnUri, <span class="string">"r"</span>);</div><div class="line">&gt;           &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">&gt;               e.printStackTrace();</div><div class="line">&gt;               Log.e(<span class="string">"MainActivity"</span>, <span class="string">"File not found."</span>);</div><div class="line">&gt;               <span class="keyword">return</span>;</div><div class="line">&gt;           &#125;</div><div class="line">&gt;           <span class="comment">// Get a regular file descriptor for the file,客户端利用FileDescriptor对象类操作文件。</span></div><div class="line">&gt;           FileDescriptor fd = mInputPFD.getFileDescriptor();</div><div class="line">&gt;           ...</div><div class="line">&gt;      &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><h4 id="获取文件信息"><a href="#获取文件信息" class="headerlink" title="获取文件信息"></a>获取文件信息</h4><blockquote>
+<p>上一步获取了服务器提供的content uri和file descriptor对象，但并不能操作文件，还需要指导文件信息，如大小、类型。</p>
+<ul>
+<li><p>获取文件MIME，通过ContentResolver.getType()获取uri对应的文件类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;      Uri returnUri = returnIntent.getData();</div><div class="line">&gt;      String mimeType = getContentResolver().getType(returnUri);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>获取文件大小，<a href="">FileProvider</a>的query()方法返回Cuisor对象，包含对应uri的文件名称大小信息。<a href="">DISPLAY_NAME</a>，<a href="">SIZE</a>。</p>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;             Uri returnUri = returnIntent.getData();</div><div class="line">&gt;                Cursor returnCursor =</div><div class="line">&gt;                        getContentResolver().query(returnUri, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">&gt;                <span class="comment">/*</span></div><div class="line">&gt;      * Get the column indexes of the data in the Cursor,</div><div class="line">&gt;      * move to the first row in the Cursor, get the data,</div><div class="line">&gt;      * and display it.</div><div class="line">&gt;      */</div><div class="line">&gt;        <span class="keyword">int</span> nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);</div><div class="line">&gt;        <span class="keyword">int</span> sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);</div><div class="line">&gt;        returnCursor.moveToFirst();</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-NFC分享文件"><a href="#3-NFC分享文件" class="headerlink" title="3. NFC分享文件"></a>3. NFC分享文件</h3><p>Android Beam文件传输可在设备间传输大文件，API调用方便。</p>
+<ul>
+<li><h4 id="发送文件"><a href="#发送文件" class="headerlink" title="发送文件"></a>发送文件</h4><blockquote>
+<p>使用NFC发送文件，需要设备支持NFC且app生命NFC和外部存储权限。使用URI给Android Beam来传出文件。需要满足以下要求：</p>
+<ol>
+<li><p><code>Android版本api&gt;=16。</code></p>
+</li>
+<li><p><code>传送的文件必须在外部存储上。</code></p>
+</li>
+<li><p>文件必须全局可读，可以用File.setReadable(true,false)来设置。</p>
+</li>
+<li><p>必须提供文件的File URI。Android Beam无法处理FileProvider.getUriForFile生成的URI。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></div><div class="line">&gt;    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_EXTERNAL_STORANGE"</span> /&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>   <em>其中外部存储权限在4.2.2之前不是必须声明的。</em></p>
+   <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;    <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span></span></div><div class="line">&gt;                  android:required="true" /&gt;</div><div class="line">&gt;    <span class="comment">&lt;!-- 如此设置，声明该应用必须要硬件nfc支持才可以运行。若是required为false，则需要检测设备是否支持Android Beam--&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>测试Android Beam，PackageManager.hasSystemFeature()和参数FEATURE_NFC来测是nfc。Build.VERSION.SDK_INT系统版本号。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="keyword">boolean</span> hasNFC= PackageManager.hasSystemFeature(PackageManager.FEATURE_NFC);<span class="comment">//判断NFC可用与否。</span></div><div class="line">&gt;   Build.VERSION.SDK_INT&lt;Build.VERSION_CODE.JELLY_BEAN_MR1<span class="comment">//版本低。</span></div><div class="line">&gt;     <span class="comment">//可用的话，实例化NfcAdapter</span></div><div class="line">&gt;     NfcAdapter adapter = NfcAdatper.getDefaultAdapter(<span class="keyword">this</span>);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>通过回调函数获取数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="keyword">private</span> Uri[] mFileUris = <span class="keyword">new</span> Uri[<span class="number">10</span>];<span class="comment">//提供给AndroidBeam的URIs</span></div><div class="line">&gt;   <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUriCallback</span> <span class="keyword">implements</span> <span class="title">NfcAdapter</span>.<span class="title">CreateBeamUrisCallback</span></span>&#123;</div><div class="line">&gt;     <span class="function"><span class="keyword">public</span> <span class="title">FileUriCallback</span><span class="params">()</span></span>&#123;</div><div class="line">&gt;     &#125;</div><div class="line">&gt;     <span class="meta">@override</span></div><div class="line">&gt;     <span class="keyword">public</span> Uri[] createBeamUris(NfcEvent event)&#123;</div><div class="line">&gt;       <span class="keyword">return</span> mFileUris;</div><div class="line">&gt;     &#125;</div><div class="line">&gt;   &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>  通过setBeamPushUrisCallback()将回调提供给Android Beam文件传输。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;   mFileUriCallback = <span class="keyword">new</span> FileUriCallback();</div><div class="line">&gt;   mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,<span class="keyword">this</span>);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li>指定要发送的文件，给文件File URI，然后加入URIs数组。记住需要有文件的读取权限。</li>
+</ul>
+</blockquote>
+</li>
+<li><h4 id="接收文件"><a href="#接收文件" class="headerlink" title="接收文件"></a>接收文件</h4><blockquote>
+<p>Android Beam文件传输时，是将文件copy到某特殊目录，然后由Media Scanner扫描文件，在MediaStore Provider中为媒体文件添加条目记录。</p>
+<ul>
+<li><p>响应传输来的请求，并显示数据。</p>
+<blockquote>
+<p>Android Beam传输数据到接收设备后，会发送Intent通知，包含ACTION_VIEW,MIME,URI。用户确认通知后，intent被发至系统，寻求其他响应。</p>
+<p>Activity在manifest配置<code>&lt;intent-filter&gt;</code>加入<code>&lt;action android:name=&quot;android.intent.action.VIEW&quot;/&gt;</code>、<code>&lt;category android:name=&quot;android.intent.category.CATEGORY_DEFAULT&quot;</code>、<code>&lt;data android:nimeType=&quot;mime-type&quot;</code>分别标识不同的Action，category和数据type。</p>
+</blockquote>
+<p><strong>Action_view的action也不一定就是Android beam发送的。*</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="tag">&lt;<span class="name">activity</span> </span></div><div class="line">&gt;     android:name="com.example.android.nfctransfer.ViewActivity"</div><div class="line">&gt;       android:label="Android Beam Viewer"&gt;</div><div class="line">&gt;         <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span>/&gt;</span></div><div class="line">&gt;           <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></div><div class="line">&gt;           ...</div><div class="line">&gt;           <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">&gt;     <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>读取文件需要权限</p>
+<p><code>&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;</code></p>
+<p>上面所说，ACTION_VIEW不一定就是AndroidBeam发送的intent，所以需要检查Scheme和Authority。调用Uri.getScheme。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;   mIntent = getIntent();</div><div class="line">&gt;   <span class="comment">//判断Action，机器Scheme和Authority</span></div><div class="line">&gt;   Uri beamUri = mIntent.getData();</div><div class="line">&gt;   beamUri.getScheme();<span class="comment">//判断是否是“file”，或者“content”</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>File URI中获取目录</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="function"><span class="keyword">public</span> String <span class="title">handleFileUri</span><span class="params">(Uri beamUri)</span> </span>&#123;</div><div class="line">&gt;           <span class="comment">// Get the path part of the URI</span></div><div class="line">&gt;           String fileName = beamUri.getPath();</div><div class="line">&gt;           <span class="comment">// Create a File object for this filename</span></div><div class="line">&gt;           File copiedFile = <span class="keyword">new</span> File(fileName);</div><div class="line">&gt;           <span class="comment">// Get a string containing the file's parent directory</span></div><div class="line">&gt;           <span class="keyword">return</span> copiedFile.getParent();</div><div class="line">&gt;       &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>Content URI中获取目录，MediaS tore会含有文件的uri信息。Uri.getAuthority()获取authority，返回值MediaStore.AUTHORITY或者其他。</p>
+<p>为其他类型时候，不一定可以获取目录；</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/03/27/第三篇、Android多媒体/" data-toggle="tooltip" data-placement="top" title="Android多媒体">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/27/第一篇、Android入门基础/" data-toggle="tooltip" data-placement="top" title="Android入门基础">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

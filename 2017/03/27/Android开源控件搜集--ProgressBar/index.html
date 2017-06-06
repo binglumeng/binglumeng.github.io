@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android开源控件搜集----ProgressBar - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/03/27/Android开源控件搜集--ProgressBar/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android开源控件搜集----ProgressBar</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-03-27
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android开源控件搜集–ProgressBar"><a href="#Android开源控件搜集–ProgressBar" class="headerlink" title="Android开源控件搜集–ProgressBar"></a>Android开源控件搜集–ProgressBar</h1><p><strong>Note：</strong>本篇博客长期维护更新，欢迎各位网友共同合作，共享知识与技术。</p>
+<p>本篇博客主要搜集个人任务比较优秀的Android开源控件，大多来自github，并附上链接，自己学习之余，亦希望于大家有所帮助。</p>
+<p>Android的控件还算比较多，官方和第三方自定义优秀控件数不胜数，搜集难免不全，逐步更新丰富吧。</p>
+<h2 id="ProgressBar"><a href="#ProgressBar" class="headerlink" title="ProgressBar"></a>ProgressBar</h2><ol>
+<li><p>SmoothProgressBar</p>
+<p>炫酷的水平进度条，效果：</p>
+<p><img src="https://github.com/castorflex/SmoothProgressBar/raw/master/screenshots/SPB_sample.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/castorflex/SmoothProgressBar" target="_blank" rel="external">https://github.com/castorflex/SmoothProgressBar</a></p>
+</li>
+<li><p>NumberProgressBar</p>
+<p>漂亮纤细的进度条，带数字，效果：</p>
+<p><img src="https://camo.githubusercontent.com/0c92568af7ec4e04e2e1503acdd2ca99854ab0b5/687474703a2f2f7777332e73696e61696d672e636e2f6d773639302f36313064633033346a77316566797264386e376937673230637a30326d7135662e676966" alt="progress"></p>
+<p>github:<a href="https://github.com/daimajia/NumberProgressBar" target="_blank" rel="external">https://github.com/daimajia/NumberProgressBar</a></p>
+</li>
+<li><p>LoadingImage</p>
+<p>各种漂亮效果的加载动画，效果：</p>
+<p><img src="https://raw.githubusercontent.com/dinuscxj/LoadingDrawable/master/Preview/ShapeChangeDrawable.gif" alt="progress"></p>
+<p><img src="https://raw.githubusercontent.com/dinuscxj/LoadingDrawable/master/Preview/CircleJumpDrawable.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/dinuscxj/LoadingDrawable" target="_blank" rel="external">https://github.com/dinuscxj/LoadingDrawable</a></p>
+</li>
+<li><p>ProgressWheel</p>
+<p>一个wheel形的进度条，效果：</p>
+<p><img src="https://github.com/Todd-Davies/ProgressWheel/raw/master/sample_image.png" alt="progress"></p>
+<p>github:<a href="https://github.com/Todd-Davies/ProgressWheel" target="_blank" rel="external">https://github.com/Todd-Davies/ProgressWheel</a></p>
+</li>
+<li><p>CircleProgress</p>
+<p>几种不同的环形进度，效果：</p>
+<p><img src="https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/circle_progress.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/lzyzsd/CircleProgress" target="_blank" rel="external">https://github.com/lzyzsd/CircleProgress</a></p>
+</li>
+<li><p>materialish-progress</p>
+<p>一个可以在android2.3上实现material效果的progress，效果：</p>
+<p><img src="https://github.com/pnikosis/materialish-progress/raw/master/spinningwheel.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/pnikosis/materialish-progress" target="_blank" rel="external">https://github.com/pnikosis/materialish-progress</a></p>
+</li>
+<li><p>AndroidFillableLoaders</p>
+<p>炫酷图像的加载progress，效果：</p>
+<p><img src="https://github.com/JorgeCastilloPrz/AndroidFillableLoaders/raw/master/art/demoWaves.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/JorgeCastilloPrz/AndroidFillableLoaders" target="_blank" rel="external">https://github.com/JorgeCastilloPrz/AndroidFillableLoaders</a></p>
+</li>
+<li><p>RoundCornerProgressBar</p>
+<p>带有圆角和图标的进度条，效果：</p>
+<p><img src="https://raw.githubusercontent.com/akexorcist/Android-RoundCornerProgressBar/master/image/screenshot_01.png" alt="progress"></p>
+<p>github:<a href="https://github.com/akexorcist/Android-RoundCornerProgressBar" target="_blank" rel="external">https://github.com/akexorcist/Android-RoundCornerProgressBar</a></p>
+</li>
+<li><p>GoogleProgressBar</p>
+<p>Google应用的进度条,效果：</p>
+<p><img src="https://raw.githubusercontent.com/jpardogo/GoogleProgressBar/dev/art/GoogleDices.gif" alt="progress"></p>
+<p><img src="https://raw.githubusercontent.com/jpardogo/GoogleProgressBar/master/art/GoogleProgressBar.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/jpardogo/GoogleProgressBar" target="_blank" rel="external">https://github.com/jpardogo/GoogleProgressBar</a></p>
+</li>
+<li><p>MaterialProgressBar</p>
+<p>实现material design风格的progress，效果：</p>
+<p><img src="https://github.com/DreaminginCodeZH/MaterialProgressBar/raw/master/screenshot/android_4_4_4.png" alt="progress"></p>
+<p>github:<a href="https://github.com/DreaminginCodeZH/MaterialProgressBar" target="_blank" rel="external">https://github.com/DreaminginCodeZH/MaterialProgressBar</a></p>
+</li>
+<li><p>WaveView</p>
+<p>水波波浪效果的progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/60722e9d4f2d2daa78a8650cb27a32adea82bdd4/68747470733a2f2f7261772e6769746875622e636f6d2f6a6f686e3939302f57617665566965772f6d61737465722f73637265656e73686f7425323661706b2f73637265656e73686f742e676966" alt="progress"></p>
+<p>github:<a href="https://github.com/john990/WaveView" target="_blank" rel="external">https://github.com/john990/WaveView</a></p>
+</li>
+<li><p>MaterialLoadingProgressBar</p>
+<p>一个比较时代感的Material progress，效果：</p>
+<p><img src="https://github.com/lsjwzh/MaterialLoadingProgressBar/raw/master/screen.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/lsjwzh/MaterialLoadingProgressBar" target="_blank" rel="external">https://github.com/lsjwzh/MaterialLoadingProgressBar</a></p>
+</li>
+<li><p>MusicPlayerView</p>
+<p>一个用于音乐播放进度的progress，效果：</p>
+<p><img src="https://raw.githubusercontent.com/iammert/MusicPlayerView/master/art/art2.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/iammert/MusicPlayerView" target="_blank" rel="external">https://github.com/iammert/MusicPlayerView</a></p>
+</li>
+<li><p>SquareProgressBar</p>
+<p>一个方形的进度progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/3ddc0a0d9ed3c39f806f1459d49e46e87be81e29/68747470733a2f2f6d61766868772d626e313330362e66696c65732e316472762e636f6d2f793270386e736e3035354b30583172663935725743634375686f6b583451453542313953506f686c74513735386174513948635632694b334b5f773830325765673668794d70624c507770574745476f62385f7a5f62725651536e4c572d50664e43773274554e6132672d5930786b344279344c6a4a316e564f7445394a7a6a5737535f6251716c4833796668657a793847646a744d4b717a6e5832486a74463834363163456536394b532d6f512f636f7665725f6769746875622e706e67" alt="progress"></p>
+<p>github:<a href="https://github.com/mrwonderman/android-square-progressbar" target="_blank" rel="external">https://github.com/mrwonderman/android-square-progressbar</a></p>
+</li>
+<li><p>Download Progress</p>
+<p>下载显示进度progress，效果：</p>
+<p><img src="https://github.com/panwrona/DownloadProgressBar/raw/master/success.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/panwrona/DownloadProgressBar" target="_blank" rel="external">https://github.com/panwrona/DownloadProgressBar</a></p>
+</li>
+<li><p>HoloCircularProgressBar</p>
+<p>Holo风格的进度progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/1df9a18184ed40918d7135d5db345fe1070137a7/68747470733a2f2f7261772e6769746875622e636f6d2f7061737373792f616e64726f69642d486f6c6f43697263756c617250726f67726573734261722f6d61737465722f7261772f73637265656e73686f74312e706e67" alt="progress"></p>
+<p>github:<a href="https://github.com/passsy/android-HoloCircularProgressBar" target="_blank" rel="external">https://github.com/passsy/android-HoloCircularProgressBar</a></p>
+</li>
+<li><p>ArcProgressStackView</p>
+<p>多层圆环进度progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/611d22202564ed670837756695c1d712f23c26ce/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d646f776e6c6f61642669643d304278504f5f55655337775363546a6c564e6b6c6855485a69625645" alt="progress"></p>
+<p>github:<a href="https://github.com/DevLight-Mobile-Agency/ArcProgressStackView" target="_blank" rel="external">https://github.com/DevLight-Mobile-Agency/ArcProgressStackView</a></p>
+</li>
+<li><p>LoadingBalls</p>
+<p>类似android 5.1的开机加载进度，效果：</p>
+<p><img src="https://github.com/glomadrian/loading-balls/raw/master/art/1.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/glomadrian/loading-balls" target="_blank" rel="external">https://github.com/glomadrian/loading-balls</a></p>
+</li>
+<li><p>FABProgressCircle</p>
+<p>一个fab按钮进度progress，效果：</p>
+<p><img src="https://github.com/JorgeCastilloPrz/FABProgressCircle/raw/master/art/fabprogresscircle.gif" alt="progress"></p>
+</li>
+<li><p>CircularProgressDrawable</p>
+<p>环形的进度图画，效果：</p>
+<p><img src="https://github.com/Sefford/CircularProgressDrawable/raw/master/overshoot.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/Sefford/CircularProgressDrawable" target="_blank" rel="external">https://github.com/Sefford/CircularProgressDrawable</a></p>
+</li>
+<li><p>CircleProgress</p>
+<p>折叠滚动的圆形进度，效果：</p>
+<p><img src="https://github.com/Fichardu/CircleProgress/raw/master/art/progress.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/Fichardu/CircleProgress" target="_blank" rel="external">https://github.com/Fichardu/CircleProgress</a></p>
+</li>
+<li><p>CircleProgressView</p>
+<p>圆环形的进度条，效果：</p>
+<p><img src="https://raw.githubusercontent.com/jakob-grabner/Circle-Progress-View/master/media/demo.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/jakob-grabner/Circle-Progress-View" target="_blank" rel="external">https://github.com/jakob-grabner/Circle-Progress-View</a></p>
+</li>
+<li><p>DilatingDotsProgressBar</p>
+<p>跑马的个式的进度progress，效果：</p>
+<p><img src="https://github.com/JustZak/DilatingDotsProgressBar/raw/demo/example/src/main/assets/dotdemo.gif?raw=true" alt="progress"></p>
+<p>github:<a href="https://github.com/JustZak/DilatingDotsProgressBar" target="_blank" rel="external">https://github.com/JustZak/DilatingDotsProgressBar</a></p>
+</li>
+<li><p>CircleMusicProgressbar</p>
+<p>类似上面的那个音乐播放进度，这个更漂亮些吧，效果：</p>
+<p><img src="https://raw.githubusercontent.com/aliab/circular-music-progressbar/master/art/splash.jpg" alt="progress"></p>
+<p>github:<a href="https://github.com/aliab/circular-music-progressbar" target="_blank" rel="external">https://github.com/aliab/circular-music-progressbar</a></p>
+</li>
+<li><p>SpotsProgressDialog</p>
+<p>割草机效果的progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/d8108413298d70047f52cff9ac05603a5fd51988/687474703a2f2f332e62702e626c6f6773706f742e636f6d2f2d6c3155765657694d5341672f564c61355a6657346444492f41414141414141414e54632f7273576f755f71623042632f733332302f593648615453772e676966" alt="progress"></p>
+<p>github:<a href="https://github.com/d-max/spots-dialog" target="_blank" rel="external">https://github.com/d-max/spots-dialog</a></p>
+</li>
+<li><p>DashedcircularProgress</p>
+<p>类似安全卫士里面电量进度的progress，效果：</p>
+<p><img src="https://github.com/glomadrian/dashed-circular-progress/raw/master/art/sample.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/glomadrian/dashed-circular-progress" target="_blank" rel="external">https://github.com/glomadrian/dashed-circular-progress</a></p>
+</li>
+<li><p>ColorArcProgressBar</p>
+<p>仪表盘效果的进度progress，效果：</p>
+<p><img src="https://raw.githubusercontent.com/Shinelw/ColorArcProgressBar/master/Demo.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/Shinelw/ColorArcProgressBar" target="_blank" rel="external">https://github.com/Shinelw/ColorArcProgressBar</a></p>
+</li>
+<li><p>MagicProgressWidget</p>
+<p>也是简单的进度progress，效果：</p>
+<p><img src="https://github.com/lingochamp/MagicProgressWidget/raw/master/art/demo.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/lingochamp/MagicProgressWidget" target="_blank" rel="external">https://github.com/lingochamp/MagicProgressWidget</a></p>
+</li>
+<li><p>RingProgress</p>
+<p>类似上面提到的一个，这也是圆环形的进度progress，效果：</p>
+<p><img src="https://github.com/ldoublem/RingProgress/raw/master/shot/shot3.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/ldoublem/RingProgress" target="_blank" rel="external">https://github.com/ldoublem/RingProgress</a></p>
+</li>
+<li><p>ElasticDownload</p>
+<p>实现晾衣绳效果的progress，效果：</p>
+<p><img src="https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/success.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/Tibolte/ElasticDownload" target="_blank" rel="external">https://github.com/Tibolte/ElasticDownload</a></p>
+</li>
+<li><p>Loading</p>
+<p>翻页效果的progress，效果：</p>
+<p><img src="https://github.com/yankai-victor/Loading/raw/master/images/BookLoading.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/yankai-victor/Loading" target="_blank" rel="external">https://github.com/yankai-victor/Loading</a></p>
+</li>
+<li><p>AnimatedCircleLoadingView</p>
+<p>漂亮的粘性水滴progress，效果：</p>
+<p><img src="https://github.com/jlmd/AnimatedCircleLoadingView/raw/master/art/indeterminate_ok.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/jlmd/AnimatedCircleLoadingView" target="_blank" rel="external">https://github.com/jlmd/AnimatedCircleLoadingView</a></p>
+</li>
+<li><p>AVLoading</p>
+<p>花样繁多的progress，效果：</p>
+<p><img src="https://github.com/81813780/AVLoadingIndicatorView/raw/master/screenshots/avi.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/81813780/AVLoadingIndicatorView" target="_blank" rel="external">https://github.com/81813780/AVLoadingIndicatorView</a></p>
+</li>
+<li><p>CatLoadingView</p>
+<p>一个狗狗加载progress，作者说是猫，呵呵，效果：</p>
+<p><img src="https://camo.githubusercontent.com/762015246e027b7d46df51faa51fd669e44f974b/687474703a2f2f7777342e73696e61696d672e636e2f6d773639302f61363935616364656a7731663268626d66787a6b3567323038753061326173732e676966" alt="progress"></p>
+<p>github:<a href="https://github.com/Rogero0o/CatLoadingView" target="_blank" rel="external">https://github.com/Rogero0o/CatLoadingView</a></p>
+</li>
+<li><p>WaveLoadingView</p>
+<p>水波波浪形progress，效果：</p>
+<p><img src="https://github.com/wasabeef/awesome-android-ui/blob/master/art/WaveLoadingView.jpg?raw=true" alt="progress"></p>
+<p>github:<a href="https://github.com/tangqi92/WaveLoadingView" target="_blank" rel="external">https://github.com/tangqi92/WaveLoadingView</a></p>
+</li>
+<li><p>MetaballLoading</p>
+<p>黏性泡泡的progress，效果：</p>
+<p><img src="https://github.com/dodola/MetaballLoading/raw/master/metaball.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/dodola/MetaballLoading" target="_blank" rel="external">https://github.com/dodola/MetaballLoading</a></p>
+</li>
+<li><p>CircularFillableLoaders</p>
+<p>似乎有过一个类似的progress，效果：</p>
+<p><img src="https://github.com/lopspower/CircularFillableLoaders/raw/master/preview/preview.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/lopspower/CircularFillableLoaders" target="_blank" rel="external">https://github.com/lopspower/CircularFillableLoaders</a></p>
+</li>
+<li><p>LoadingAnimation</p>
+<p>绚丽的加载progress，效果：</p>
+<p><img src="https://github.com/guohuanwen/AndroidLoadingAnimation/raw/master/screenshots/taiji1.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/guohuanwen/AndroidLoadingAnimation" target="_blank" rel="external">https://github.com/guohuanwen/AndroidLoadingAnimation</a></p>
+</li>
+<li><p>SpinKit</p>
+<p>多种加载progress，效果：</p>
+<p><img src="https://raw.githubusercontent.com/ybq/AndroidSpinKit/master/art/screen.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/ybq/Android-SpinKit" target="_blank" rel="external">https://github.com/ybq/Android-SpinKit</a></p>
+</li>
+<li><p>LoadingView</p>
+<p>另一拨loading，效果：</p>
+<p><img src="https://github.com/ldoublem/LoadingView/raw/master/screen/%E6%95%88%E6%9E%9C.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/ldoublem/LoadingView" target="_blank" rel="external">https://github.com/ldoublem/LoadingView</a></p>
+</li>
+<li><p>ShapeLoadingView</p>
+<p>带有阴影效果的progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/575b98a56c5546043ec045d044429590e4a623fe/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f3136363836362d376434313538646532636534306139612e676966" alt="progress"></p>
+<p>github:<a href="https://github.com/zzz40500/android-shapeLoadingView" target="_blank" rel="external">https://github.com/zzz40500/android-shapeLoadingView</a></p>
+</li>
+<li><p>RoadRunner</p>
+<p>可以自定义path路径的progress，效果：</p>
+<p><img src="https://github.com/glomadrian/RoadRunner/raw/master/art/roadRunner.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/glomadrian/RoadRunner" target="_blank" rel="external">https://github.com/glomadrian/RoadRunner</a></p>
+</li>
+<li><p>BezierLoadingView</p>
+<p>贝塞尔粘性泡泡progress，效果：</p>
+<p><img src="https://camo.githubusercontent.com/13cbed7a494b18b10fdd13be2c636a823e7547f5/687474703a2f2f69342e6275696d672e636f6d2f636464356134613866303233333635302e676966" alt="progress"></p>
+<p>github:<a href="https://github.com/JeasonWong/BezierLoadingView" target="_blank" rel="external">https://github.com/JeasonWong/BezierLoadingView</a></p>
+</li>
+<li><p>StackLoadingView</p>
+<p>stack风格progress，效果：</p>
+<p><img src="https://raw.githubusercontent.com/jeasonwong/SlackLoadingView/master/screenshots/slack.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/JeasonWong/SlackLoadingView" target="_blank" rel="external">https://github.com/JeasonWong/SlackLoadingView</a></p>
+</li>
+<li><p>FAB-Loading</p>
+<p>变脸progress，效果：</p>
+<p><img src="https://raw.githubusercontent.com/smasoumi/FAB-Loading/master/images/marvel_loader.gif" alt="progress"></p>
+<p>github:<a href="https://github.com/SaeedMasoumi/FAB-Loading" target="_blank" rel="external">https://github.com/SaeedMasoumi/FAB-Loading</a></p>
+</li>
+</ol>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/03/27/Android开源控件搜集--Button/" data-toggle="tooltip" data-placement="top" title="Android开源控件搜集----Button">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/27/Android学习笔记第五篇--网络连接与云服务/" data-toggle="tooltip" data-placement="top" title="Android网络连接与云服务">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>
