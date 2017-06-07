@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android《第一行代码》简要笔记 二 - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/06/07/Android《第一行代码》简要笔记-二/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android《第一行代码》简要笔记 二</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-06-07
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android《第一行代码》简要笔记-二"><a href="#Android《第一行代码》简要笔记-二" class="headerlink" title="Android《第一行代码》简要笔记 二"></a>Android《第一行代码》简要笔记 二</h1><h2 id="第六章、数据存储"><a href="#第六章、数据存储" class="headerlink" title="第六章、数据存储"></a>第六章、数据存储</h2><p>IT行业方向众多，编程语言种类繁多，然而程序设计的核心则无外乎<code>算法</code>与<code>数据</code>，这两年概念火热的云计算、大数据、机器学习、人工智能等等，原理也就是基于以上两点。</p>
+<p>​    Android中数据的存储大致分为五类：1、文件。2、SharedPreferences。3、Sqlite数据库。4、Content Provider。5、网络存储。</p>
+<h3 id="6-1、文件存储"><a href="#6-1、文件存储" class="headerlink" title="6.1、文件存储"></a>6.1、文件存储</h3><p>文件存储，是基于Java IO技术的一个基本存储方式。Android中提供了<code>openFileOutput()</code>方法用于存储文件到App自身data目录下：<code>/data/data/&lt;package_name&gt;/files/</code>,在操作文件时，不用指定这个路径。</p>
+<p>openFileOutput()有两个参数，一就是file文件名，二是操作模式。Android 4.2之前还有三种模式，现在只剩下<code>MODE_PRIVATE</code>和<code>MODE_APPEND</code>两种。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span></span>&#123;</div><div class="line">  String str = <span class="string">"Data to save"</span>;</div><div class="line">  FileOutputStream out = <span class="keyword">null</span>;</div><div class="line">  BufferedWriter writer = <span class="keyword">null</span>;</div><div class="line">  <span class="keyword">try</span>&#123;</div><div class="line">    out = openFileOutput(<span class="string">"myData"</span>,Context.MODE_PRIVATE);</div><div class="line">    writer = <span class="keyword">new</span> BufferWriter(<span class="keyword">new</span> OutputStreamWriter(out));</div><div class="line">    writer.write(str);</div><div class="line">  &#125;<span class="keyword">catch</span>(IOException e)&#123;</div><div class="line">    e.printStackTrace();</div><div class="line">  &#125;<span class="keyword">finally</span>&#123;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">      <span class="keyword">if</span>(writer!=<span class="keyword">null</span>)&#123;</div><div class="line">        writer.close();</div><div class="line">      &#125;</div><div class="line">    &#125;<span class="keyword">catch</span>(IOException e)&#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>从文件读取数据</li>
+</ul>
+<p><code>openFileInput()</code>方法，接收一个参数，就是文件名。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">load</span><span class="params">()</span></span>&#123;</div><div class="line">  FileInputStream in = <span class="keyword">null</span>;</div><div class="line">  BufferedReader reader = <span class="keyword">null</span>;</div><div class="line">  StringBuilder content = <span class="keyword">new</span> StringBuilder();</div><div class="line">  <span class="keyword">try</span>&#123;</div><div class="line">    in = openFileInput(<span class="string">"myData"</span>);<span class="comment">//上面存储的文件名称</span></div><div class="line">    reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</div><div class="line">    String line = <span class="string">""</span>;</div><div class="line">    <span class="keyword">while</span>((line = reader.readline())!= <span class="keyword">null</span>)&#123;</div><div class="line">      content.append(line);</div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span>(IOException e)&#123;</div><div class="line">    e.printStackTrace();</div><div class="line">  &#125;<span class="keyword">finally</span>&#123;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">      <span class="keyword">if</span>(reader!=<span class="keyword">null</span>)&#123;</div><div class="line">        reader.close();</div><div class="line">      &#125;</div><div class="line">    &#125;<span class="keyword">catch</span>(IOException e)&#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> content.toString();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>EditText:</strong>将光标移动到指定位置<code>edit.setSelection(int position);</code></p>
+<h3 id="6-2、SharedPreferences"><a href="#6-2、SharedPreferences" class="headerlink" title="6.2、SharedPreferences"></a>6.2、SharedPreferences</h3><p>SharedPreferences利用键值对的形式保存轻量型的数据。有三种获取SP对象的方式：</p>
+<ul>
+<li><p>Context中getSharedPreferences();</p>
+<p>两个参数，一是sp的名称，存放与<code>/data/data/&lt;package_name&gt;/shared_perfs/</code>下;二是操作模式，先只有<code>MODE_PRIVATE</code>可用，4.2版本之后废弃<code>MODE_WORLD_WRITEABLE</code>和<code>MODE_WORLD_READABLE</code>。6.0版本废弃<code>MODE_MULTI_PROCESS</code>模式。</p>
+</li>
+<li><p>Activity中getPreferences();</p>
+<p>类似上面，只不过将文件名默认本包名。</p>
+</li>
+<li><p>PreferenceManager中getDefaultSharedPreferences();</p>
+<p>静态方法，接收context，包名为文件名。</p>
+</li>
+</ul>
+<p>SharedPreferences使用方法，三步骤：</p>
+<blockquote>
+<ol>
+<li>获取Editor对象<code>SharedPreferences.Editor</code></li>
+<li>editor.putString()等操作。</li>
+<li>editor.apply();或commit();</li>
+</ol>
+</blockquote>
+<p>其中<code>commit</code>会立即提交，而<code>apply</code>会等合适时机操作。</p>
+<p>从SP读取数据只需要使用SP的对象的<code>getString()</code>之类的方法就可以。</p>
+<h3 id="6-3、SQLite数据库"><a href="#6-3、SQLite数据库" class="headerlink" title="6.3、SQLite数据库"></a>6.3、SQLite数据库</h3><p>SQLite是一个轻量型的数据库，内部一切字符串形式存储(好象是？)。Android中使用了sqlite并做了很好的封装。</p>
+<p><code>SQLiteOpenHelper</code>是Android提供的操作数据库的帮助类。其包含<code>getReadableDatabase()</code>和<code>getWritableDatabase()</code>两个操作实例。</p>
+<ul>
+<li><p>getReadableDatabase()</p>
+<p>获得数据库的<strong>读写</strong>操作，当磁盘空间已满，则返回<strong>只读</strong>模式的对象。</p>
+</li>
+<li><p>getWritableDatabase()</p>
+<p>获取数据库的<strong>读写</strong>操作，当磁盘空间已满，则会抛<strong>出异常</strong>。</p>
+</li>
+</ul>
+<p>SQLiteOpenHelper有两个构造函数，代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDatabaseHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CREATE_BOOK = <span class="string">"create table book ( id integer primary key autoincrement,author text,price real,pages integer,name text)"</span>;</div><div class="line">  <span class="keyword">private</span> Context mContext;</div><div class="line">  <span class="comment">//构造函数</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyDatabaseHelper</span><span class="params">(Context context,String name,SQLiteDatabase.CursorFactory factory,<span class="keyword">int</span> version)</span></span>&#123;</div><div class="line">    <span class="keyword">super</span>.(context,name,factory,version);</div><div class="line">    mContext = context;</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span></span>&#123;</div><div class="line">    db.exeSQL(CREATE_BOOK);</div><div class="line">    Toast.makeText(mContext,<span class="string">"Create table book Successed !"</span>,Toast.LENGTH_SHORT).show();</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db,<span class="keyword">int</span> oldVersion,<span class="keyword">int</span> newVersion)</span></span>&#123;</div><div class="line">    <span class="comment">//数据库版本升级使用</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在其他调用<code>MyDatabaseHelper</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="comment">//创建helper对象，参数分别是context、数据库名称、Cursor对象、版本号</span></div><div class="line">MyDatabaseHelper helper = <span class="keyword">new</span> MyDatabaseHelper(<span class="keyword">this</span>,<span class="string">"BookStore.db"</span>,<span class="keyword">null</span>,<span class="number">1</span>);</div><div class="line">...</div><div class="line"><span class="comment">//获取数据库操作类对象</span></div><div class="line">helper.getWritableDatabase();</div></pre></td></tr></table></figure>
+<ul>
+<li>升级数据库</li>
+</ul>
+<p>数据库创建在<code>onCreate()</code>方法中，只创建一次，若是已经存在，哪怕改代码使得创建语句不同，依然不能创建新的。若是卸载删除，再新建，会使之前数据丢失。所以要使用<code>onUpgrade()</code>方法升级数据库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDatabaseHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</div><div class="line">  ...</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db,<span class="keyword">int</span> oldVersion,<span class="keyword">int</span> newVersion)</span></span>&#123;</div><div class="line">    <span class="comment">//升级数据库，先删除原有表，否则创建不了。</span></div><div class="line">    db.exeSQL(<span class="string">"drop table if exists book"</span>);</div><div class="line">    db.exeSQL(<span class="string">"drop table if exists category"</span>);</div><div class="line">    onCreate(db);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="6-4、数据库CRUD"><a href="#6-4、数据库CRUD" class="headerlink" title="6.4、数据库CRUD"></a>6.4、数据库CRUD</h3><p>数据库的曾删改查<code>Create</code>、<code>Retrieve</code>查询、更新<code>Update</code>、<code>Delete</code>删除。SQL： Structured Query Language</p>
+<ul>
+<li><p>insert</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  SQLiteDatabase db = helper.getWritableDatabase();<span class="comment">//此处的helper是上面的MyDatabaseHelper对象</span></div><div class="line">ContentVaules values = <span class="keyword">new</span> ContentValues();</div><div class="line"><span class="comment">//insert the first data</span></div><div class="line">values.put(<span class="string">"name"</span>,<span class="string">"Head First Java"</span>);</div><div class="line">values.put(<span class="string">"author"</span>,<span class="string">"Jim Green"</span>);</div><div class="line">...</div><div class="line">db.insert(<span class="string">"book"</span>,<span class="keyword">null</span>,values);<span class="comment">//插入数据，第一个参数是表名</span></div><div class="line"><span class="comment">//清空values的数值，才能第二次使用</span></div><div class="line">values.clear();</div><div class="line">values.put(<span class="string">"name"</span>,<span class="string">"《第一行代码》"</span>);</div><div class="line">values.put(<span class="string">"author"</span>,<span class="string">"郭霖"</span>);</div><div class="line">...</div><div class="line">  db.insert(<span class="string">"book"</span>,<span class="keyword">null</span>,values);</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>update</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  <span class="comment">//参数依次是表名、更新值、更新的列名、对应的数据，也就是选择出这个条件的条目</span></div><div class="line">  db.update(<span class="string">"book"</span>,values,<span class="string">"name = ? "</span>,<span class="keyword">new</span> String[]&#123;<span class="string">"Head First Java"</span>&#125;);</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>delete</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  <span class="comment">//此语句表示，删除页码大于500页的那本书</span></div><div class="line">db.delete(<span class="string">"book"</span>,<span class="string">"page &gt; ? "</span>,<span class="keyword">new</span> String[]&#123;<span class="string">"500"</span>&#125;);  </div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>search</p>
+<p>数据库最为常用的功能便是<strong>查询</strong>数据，SQLite提供了query方法，最短的也有7个参数：表名、指定列（默认全部）、约束条件、约束条件值、group by、filter、orderby。返回cursor对象。</p>
+<ul>
+<li><p>查询所有数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  Cursor cursor = db.query(<span class="string">"book"</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>);</div><div class="line"><span class="keyword">if</span>(cursor.moveToFirst())&#123;</div><div class="line">  <span class="keyword">do</span>&#123;</div><div class="line">    <span class="comment">//遍历Cursor对象的数据</span></div><div class="line">    String name = cursor.getString(cursor.getColumnIndex(<span class="string">"name"</span>));</div><div class="line">    String author = cursor.getString(cursor.getColumnIndex(<span class="string">"author"</span>));</div><div class="line">    ...</div><div class="line">      </div><div class="line">  &#125;<span class="keyword">while</span>(cursor.moveToNext());</div><div class="line">  cursor.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Android同时也提供了原始SQL语句的操作方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">db.exeSQL(<span class="string">"insert into book(name,author,pages,price) values (?,?,?,?)"</span>,<span class="keyword">new</span> String[]&#123;<span class="string">"Head First Java"</span>,<span class="string">"Jim Green"</span>,<span class="string">"435"</span>,<span class="string">"20.50"</span>&#125;);</div><div class="line">db.exeSQL(<span class="string">"update book set price = ? where name = ?"</span> ,<span class="keyword">new</span> String[]&#123;<span class="string">"15.7"</span>,<span class="string">"Head First Java"</span>&#125;);</div><div class="line"><span class="comment">//此方法用？站位，避免sql注入危险。</span></div><div class="line">db.exeSQL(<span class="string">"delete from book where pages &gt; ?"</span>,<span class="keyword">new</span> String[]&#123;<span class="string">"500"</span>&#125;);</div><div class="line"><span class="comment">//注意，查询使用的是rawQuery</span></div><div class="line">db.rawQuery(<span class="string">"select * from book"</span>,<span class="keyword">null</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="6-5、LitePal开源框架"><a href="#6-5、LitePal开源框架" class="headerlink" title="6.5、LitePal开源框架"></a>6.5、LitePal开源框架</h3><p>Android 开源的ORM（对象关系映射）模式的数据库框架比较多，GreenDAO、xUtils3、LitePal等。本书介绍的是LitePal。</p>
+<p>使用步骤：</p>
+<ol>
+<li><p>在AndroidStudio中配置依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dependencies&#123;</div><div class="line">  ...</div><div class="line">    compile <span class="string">'org.litepal.android:core:1.4.1'</span></div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在assets目录下创建<code>litepal.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">litepal</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">dbname</span> <span class="attr">value</span>=<span class="string">"BookStore"</span> &gt;</span><span class="tag">&lt;/<span class="name">daname</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span><span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">  	<span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">litepal</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>在AnroidManifest.xml中配置Application</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">application</span></span></div><div class="line">             <span class="attr">android:name</span>=<span class="string">"org.litpal.LitePalApplication"</span></div><div class="line">             <span class="attr">...</span></div><div class="line">             &gt;</div><div class="line">...</div><div class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>所谓的对象关系映射模式，就是将Java Bean对象，直接映射到数据库中的表结构。</strong></p>
+</li>
+</ol>
+<ul>
+<li>Java Bean:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> ind id;</div><div class="line">  <span class="keyword">private</span> String name;</div><div class="line">  <span class="keyword">private</span> String author;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> pages;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">double</span> price;</div><div class="line">  </div><div class="line">  <span class="comment">//下面就是get、set</span></div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>此时在<code>litepal.xml</code>中的<code>list</code>中配置需要映射的Java Bean类</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapping</span> <span class="attr">class</span>=<span class="string">"com.example.litepaltest.Book"</span>&gt;</span><span class="tag">&lt;/<span class="name">mapping</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>在Java代码中创建</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  <span class="comment">//如此便创建了数据库</span></div><div class="line">  LitePal.getDatabase();</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>修改Book的成员属性信息，或者新增一个<code>Cagegory</code>表，只需要在<code>litepal.xml</code>中做修改版本号，以及添加对应类名到list中即可。重新运行上面的getDatabase();</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">version</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span><span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapping</span> <span class="attr">class</span>=<span class="string">"com.example.litepaltest.Book"</span>&gt;</span><span class="tag">&lt;/<span class="name">mapping</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapping</span> <span class="attr">class</span>=<span class="string">"com.example.litepaltest.Category"</span>&gt;</span><span class="tag">&lt;/<span class="name">mapping</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>一、向数据库操作数据才是真正的意义所在，所以Book需要继承<code>DataSupport</code>才可以。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> <span class="keyword">extends</span> <span class="title">DataSupport</span></span>&#123;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此时在Activity之中可以</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  Book book = <span class="keyword">new</span> Book();</div><div class="line">	book.setName(<span class="string">"Head First Java"</span>);</div><div class="line">	book.setAuthor(<span class="string">"Jim Green"</span>);</div><div class="line">	...</div><div class="line">      book.save();<span class="comment">//调用save()方法，即可完成相应表格的初始化。</span></div></pre></td></tr></table></figure>
+<p>二、更新</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">... </div><div class="line">Book book = <span class="keyword">new</span> Book();</div><div class="line">	book.setName(<span class="string">"Head First Java"</span>);</div><div class="line">	book.setAuthor(<span class="string">"Jim Green"</span>);</div><div class="line">	...</div><div class="line">      book.save();<span class="comment">//调用save()方法，即可完成相应表格的初</span></div><div class="line">book.setAuthor(<span class="string">"Haha"</span>);</div><div class="line">book.save();<span class="comment">//如此也算更新了，但是这个方法比较笨。</span></div></pre></td></tr></table></figure>
+<p>用条件语句：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Book book = <span class="keyword">new</span> Book();</div><div class="line">book.setPrice(<span class="number">27.9</span>);</div><div class="line">book.setAuthor(<span class="string">"Haha"</span>);</div><div class="line">book.updateAll(<span class="string">"name = ?"</span>,<span class="string">"Head First Java"</span>);</div></pre></td></tr></table></figure>
+<p>//注意的是，updateAll不能用于设置默认值，比如整数型默认为0或0.0,引用型默认null，LitePal统一方法<code>setToDefault()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">book.setToDefault();<span class="comment">//将所有数据设置为默认。</span></div></pre></td></tr></table></figure>
+<p>三、删除数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DataSupport.deleteAll(Book.class,<span class="string">"price &gt; ? "</span>,<span class="string">"15"</span>);</div></pre></td></tr></table></figure>
+<p>四、查询</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">List&lt;Book&gt; list = DataSupport.findAll(Book.class);</div><div class="line">DataSupport.findFirst(Book.class);</div><div class="line">DataSupport.findLast(Book.class);</div><div class="line"><span class="comment">//根据api的高级用法</span></div><div class="line">DataSupport.select(<span class="string">"name"</span>,<span class="string">"author"</span>).find(Book.class);</div><div class="line">DataSupport.where(<span class="string">"pages &gt; ? "</span>,<span class="string">"400"</span>).find(Book.class);</div><div class="line">DataSupport.order(<span class="string">"price desc "</span>).find(Book.class);</div><div class="line">DataSupport.limit(<span class="number">3</span>).find(Book.class);</div><div class="line"><span class="comment">//指定偏移量</span></div><div class="line">DataSupport.limit(<span class="number">3</span>).offset(<span class="number">1</span>).find(Book.class);<span class="comment">//从第二条开始查询，三条数据</span></div><div class="line"><span class="comment">//LitePal依然支持原始的SQL语句</span></div><div class="line">Cursor cursor = DataSupport.findBySQL(<span class="string">"selece * form Book"</span>);</div></pre></td></tr></table></figure>
+<h2 id="第七章、Content-Provider"><a href="#第七章、Content-Provider" class="headerlink" title="第七章、Content Provider"></a>第七章、Content Provider</h2><p>Android中为了保护数据的安全共享，使用了ContentProvider这个组件。Android应用开发涉及权限较多，6.0以后加入了运行时权限，危险类的权限就需要在代码运行时做对应申请和处理。</p>
+<table>
+<thead>
+<tr>
+<th>权限组名</th>
+<th>权限名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CALENDAR</td>
+<td>READ_CALENDAR、WRITE_CALENDAR</td>
+</tr>
+<tr>
+<td>CAMERA</td>
+<td>CAMERA</td>
+</tr>
+<tr>
+<td>CONTACTS</td>
+<td>READ_CONTACTS、WRITE_CONTACTS、GET_ACCOUNTS</td>
+</tr>
+<tr>
+<td>LOCATION</td>
+<td>ACCESS_FINE_LOCATION、ACCESS_COARSE_LOCATION</td>
+</tr>
+<tr>
+<td>MICROPHONE</td>
+<td>RECORD_AUDIO</td>
+</tr>
+<tr>
+<td>PHONE</td>
+<td>READ_PHONE_STATE、CALL_PHONE、READ_CALL_LOG、WRITE_CALL_LOG、ADD_VOICEMAIL、USE_SIP、PROCESS_OUTGING_CALLS</td>
+</tr>
+<tr>
+<td>SENSORS</td>
+<td>BODY_SENSORS</td>
+</tr>
+<tr>
+<td>SMS</td>
+<td>SEND_SMS、RECEIVE_SMS、READ_SMS、RECEIVE_WAP_PUSH、RECEIVE_MMS</td>
+</tr>
+<tr>
+<td>STORAGE</td>
+<td>READ_EXTERNAL_STORAGE、WRITE_EXTERNAL_STORAGE</td>
+</tr>
+</tbody>
+</table>
+<p>以上均被视为危险权限，需要申请运行时权限处理。<strong>同一组权限，有一个申请了，其他的自动拥有。</strong></p>
+<h3 id="1、运行时权限申请"><a href="#1、运行时权限申请" class="headerlink" title="1、运行时权限申请"></a>1、运行时权限申请</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">  ...</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">    ...</div><div class="line">      btn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span></span>&#123;</div><div class="line">          <span class="comment">//此处，模拟申请拨打电话权限</span></div><div class="line">          <span class="keyword">if</span>(ContextCompat.checkSelfPermission(MainActivity.<span class="keyword">this</span>,Manifest.permission.CALL_PHONE)!=PackageManager.PERMISSION_GRANTED)&#123;</div><div class="line">           ActivityCompat.requestPermission(MainActivity.<span class="keyword">this</span>,<span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE&#125;，<span class="number">1</span>);<span class="comment">//此处的1,表示requestCode，可以自定义。 </span></div><div class="line">          &#125;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">          call();</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//拨打电话</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span></span>&#123;</div><div class="line">    Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL);</div><div class="line">    intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</div><div class="line">    startActivity(intent);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//运行时权限的处理</span></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionResult</span><span class="params">(<span class="keyword">int</span> requestCode,String[] permissions,<span class="keyword">int</span>[] grantResults)</span></span>&#123;</div><div class="line">    <span class="keyword">switch</span>(requestCode)&#123;</div><div class="line">      <span class="keyword">case</span> <span class="number">1</span>:<span class="comment">//上面的请求码</span></div><div class="line">        <span class="keyword">if</span>(grantResults.length &gt; <span class="number">0</span> &amp;&amp; grantResults[<span class="number">0</span>] == PackageManager.PERMISSION_GRANTED)&#123;</div><div class="line">         call(); </div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">          Toast.makeText(<span class="keyword">this</span>,<span class="string">"You denied the permission "</span>, Toast.LENGTH_SHORT).show();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">        </div><div class="line">      <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2、Content-Provider"><a href="#2、Content-Provider" class="headerlink" title="2、Content Provider"></a>2、Content Provider</h3><p>可以将Content Provider理解为一个封装很好的SQLite数据操作，其接受的参数不是表名，而是一个<code>uri</code></p>
+<p>分为<code>authority</code>和<code>path</code>两部分。前面在加上协议头，完整的就是<code>协议：//authority/path</code>如：</p>
+<p><code>content://com.example.app.provider/table1</code></p>
+<p>使用<code>Uri.parse</code>将如上uri解析为uri对象。读取Provider需要使用<code>ContentResolver</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Cursor cursor = getContentResolver().query(</div><div class="line">	uri,<span class="comment">//uri</span></div><div class="line">  	projection,<span class="comment">//指定的列名</span></div><div class="line">  	selection,<span class="comment">//where条件</span></div><div class="line">  	selectionArgs,<span class="comment">//占位符对应的实际数据数组</span></div><div class="line">  	sortOrder<span class="comment">//查询结果的排序方式</span></div><div class="line">)</div></pre></td></tr></table></figure>
+<p>接下来使用cursor遍历数据，添加数据都类似sqlite操作。</p>
+<ul>
+<li>读取联系人示例</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readContacts</span><span class="params">()</span></span>&#123;</div><div class="line">    Cursor cursor = <span class="keyword">null</span>;</div><div class="line">  	<span class="keyword">try</span>&#123;</div><div class="line">      <span class="comment">//查询联系人</span></div><div class="line">      cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>);</div><div class="line">      <span class="keyword">if</span>(cursor != <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">while</span>(cursor.moveToNext())&#123;</div><div class="line">          <span class="comment">//获取联系人姓名,这里使用了系统提供的联系人Phone类的uri常量</span></div><div class="line">          String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));</div><div class="line">          ...</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">  	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>创建Provider对外共享数据</strong></p>
+<blockquote>
+<ol>
+<li>继承ContentProvider</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProvider</span> <span class="keyword">extends</span> <span class="title">ContentProvider</span> </span>&#123;</div><div class="line">&gt;   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TABLE1_DIR = <span class="number">0</span>;</div><div class="line">&gt;   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TABLE1_ITEM = <span class="number">1</span>;</div><div class="line">&gt;   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TABLE2_DIR = <span class="number">2</span>;</div><div class="line">&gt;   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TABLE2_ITEM = <span class="number">3</span>;</div><div class="line">&gt;   </div><div class="line">&gt;   <span class="keyword">private</span> <span class="keyword">static</span> UriMatcher uriMatcher;</div><div class="line">&gt;   </div><div class="line">&gt;   <span class="keyword">static</span> &#123;</div><div class="line">&gt;     uriMatcher = <span class="keyword">new</span> UriMatcher(UriMatcher.NO_MATCH);</div><div class="line">&gt;     uriMatcher.addURI(<span class="string">"com.example.app.provider"</span>,<span class="string">"table1"</span>,TABLE1_DIR);</div><div class="line">&gt;     uriMatcher.addURI(<span class="string">"com.example.app.provider"</span>,<span class="string">"table1/#"</span>,TABLE1_ITEM);</div><div class="line">&gt;     uriMatcher.addURI(<span class="string">"com.example.app.provider"</span>,<span class="string">"table2"</span>,TABLE2_DIR);</div><div class="line">&gt;     uriMatcher.addURI(<span class="string">"com.example.app.provider"</span>,<span class="string">"table2/#"</span>,TABLE2_ITEM);</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   ...</div><div class="line">&gt;   <span class="meta">@Override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreate</span><span class="params">()</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="meta">@Override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> Cursor <span class="title">query</span><span class="params">(Uri uri,String[] projection,String selection,String[] selectionArgs,String sortOrder)</span></span>&#123;</div><div class="line">&gt;     <span class="comment">//根据不同的uri来查询不同</span></div><div class="line">&gt;     <span class="keyword">switch</span>(uriMatcher.match(uri))&#123;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE1_DIR:</div><div class="line">&gt; 		<span class="comment">//查询表1中所有数据        </span></div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE1_ITEM:</div><div class="line">&gt;         <span class="comment">//查询表1中单条数据</span></div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE2_DIR:</div><div class="line">&gt;         </div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE2_ITEM:</div><div class="line">&gt;         </div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">default</span>:</div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;     &#125;</div><div class="line">&gt;     <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="meta">@Override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> Uri <span class="title">insert</span><span class="params">(Uri uri,ContentValues values)</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="meta">@Override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(Uri uri,ContentValues values,String selection,String[] selectionArgs)</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="meta">@Override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">delete</span><span class="params">(Uri,String selection,String[] selectionArgs)</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&gt;   &#125;</div><div class="line">&gt;   <span class="comment">//返回的是MIME类型</span></div><div class="line">&gt;   <span class="meta">@Override</span></div><div class="line">&gt;   <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">(Uri uri)</span></span>&#123;</div><div class="line">&gt;     <span class="keyword">switch</span>(uriMatcher.match(uri))&#123;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE1_DIR:</div><div class="line">&gt; 		<span class="keyword">return</span> <span class="string">"vnd.android.cursor.dir/vnd.com.example.app.provider.table1"</span>       </div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE1_ITEM:</div><div class="line">&gt;         <span class="keyword">return</span> <span class="string">"vnd.android.cursor.item/vnd.com.example.app.provider.table1"</span></div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE2_DIR:</div><div class="line">&gt;         </div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">case</span> TABLE2_ITEM:</div><div class="line">&gt;         </div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;       <span class="keyword">default</span>:</div><div class="line">&gt;         <span class="keyword">break</span>;</div><div class="line">&gt;     &#125;</div><div class="line">&gt;     <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&gt;   &#125;</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>匹配MIME类型可以用<code>*</code>和<code>#</code>分别表示任意长度字符、任意长度的数字。MIME类型有3部分组成：</p>
+<ul>
+<li>vnd开头</li>
+<li>如果是路径结尾，则加上<code>android.cursor.dir/</code>，若是id结尾，加上<code>android.cursor.item/</code></li>
+<li>最后接上<code>vnd.&lt;authority&gt;.&lt;path&gt;</code></li>
+</ul>
+</blockquote>
+<p>示例：对应<code>content://com.example.app.provider/table1</code>这个URI的MIME类型如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vnd.android.cursor.dir/vnd.com.example.app.provider.table1</div></pre></td></tr></table></figure>
+<p>示例：对应<code>content://com.example.app.provider/table1/1</code>这个URI的MIME类型如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vnd.android.cursor.item/vnd.com.example.app.provider.table1</div></pre></td></tr></table></figure>
+<p><strong>注意看清，是item和dir的区别</strong></p>
+<p>==provider==在AndroidManifest中注册标签，除了<code>android:name</code>外，还有个==<code>android:authorities=&quot;com.example.app.provider&quot;</code>==比较重要</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- android:authorities 指定的是上面定义的authority--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">provider</span> <span class="attr">androd:name</span>=<span class="string">".MyProvider"</span></span></div><div class="line">          <span class="attr">android:authorities</span>=<span class="string">"com.example.app.provider"</span></div><div class="line">          <span class="attr">android:enable</span>=<span class="string">"true"</span></div><div class="line">          <span class="attr">android:exported</span>=<span class="string">"true"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">provider</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>Git指令</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git status</div><div class="line">git diff file1 file2</div><div class="line">git checkout file <span class="comment"># 撤销未提交，没有add的修改</span></div><div class="line">git reset HEAD file <span class="comment"># 回退已经add提交的修改</span></div><div class="line">git <span class="built_in">log</span></div></pre></td></tr></table></figure>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/06/06/Android 《第一行代码》简要知识点笔记/" data-toggle="tooltip" data-placement="top" title="Android 《第一行代码》简要笔记（一）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

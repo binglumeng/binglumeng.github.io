@@ -187,20 +187,17 @@
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/第二篇、Android分享操作/">
+    <a href="/2017/03/27/第一篇、Android入门基础/">
         <h2 class="post-title">
-            Android分享操作
+            Android入门基础
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            第二章、Android分享操作1. 分享简单数据
-向其他app发送检单数据
-
-Intent发送数据必须有actions，其他对应action的activity响应事件。通过Intent实现分享功能，而ActionBar可使用ShareActionProvider来快速实现分享功能。如下是使用Intent.createChooser实现分享功能的demo：
-
-123456&gt;Intent ......
+            第一章、Android入门基础1.$建立App$Intent 启动activity。传递参数。有显示和隐式的区分。explicit intent和implicit intent。
+2.$ActionBar$
+声明父类Activity，在AndroidManifest.xml文件中,Activity节点下，有activity:parentActivityName的属性，并在ActionBar中......
         </div>
     </a>
     <p class="post-meta">
@@ -213,17 +210,16 @@ Intent发送数据必须有actions，其他对应action的activity响应事件�
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/第一篇、Android入门基础/">
+    <a href="/2017/03/27/Android学习笔记第五篇--网络连接与云服务/">
         <h2 class="post-title">
-            Android入门基础
+            Android网络连接与云服务
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            第一章、Android入门基础1.$建立App$Intent 启动activity。传递参数。有显示和隐式的区分。explicit intent和implicit intent。
-2.$ActionBar$
-声明父类Activity，在AndroidManifest.xml文件中,Activity节点下，有activity:parentActivityName的属性，并在ActionBar中......
+            Android学习笔记第五篇–网络连接与云服务第一章、无线连接设备​    除了能够在云端通讯，Android的无线API也允许在同一局域网内的设备通讯，甚至没有连接网络，而是物理具体相近，也可以相互通讯。Network Service Discovery 简称NSD可以允许应用相互通讯发现附近设备。
+​    本节主要介绍Android应用发现与连接其他设备的API。主要介绍NSD的API......
         </div>
     </a>
     <p class="post-meta">
@@ -285,16 +281,20 @@ SmoothPro......
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/Android学习笔记第五篇--网络连接与云服务/">
+    <a href="/2017/03/27/第四篇、Android图像与动画/">
         <h2 class="post-title">
-            Android网络连接与云服务
+            Android图像与动画
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Android学习笔记第五篇–网络连接与云服务第一章、无线连接设备​    除了能够在云端通讯，Android的无线API也允许在同一局域网内的设备通讯，甚至没有连接网络，而是物理具体相近，也可以相互通讯。Network Service Discovery 简称NSD可以允许应用相互通讯发现附近设备。
-​    本节主要介绍Android应用发现与连接其他设备的API。主要介绍NSD的API......
+            第四篇、Android图像与动画[TOC]
+第1章、高效显示Bitmap本节主要介绍加载处理Bitmap对象常用方法，以避免UI线程阻塞与OOM问题。由于Android设备
+
+Android单个应用至少16M内存，不同分辨率屏幕的设备要求不同。国内自定义ROM限制也有差异。
+Bitmap消耗内存，一张5M的高清照片，使用ARGB_8888方式加载Bitmap，则需要19M左右的内存。
+And......
         </div>
     </a>
     <p class="post-meta">
@@ -331,20 +331,46 @@ Text View其实好多第三方view，都......
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/第四篇、Android图像与动画/">
+    <a href="/2017/03/27/第三篇、Android多媒体/">
         <h2 class="post-title">
-            Android图像与动画
+            Android多媒体
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            第四篇、Android图像与动画[TOC]
-第1章、高效显示Bitmap本节主要介绍加载处理Bitmap对象常用方法，以避免UI线程阻塞与OOM问题。由于Android设备
+            第三章、Android多媒体1. 管理音频播放
+控制音量与音频播放应用若使用音频功能，应保证App获取音频焦点，不造成多个应用声音混杂，且可响应音频按钮事件。
 
-Android单个应用至少16M内存，不同分辨率屏幕的设备要求不同。国内自定义ROM限制也有差异。
-Bitmap消耗内存，一张5M的高清照片，使用ARGB_8888方式加载Bitmap，则需要19M左右的内存。
-And......
+
+Android有播放音乐、闹铃、通知、来电等等不同的音频流，需要独立鉴别。
+音量按钮会调节当前音频流，若无，则调节响铃。Android 中setVolumeControlStream()方法控制音频流。一般在Activity或Fr......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-03-27
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/27/第二篇、Android分享操作/">
+        <h2 class="post-title">
+            Android分享操作
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            第二章、Android分享操作1. 分享简单数据
+向其他app发送检单数据
+
+Intent发送数据必须有actions，其他对应action的activity响应事件。通过Intent实现分享功能，而ActionBar可使用ShareActionProvider来快速实现分享功能。如下是使用Intent.createChooser实现分享功能的demo：
+
+123456&gt;Intent ......
         </div>
     </a>
     <p class="post-meta">
@@ -411,28 +437,6 @@ download......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/03/21/图片缓存LruCache和DiskLruCache使用/">
-        <h2 class="post-title">
-            图片缓存LruCache和DiskLruCache的使用
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            ##前言
-作为一个Android技术小白，感觉自己各方面知识与技能都存在欠缺、不足，知识体系不够系统。是时候整理一下学习知识和技术点，慢慢梳理，架构体系，如此才能有利于自身技术的更好发展。Android属于开源操作系统，若要快速开发App，最好是学会很好的使用各种优秀的开源框架，一方面完成工作项目，同行也是提升自己代码能力。今天就先从内存缓存的优秀框架DiskLruCache和LruCach......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 冰路梦 on
-        2017-03-21
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -472,7 +476,7 @@ download......
                     <div class="tags">
                         
                             
-                            <a href="/tags/#Android" title="Android" rel="18">Android</a>
+                            <a href="/tags/#Android" title="Android" rel="19">Android</a>
                             
                         
                             
