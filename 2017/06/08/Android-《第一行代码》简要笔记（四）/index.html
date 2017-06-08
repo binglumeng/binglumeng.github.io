@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Github Fork Tag -->
+<a href="https://github.com/binglumeng"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android 《第一行代码》简要笔记（四） - 冰路梦 | binglumeng
+        
+    </title>
+
+    <link rel="canonical" href="https://binglumeng.github.io/2017/06/08/Android-《第一行代码》简要笔记（四）/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">冰路梦Github空间</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Author</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#Service" title="Service">Service</a>
+                        
+                    </div>
+                    <h1>Android 《第一行代码》简要笔记（四）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 冰路梦 on
+                        2017-06-08
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android-《第一行代码》简要笔记（四）"><a href="#Android-《第一行代码》简要笔记（四）" class="headerlink" title="Android 《第一行代码》简要笔记（四）"></a>Android 《第一行代码》简要笔记（四）</h1><h2 id="第十章、Service"><a href="#第十章、Service" class="headerlink" title="第十章、Service"></a>第十章、Service</h2><h3 id="1、线程的基本用法"><a href="#1、线程的基本用法" class="headerlink" title="1、线程的基本用法"></a>1、线程的基本用法</h3><ul>
+<li><p>继承<code>Thread</code>覆写<code>run</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">//子线程逻辑</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后<code>new MyThread().start()</code>即可调用子线程。</p>
+</li>
+<li><p>实现Runnable接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">//子线程逻辑</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后<code>new Thread(new MyRunnable()).start()</code><strong>推荐此种方式，便于解耦</strong></p>
+</li>
+<li><p>习惯写法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">//</span></div><div class="line">  &#125;</div><div class="line">&#125;).start();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2、线程间通讯"><a href="#2、线程间通讯" class="headerlink" title="2、线程间通讯"></a>2、线程间通讯</h3><p>Android中子线程是不允许更新UI的。常用的方式：Handler和AsyncTask</p>
+<ul>
+<li><p>Handler</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UPDATE_TEXT = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> TextView text;</div><div class="line">  <span class="keyword">private</span> Handler handler = <span class="keyword">new</span> Handler()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</div><div class="line">      <span class="keyword">switch</span>(msg.what)&#123;</div><div class="line">        <span class="keyword">case</span> UPDATE_TEXT:</div><div class="line">          text.setText(<span class="string">"After Update Text"</span>);</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">  ...</div><div class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnabe()&#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">        Message msg = <span class="keyword">new</span> Message();</div><div class="line">        msg.what = UPDATE_TEXT;</div><div class="line">        handler.sendMessage(msg);</div><div class="line">      &#125;</div><div class="line">    &#125;).start();</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>简要分析Handler机制：</strong></p>
+<blockquote>
+<p>Android中异步消息处理主要有4部分组成：<code>message</code>、<code>handler</code>、<code>MeaageQueue</code>、<code>Looper</code>;</p>
+<ul>
+<li><p>Message</p>
+<p>消息类，用于线程间少量信息的通讯。含有<code>what</code>、<code>arg1</code>、<code>arg2</code>和<code>obj</code></p>
+</li>
+<li><p>Handler</p>
+<p>消息处理者，<code>sendMessage()</code>和<code>handleMessage()</code>方法</p>
+</li>
+<li><p>MessageQueue</p>
+<p>消息队列，一个线程一个队列FIFO的消息栈。存放handler发来的消息，由Looper循环，再有handler取出处理。</p>
+</li>
+<li><p>Looper</p>
+<p>消息循环管理者，调用<code>loop()</code>方法，进入无限循环，用于取出消息给handler，每个线程一个looper。</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>Async Task</p>
+<p>Android系统提供的异步操作类。使用时需要继承<code>AsyncTask</code>并实现对应的方法。需要制定三个参数</p>
+<ul>
+<li><p>Params</p>
+<p>执行AsyncTask需要传入的参数，用于后台操作使用。</p>
+</li>
+<li><p>Progress</p>
+<p>后台执行时候，可用于前台显示进度，泛型作为进度单位。</p>
+</li>
+<li><p>Result</p>
+<p>后台执行完毕，需要返回的结果类型。</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>AsyncTask需要实现的子类方法：</p>
+<ul>
+<li>onPreExecute(),任务执行前准备工作</li>
+<li>doInBackground(Params…)，后台执行的逻辑，如要反馈进度，调用<code>publishProgress(Progress...)</code></li>
+<li>onProgressUpdate(Progress…)，更新进度</li>
+<li>onPostExecute(Result)，后台执行完毕，返回给前台数据。</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DownloadTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span>&lt;<span class="title">Void</span>,<span class="title">Integer</span>,<span class="title">Boolean</span>&gt;</span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPreExecute</span><span class="params">()</span></span>&#123;</div><div class="line">    progressDialog.show();<span class="comment">//显示进度条</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> Boolean <span class="title">doInBackground</span><span class="params">(Void... params)</span></span>&#123;</div><div class="line">    <span class="comment">//...do something</span></div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onProgressUpdate</span><span class="params">(Integer... values)</span></span>&#123;</div><div class="line">    <span class="comment">//显示进度</span></div><div class="line">    progressDialog.setMessage(<span class="string">"Downloaded "</span>+ values[<span class="number">0</span>]+ <span class="string">" %"</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Boolean result)</span></span>&#123;</div><div class="line">    progressDialog.dismiss();</div><div class="line">    <span class="comment">//...      do something</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3、Service"><a href="#3、Service" class="headerlink" title="3、Service"></a>3、Service</h3><p>Android四大组件之一，需要子类继承<code>Service</code>来实现相应的逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyService</span> <span class="keyword">extends</span> <span class="title">Service</span></span>&#123;</div><div class="line">  <span class="comment">//构造函数</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyService</span><span class="params">()</span></span>&#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  <span class="comment">//用于绑定</span></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span></span>&#123;</div><div class="line">    <span class="comment">//此时暂时抛个异常，下面会实现这个方法。</span></div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> UnSupportedOperationException(<span class="string">"Not ye implented"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Service的启动有两种：<code>Context.startService()</code>和<code>Context.bindService()</code>;前者启动服务后，不再过问，后者是与Service共命运。</p>
+<p>停止可以用Service.stopSelf()即可停止。或者<code>Context.stopServie()</code>,<code>Context.unbindService</code>只是解绑，并不能停止。</p>
+<ul>
+<li><p>Activity与Service通讯</p>
+<p>通过Binder沟通Activity与Service</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">MyBinder</span> <span class="keyword">extends</span> <span class="title">Binder</span> </span>&#123;</div><div class="line">    <span class="comment">//自定义方法</span></div><div class="line">    </div><div class="line">  &#125;</div><div class="line">...</div><div class="line">  <span class="comment">//Service中</span></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MyBinder();</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><strong>Activity中需要持有这个链接通讯：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  <span class="keyword">private</span> ServiceConnection conn = <span class="keyword">new</span> ServiceConnection()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span></span>&#123;</div><div class="line">      <span class="comment">//断开链接，，，</span></div><div class="line">  	&#125;</div><div class="line">  	<span class="meta">@Override</span></div><div class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name,IBinder service)</span></span>&#123;</div><div class="line">      MyBinder myBinder = (MyBinder)service;</div><div class="line">      <span class="comment">//获取Binder对象后，操作对应定义的方法，实现通讯。</span></div><div class="line">  	&#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>绑定服务<code>bingService(intent,conn,BIND_AUTO_CREATE);</code></p>
+</li>
+<li><p>Service 生命周期</p>
+<p>onCreate()–&gt;onStartCommand()–&gt;onBind()–&gt;onUnbind()–&gt;onDestroy(),还有一个onRebind();</p>
+<p>不论多次调用<code>onStartCommand()</code>都将是一个Service实例，而且只需要调用一次StopService或stopSelf即可停止。</p>
+</li>
+</ul>
+<blockquote>
+<ol>
+<li>只startService，stopService即可停止。</li>
+<li>只bindService，unbindService即可销毁。</li>
+<li>startService后，又bindService，则需要unbindService，再stopService方可销毁。</li>
+</ol>
+</blockquote>
+<p><strong>前台服务</strong>，是服务处于前台，而不会轻易的被销毁，以前什么优先级、系统级，双服务之类的，效果都不那么好了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">  ...</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span>&#123;</div><div class="line">      <span class="keyword">super</span>.onCreate();</div><div class="line">    	<span class="comment">//创建前台服务，需要用的PendingIntent，设置成通知Notification形式，但是不显示出来。</span></div><div class="line">    	Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>,MainActivity.class);</div><div class="line">    	PendingIntent pi = PendingIntent.getActivity(<span class="keyword">this</span>,<span class="number">0</span>,intnet,<span class="number">0</span>);</div><div class="line">    <span class="comment">//构建Notification</span></div><div class="line">    Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>)</div><div class="line">      .setContentTitle(<span class="string">"Content title"</span>)</div><div class="line">      .setContentText(<span class="string">"content text"</span>)</div><div class="line">      .setWhen(System.currentTimeMillis())</div><div class="line">      .setSmallIcon(R.mipmap.ic_launcher)</div><div class="line">      .setLargeIcon(BitmapFactory.decodeResource(getResource(),R.mipmap.ic_launcher))</div><div class="line">      .setContentIntent(pi)</div><div class="line">      .build();</div><div class="line">    <span class="comment">//id,notification,此处没用NotificationManager，而用startForground，可以是service变为前台服务。</span></div><div class="line">    startForeground(<span class="number">1</span>,notification);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>IntentService</p>
+<p>Service也是运行在主线程，不能运行耗时操作。若在Service中开启异步逻辑，需要的时候，可用service的stopSelf停止自己。</p>
+<p>而Android官方提供了一个<code>IntentService</code>可以自动运行完逻辑，就可停止的Service。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyIntentService</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyIntentService</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">super</span>(<span class="string">"MyIntentService"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(Intent intent)</span></span>&#123;</div><div class="line">    <span class="comment">//处理逻辑,这里就是在异步子线程运行了，不用在new新的线程，而且运行完这里的逻辑，service会自动销毁。</span></div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDestroy();</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Android四大组建，都要在AndroidManifest中注册的哦</strong></p>
+</li>
+</ul>
+<p><strong>Git实践：</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">git branch</div><div class="line">git checkout branch_name</div><div class="line">git merge other_branch_name</div><div class="line">git branch -D branch_name</div><div class="line">git push origin branch_name</div><div class="line"><span class="comment"># master 为分支名</span></div><div class="line">git fetch origin master</div><div class="line">git diff origin/master</div><div class="line">git merge origin/master</div><div class="line"><span class="comment"># </span></div><div class="line">git pull origin master</div></pre></td></tr></table></figure>
+<h2 id="其他章节"><a href="#其他章节" class="headerlink" title="其他章节"></a>其他章节</h2><p>使用第三方的服务SDK的讲解，最好的是看官方文档和示例代码。如Baidu定位、地图等。</p>
+<h4 id="12、material-design"><a href="#12、material-design" class="headerlink" title="12、material design"></a>12、material design</h4><p>Android官方推荐ToolBar替换ActionBar。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ActionBar bar = getSupportActionBar();<span class="comment">//其实xml布局中使用了ToolBar</span></div><div class="line"><span class="keyword">if</span>(bar != <span class="keyword">null</span>)&#123;</div><div class="line">  bar.setDisplayHomeAsUpEnable(<span class="keyword">true</span>);<span class="comment">//HomeAsUp 就是ActionBar最左侧那个按钮。</span></div><div class="line">  bar.setHomeAsUpIndicator(R.drawable.ic);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></div><div class="line">                                  <span class="attr">....</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>滑动菜单可以用<code>DrawerLayout</code>、Google还提供了更好的选择，就是<code>NavigationView</code>在依赖兼容库中</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.android.support:design:24.2.1'</span></div></pre></td></tr></table></figure>
+<p><code>NavigationView</code>中的<code>item</code>可以分组，可以设置<code>checkableBehavior=&quot;single&quot;</code>单个选择。</p>
+<ul>
+<li><p>悬浮按钮和可交互提示</p>
+<p><code>FloatinActionButton</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></div><div class="line">		<span class="attr">android:id</span>=<span class="string">"@+id/fab"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom|end"</span></div><div class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"16dp"</span></div><div class="line">        <span class="attr">android:src</span>=<span class="string">"@drawable/ic_done"</span></div><div class="line">        <span class="attr">android:elevation</span>=<span class="string">"8dp"</span>/&gt;</div></pre></td></tr></table></figure>
+<p><strong>其中<code>elevation</code>属性表示投影效果，数值大，就范围大而浅。</strong>其他属性类似Button没特别的。</p>
+</li>
+<li><p>SnackBar</p>
+<p>SnackBar类似与toast，但是多了一个可以撤销的按钮。它放在其他按钮中，调用到它的逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">fab.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span></span>&#123;</div><div class="line">    Snackbar.make(view,<span class="string">"data deleted ?"</span>,Snackbar.LENGTH_SHORT)</div><div class="line">  .setAction(<span class="string">"Undo"</span>,<span class="keyword">new</span> View.OnClickListener()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span></span>&#123;</div><div class="line">      <span class="comment">//撤销操作</span></div><div class="line">    &#125;</div><div class="line">  &#125;).show();</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>CoordinatorLayout</p>
+<p><code>CoordinatorLayout</code>可谓是增强版的<code>FrameLayout</code>，如上悬浮按钮fab点击后弹出一个snackbar，会遮挡到fab。这时需要使用<code>CoordinatorLayout</code>来自动处理子空间的事件。它会自动偏移其他控件，来专注于当前。</p>
+<p><strong>如上Bug，则需要把fab放入到CoordinatorLayout中即可，因为snackbar也是在fab中点击的，所以可以被控制。</strong></p>
+</li>
+<li><p>CardView</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android:support.v7.widget.CardView</span></span></div><div class="line">                                    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                                    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">                                    <span class="attr">app:cardCornerRadius</span>=<span class="string">"4dp"</span></div><div class="line">                                    <span class="attr">app:elevation</span>=<span class="string">"5dp"</span>&gt;</div><div class="line">  ...</div><div class="line"><span class="tag">&lt;/<span class="name">android:support.v7.widget.CardView</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>cardview需要单独添加依赖包</code></p>
+</li>
+<li><p>Glide图片加载库</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.github.bumptech.glide:glide:3.7.0'</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Glide.with(mContext).load(imageId).into(ImageView)<span class="comment">//glide的用法，更多可以参照api</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>全局布局时候，RecyclerView会吧ActionBar遮挡，原因是FrameLayout的内部布局从左上开始的缘故。</strong></p>
+<p>解决方案，使用<code>AppBarLayout</code>包裹住<code>Toolbar</code>然后下面的控件，设置<code>layout_behavior</code>属性</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></div><div class="line">                                            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">                                            <span class="attr">andorid:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</div><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></div><div class="line">                                   <span class="attr">....</span>&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 上有AppBarLayout，这下面的RecyclerView，设置layout_behavior属性，就不会遮挡上面了--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></div><div class="line">                                        <span class="attr">...</span></div><div class="line">                                        <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span>/&gt;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>上面<code>app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</code>都是固定的属性写法。</p>
+<ul>
+<li><p>AppBarLayout</p>
+<p>还有一些高级用法，它能控制内部一下空间的滚动时候的事件处理</p>
+<p>比如Toolbar在其属性中加入<code>app:layout_scrollFlags=&quot;scroll&quot;enterAlways|snap&quot;</code></p>
+<ul>
+<li>scroll表示toolbar下面的recyclerView向上滚动时，toolbar会一起滚动，并隐藏。</li>
+<li>enterAlways，表示recyclerView向下滚动时，toolbar会向下滚动，并重新显示。</li>
+<li>snap表示，toolbar未完全隐藏或显示时候，根据滚动距离决定显示隐藏。</li>
+</ul>
+</li>
+<li><p>下拉刷新</p>
+<p><code>SwipeRefreshLayout</code>包裹listView或RecyclerView即可是它们拥有下拉刷新功能效果。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.suport.v4.widget.SwipeRefreshLayout</span></span></div><div class="line">                                             <span class="attr">...</span></div><div class="line">                                             <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span>&gt;</div><div class="line"><span class="tag">&lt;<span class="name">ListView</span></span></div><div class="line">          <span class="attr">...</span>&gt;</div><div class="line">  </div><div class="line">  <span class="tag">&lt;/<span class="name">ListView</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">android.suport.v4.widget.SwipeRefreshLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">SwipeRefreshLayout srl;</div><div class="line">srl.setonRefreshListener(<span class="keyword">new</span> SwipeRefreshLayout.onRefreshListener()&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">(&#123;</span></span></div><div class="line">    ...</div><div class="line">  &#125;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//刷新完毕，需要设置</span></div><div class="line">srl.setRefreshing(<span class="keyword">false</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>折叠式标题栏</p>
+<p>CollapsingToolbarLayout用于使Toolbar更为炫酷，但是它必须为<code>AppBarLayout</code>的子控件才可，而AppBarLayout又必须是CoordinatorLayout的子布局，还是看代码吧～</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span></span></div><div class="line">                                                 <span class="attr">...</span>&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></div><div class="line">                                                <span class="attr">...</span>&gt;</div><div class="line">  		<span class="tag">&lt;<span class="name">android.support.design.widget.CollapsingToolbarLayout</span></span></div><div class="line">                                                               <span class="attr">...</span>&gt;</div><div class="line">      	<span class="comment">&lt;!--这个imageView的效果就是那种下拉折叠式标题栏的背景--&gt;</span>	</div><div class="line">          <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">                     <span class="attr">android:scaleType</span>=<span class="string">"centerCrop"</span></div><div class="line">                     <span class="attr">app:layout_collapseMode</span>=<span class="string">"parallax"</span></div><div class="line">                       <span class="attr">...</span>&gt;</div><div class="line">          	<span class="tag">&lt;/<span class="name">ImageView</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></div><div class="line">                                             <span class="attr">app:layout_collapseMode</span>=<span class="string">"pin"</span></div><div class="line">                                             <span class="attr">...</span>&gt;</div><div class="line">          </div><div class="line">          <span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></div><div class="line">      	<span class="tag">&lt;/<span class="name">android.support.design.widget.CollapsingToolbarLayout</span>&gt;</span></div><div class="line">  	<span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></div><div class="line">  	<span class="comment">&lt;!--折叠式标题栏下面的正文空间--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">android.support.v4.widget.NestedScrollView</span></span></div><div class="line">                                              <span class="attr">...</span></div><div class="line">                                              <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span>&gt;</div><div class="line">  	<span class="comment">&lt;!-- ScrollView 和 NestScrollView都只允许一个子布局，要想多布局，就用布局嵌套吧。--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">                  <span class="attr">...</span>&gt;</div><div class="line">    ...</div><div class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">android.support.v4.widget.NestedScrollView</span>&gt;</span>                                          <span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></div><div class="line">                                                                                                                                             <span class="attr">...</span></div><div class="line">                                                        <span class="attr">app:layout_anchor</span>=<span class="string">"@id/appBar"</span></div><div class="line">                                                                                                                                             <span class="attr">app:layout_anchorGravity</span>=<span class="string">"bottom|end"</span>/&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上面需要注意的就是<code>layout_collapseMode</code>属性，pin表示钉住不动，parallax表示随动偏移。<code>layout_anchor</code>表示设置悬浮按钮的锚点，指定控件的id即可。</p>
+<p><strong>使用<code>android:fitsSystemWindows</code></strong>属性，设置布局，就可以是控件与系统状态栏融合。</p>
+</li>
+</ul>
+<h4 id="13、进阶知识"><a href="#13、进阶知识" class="headerlink" title="13、进阶知识"></a>13、进阶知识</h4><ul>
+<li><p>全局Context，覆写Application，    getApplication()。</p>
+</li>
+<li><p>对象序列化</p>
+<ul>
+<li><p>Serializable</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line">  ....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Parcelable</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Parcelabe</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> string name;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">  ...</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">describeConents</span><span class="params">()</span></span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="number">0</span></div><div class="line">    &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest,<span class="keyword">int</span> flags)</span></span>&#123;</div><div class="line">    dest.writeString(name);<span class="comment">//写出name</span></div><div class="line">    dest.writeInt(age);<span class="comment">//写出age</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Parcelable.Creator&lt;Student&gt; CREATOR = <span class="keyword">new</span> Parcelable.Creator&lt;Student&gt;()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Student <span class="title">createFromParcel</span><span class="params">(Parcel source)</span></span>&#123;</div><div class="line">      Student stu = <span class="keyword">new</span> Student();</div><div class="line">      stu.name = source.readString();</div><div class="line">      stu.age = source.readInt();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> Student[] newArray(<span class="keyword">int</span> size)&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Student[size];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Intent中可以传递这些序列化的对象。</p>
+</li>
+<li><p>Log工具</p>
+<p>为使的开发中的log不会带入到发行办，需要做个全局开关配置，或则log级别限制。</p>
+<ol>
+<li>定义Level ，只有当全局Level =&lt; log内的级别时候，打印出相应级别一下的log，如此，发布时候，定义level大于最高的log级别，就不会输出log。</li>
+<li>定于debug开关。封装log类。</li>
+</ol>
+</li>
+<li><p>定时任务</p>
+</li>
+</ul>
+<p>Android中虽然也有<code>timer</code>定时，但是由于cpu休眠等情况，导致它的计时并不会准确。不适合长时间的定时任务。</p>
+<blockquote>
+<p>Alarm机制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt; AlramManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);</div><div class="line">&gt; <span class="comment">//十秒后执行一个任务</span></div><div class="line">&gt; <span class="keyword">long</span> triggerAtTime = SystemClock.elapsedRealtime() + <span class="number">10</span>*<span class="number">1000</span>;</div><div class="line">&gt; manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerAtTime,pendingIntent);</div><div class="line">&gt; <span class="comment">//其中参数ＥＬＡＰＳＥＤ_REALTIME、ＥＬＡＰＳＥＤ_REALTIME_WAKEUP、表示系统开机以来的到现在的时间，ｗａｋｅｕｐ表示唤醒ｃｐｕ。</span></div><div class="line">&gt; <span class="comment">//RTC_REALTIME、ＲＴＣ_REALTIME_WAKEUP、分别表示1970年以来的时间，wakeup表示唤醒cpu。</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>逻辑操作也会耗时，所以定时任务放在子线程会让时间更精准点。</p>
+</blockquote>
+<p>Android 4.4以后Alarm定时任务多有不准，因为休眠cpu时候，会逐级减少唤醒cpu的次数和增加时间间隔。若要保证任务准时，使用<code>AlarmManager</code>的<code>setExact（）</code>代替set（）方法。</p>
+<ul>
+<li>Doze模式</li>
+</ul>
+<p>Android 6.0引入此模式，用于省电。网络、cpu、wifi、同步、Alarm等都会在这个模式下受到影响。若要alarm精准，使得在Doze模式下也运作，调用<code>AlarmManager.setAndAllowWhileIdle()</code>或<code>setExactAndAllowWhildeIdle()</code></p>
+<ul>
+<li><p>多窗口模式，7.0引入，同时多个窗口，也只有一个真正活动，生命周期一样的。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 禁用多窗口 --&gt;</span></div><div class="line">android:resizeableActivity = "false"</div></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda表达式</p>
+<p>JAVA8的新特性，Gralde配置新增</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">android&#123;</div><div class="line">  ...</div><div class="line">    defaultConfit&#123;</div><div class="line">      ...</div><div class="line">        jackOptions.enabled = <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">  compileOptions &#123;</div><div class="line">    sourceCompatibility JavaVersion.VERSION_1_8</div><div class="line">    targetCompatibility JavaVersion.VERSION_1_8</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>详细的Lambda需要专门学习一下，这里就简单说一个，单个参数，或简单参数，接口只有一个方法的形式，可以简略。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">//</span></div><div class="line">  &#125;</div><div class="line">&#125;).start();</div><div class="line"></div><div class="line"><span class="comment">// -- &gt;  lambda</span></div><div class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">  <span class="comment">//</span></div><div class="line">&#125;).start();</div></pre></td></tr></table></figure>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/06/07/Android《第一行代码》简要笔记(三)/" data-toggle="tooltip" data-placement="top" title="Android《第一行代码》简要笔记(三)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#Service" title="Service">Service</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">Binglumeng&#39;s Blog</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/binglumeng" target="_blank">冰路梦</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://binglumeng.github.io" target="_blank">Github</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/binglumeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/冰路梦">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 冰路梦Github空间 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.csdn.net/binglumeng">binglumeng</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=binglumeng&repo=binglumeng.github.io&type=star&count=true" >
+                    </iframe>
+					<br>
+					本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://binglumeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://binglumeng.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+</body>
+
+</html>

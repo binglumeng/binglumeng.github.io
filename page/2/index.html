@@ -187,6 +187,28 @@
 
 <div class="post-preview">
 
+    <a href="/2017/04/10/Android系统源码编译-unsupported-reloc-43-和-make-update-api问题/">
+        <h2 class="post-title">
+            Android系统源码编译 unsupported reloc 43 和 make update-api问题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android系统源码编译 unsupported reloc 43 和 make update-api最近初次接触到Android系统源码的编译工作，公司内使用的开发板是RK3288平台的。众所周知，Android是一个开源、开放的系统平台，国内的众多所谓的智能系统好多都是基于Android平台裁剪定制而来的。
+无可厚非，Android的开放性却也带来的一些副作用，各类修改版的Androi......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-04-10
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2017/04/07/Linux下adb的使用及adb devices no permissions问题的解决/">
         <h2 class="post-title">
             Linux adb使用及adb devices no permissions问题解决
@@ -210,67 +232,20 @@
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/第二篇、Android分享操作/">
+    <a href="/2017/03/27/第三篇、Android多媒体/">
         <h2 class="post-title">
-            Android分享操作
+            Android多媒体
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            第二章、Android分享操作1. 分享简单数据
-向其他app发送检单数据
+            第三章、Android多媒体1. 管理音频播放
+控制音量与音频播放应用若使用音频功能，应保证App获取音频焦点，不造成多个应用声音混杂，且可响应音频按钮事件。
 
-Intent发送数据必须有actions，其他对应action的activity响应事件。通过Intent实现分享功能，而ActionBar可使用ShareActionProvider来快速实现分享功能。如下是使用Intent.createChooser实现分享功能的demo：
 
-123456&gt;Intent ......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 冰路梦 on
-        2017-03-27
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/03/27/第一篇、Android入门基础/">
-        <h2 class="post-title">
-            Android入门基础
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            第一章、Android入门基础1.$建立App$Intent 启动activity。传递参数。有显示和隐式的区分。explicit intent和implicit intent。
-2.$ActionBar$
-声明父类Activity，在AndroidManifest.xml文件中,Activity节点下，有activity:parentActivityName的属性，并在ActionBar中......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 冰路梦 on
-        2017-03-27
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/03/27/Android开源控件搜集--Button/">
-        <h2 class="post-title">
-            Android开源控件搜集----Button
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Android开源控件搜集–ButtonNote：本篇博客长期维护更新，欢迎各位网友共同合作，共享知识与技术。
-本篇博客主要搜集个人任务比较优秀的Android开源控件，大多来自github，并附上链接，自己学习之余，亦希望于大家有所帮助。
-Android的控件还算比较多，官方和第三方自定义优秀控件数不胜数，搜集难免不全，逐步更新丰富吧。
-ButtonButton可以说是Android中仅次......
+Android有播放音乐、闹铃、通知、来电等等不同的音频流，需要独立鉴别。
+音量按钮会调节当前音频流，若无，则调节响铃。Android 中setVolumeControlStream()方法控制音频流。一般在Activity或Fr......
         </div>
     </a>
     <p class="post-meta">
@@ -308,32 +283,6 @@ SmoothPro......
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/第三篇、Android多媒体/">
-        <h2 class="post-title">
-            Android多媒体
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            第三章、Android多媒体1. 管理音频播放
-控制音量与音频播放应用若使用音频功能，应保证App获取音频焦点，不造成多个应用声音混杂，且可响应音频按钮事件。
-
-
-Android有播放音乐、闹铃、通知、来电等等不同的音频流，需要独立鉴别。
-音量按钮会调节当前音频流，若无，则调节响铃。Android 中setVolumeControlStream()方法控制音频流。一般在Activity或Fr......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 冰路梦 on
-        2017-03-27
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/2017/03/27/Android开源控件搜集--TextView/">
         <h2 class="post-title">
             Android开源控件搜集----Text View
@@ -346,6 +295,77 @@ Android有播放音乐、闹铃、通知、来电等等不同的音频流，需�
 本篇博客主要搜集个人任务比较优秀的Android开源控件，大多来自github，并附上链接，自己学习之余，亦希望于大家有所帮助。
 Android的控件还算比较多，官方和第三方自定义优秀控件数不胜数，搜集难免不全，逐步更新丰富吧。
 Text View其实好多第三方view，都......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-03-27
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/27/Android学习笔记第五篇--网络连接与云服务/">
+        <h2 class="post-title">
+            Android网络连接与云服务
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android学习笔记第五篇–网络连接与云服务第一章、无线连接设备​    除了能够在云端通讯，Android的无线API也允许在同一局域网内的设备通讯，甚至没有连接网络，而是物理具体相近，也可以相互通讯。Network Service Discovery 简称NSD可以允许应用相互通讯发现附近设备。
+​    本节主要介绍Android应用发现与连接其他设备的API。主要介绍NSD的API......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-03-27
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/27/第一篇、Android入门基础/">
+        <h2 class="post-title">
+            Android入门基础
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            第一章、Android入门基础1.$建立App$Intent 启动activity。传递参数。有显示和隐式的区分。explicit intent和implicit intent。
+2.$ActionBar$
+声明父类Activity，在AndroidManifest.xml文件中,Activity节点下，有activity:parentActivityName的属性，并在ActionBar中......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 冰路梦 on
+        2017-03-27
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/27/第二篇、Android分享操作/">
+        <h2 class="post-title">
+            Android分享操作
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            第二章、Android分享操作1. 分享简单数据
+向其他app发送检单数据
+
+Intent发送数据必须有actions，其他对应action的activity响应事件。通过Intent实现分享功能，而ActionBar可使用ShareActionProvider来快速实现分享功能。如下是使用Intent.createChooser实现分享功能的demo：
+
+123456&gt;Intent ......
         </div>
     </a>
     <p class="post-meta">
@@ -384,38 +404,18 @@ And......
 
 <div class="post-preview">
 
-    <a href="/2017/03/27/Android学习笔记第五篇--网络连接与云服务/">
+    <a href="/2017/03/27/Android开源控件搜集--Button/">
         <h2 class="post-title">
-            Android网络连接与云服务
+            Android开源控件搜集----Button
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Android学习笔记第五篇–网络连接与云服务第一章、无线连接设备​    除了能够在云端通讯，Android的无线API也允许在同一局域网内的设备通讯，甚至没有连接网络，而是物理具体相近，也可以相互通讯。Network Service Discovery 简称NSD可以允许应用相互通讯发现附近设备。
-​    本节主要介绍Android应用发现与连接其他设备的API。主要介绍NSD的API......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 冰路梦 on
-        2017-03-27
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/03/27/hello-world/">
-        <h2 class="post-title">
-            Hello World
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu......
+            Android开源控件搜集–ButtonNote：本篇博客长期维护更新，欢迎各位网友共同合作，共享知识与技术。
+本篇博客主要搜集个人任务比较优秀的Android开源控件，大多来自github，并附上链接，自己学习之余，亦希望于大家有所帮助。
+Android的控件还算比较多，官方和第三方自定义优秀控件数不胜数，搜集难免不全，逐步更新丰富吧。
+ButtonButton可以说是Android中仅次......
         </div>
     </a>
     <p class="post-meta">
@@ -465,7 +465,7 @@ Qu......
                     <div class="tags">
                         
                             
-                            <a href="/tags/#Android" title="Android" rel="20">Android</a>
+                            <a href="/tags/#Android" title="Android" rel="21">Android</a>
                             
                         
                             
@@ -482,6 +482,8 @@ Qu......
                         
                             
                         
+                            
+                            <a href="/tags/#Service" title="Service" rel="2">Service</a>
                             
                         
                             
